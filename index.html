@@ -18,9 +18,9 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E6 50%, #FFF0F3 100%);
+            background: linear-gradient(135deg, #E8F4FC 0%, #D6E9F8 50%, #EDF5FC 100%);
             min-height: 100vh;
-            color: #6B5B5B;
+            color: #4A5568;
         }
 
         .container {
@@ -50,7 +50,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
+            box-shadow: 0 8px 30px rgba(100, 150, 200, 0.3);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -62,7 +62,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #E8929C, #D4A5AA, #C7929C);
+            background: linear-gradient(90deg, #5B9BD5, #7BAFD4, #9DC3E6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -70,7 +70,7 @@
         }
 
         header p {
-            color: #9B8585;
+            color: #7A8B9A;
             margin-top: 5px;
             font-size: 1.1rem;
         }
@@ -89,22 +89,22 @@
             border: none;
             border-radius: 25px;
             background: #fff;
-            color: #6B5B5B;
+            color: #4A5568;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(199, 146, 156, 0.15);
+            box-shadow: 0 4px 15px rgba(100, 150, 200, 0.15);
         }
 
         .month-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(199, 146, 156, 0.25);
+            box-shadow: 0 6px 20px rgba(100, 150, 200, 0.25);
         }
 
         .month-btn.active {
-            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
+            background: linear-gradient(135deg, #5B9BD5 0%, #7BAFD4 100%);
             color: #fff;
         }
 
@@ -114,7 +114,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -126,13 +126,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #E8929C, #F5C6CB);
+            background: linear-gradient(90deg, #5B9BD5, #9DC3E6);
         }
 
         .info-section h2 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: #6B5B5B;
+            color: #4A5568;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -149,7 +149,7 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
+            background: linear-gradient(135deg, #EDF5FC 0%, #E0EEF8 100%);
             border-radius: 15px;
             transition: transform 0.2s;
         }
@@ -163,7 +163,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #F5C6CB;
+            border: 3px solid #9DC3E6;
         }
 
         .info-item .emoji {
@@ -172,13 +172,13 @@
 
         .info-text h4 {
             font-size: 1rem;
-            color: #6B5B5B;
+            color: #4A5568;
             margin-bottom: 3px;
         }
 
         .info-text p {
             font-size: 0.85rem;
-            color: #9B8585;
+            color: #7A8B9A;
             line-height: 1.4;
         }
 
@@ -194,7 +194,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -210,9 +210,9 @@
         }
 
         .card.income::after { background: #7EC8A3; }
-        .card.expense::after { background: #E8929C; }
-        .card.balance::after { background: #D4A5AA; }
-        .card.savings::after { background: #F5C6CB; }
+        .card.expense::after { background: #7BAFD4; }
+        .card.balance::after { background: #9DC3E6; }
+        .card.savings::after { background: #B8D4E8; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -236,12 +236,12 @@
         }
 
         .card-icon.income { background: #D4EDDA; }
-        .card-icon.expense { background: #FFE4E6; }
-        .card-icon.balance { background: #F5D6D9; }
-        .card-icon.savings { background: #FFF0F3; }
+        .card-icon.expense { background: #D6E9F8; }
+        .card-icon.balance { background: #E0EEF8; }
+        .card-icon.savings { background: #EDF5FC; }
 
         .card h3 {
-            color: #9B8585;
+            color: #7A8B9A;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -253,12 +253,12 @@
         }
 
         .card .amount.positive { color: #5B9B7A; }
-        .card .amount.negative { color: #D47580; }
-        .card .amount.neutral { color: #B08B90; }
+        .card .amount.negative { color: #5B9BD5; }
+        .card .amount.neutral { color: #7BAFD4; }
 
         .card .sub-text {
             font-size: 0.8rem;
-            color: #B09A9A;
+            color: #9AABB8;
             margin-top: 5px;
         }
 
@@ -274,13 +274,13 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
         }
 
         .chart-card h2 {
             font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #6B5B5B;
+            color: #4A5568;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -296,14 +296,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             margin-bottom: 25px;
         }
 
         .insights-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #6B5B5B;
+            color: #4A5568;
         }
 
         .insight-item {
@@ -311,7 +311,7 @@
             align-items: flex-start;
             gap: 15px;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
+            background: linear-gradient(135deg, #EDF5FC 0%, #E0EEF8 100%);
             border-radius: 15px;
             margin-bottom: 12px;
             transition: transform 0.2s;
@@ -334,19 +334,19 @@
 
         .insight-icon.good { background: #D4EDDA; }
         .insight-icon.warning { background: #FFE4E6; }
-        .insight-icon.info { background: #F5D6D9; }
-        .insight-icon.tip { background: #FFF0F3; }
-        .insight-icon.cat { background: #FFEEF0; }
+        .insight-icon.info { background: #D6E9F8; }
+        .insight-icon.tip { background: #E0EEF8; }
+        .insight-icon.cat { background: #B8D4E8; }
 
         .insight-content h4 {
             font-size: 0.95rem;
             margin-bottom: 5px;
-            color: #6B5B5B;
+            color: #4A5568;
         }
 
         .insight-content p {
             font-size: 0.85rem;
-            color: #9B8585;
+            color: #7A8B9A;
             line-height: 1.5;
         }
 
@@ -355,7 +355,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             margin-bottom: 25px;
             overflow-x: auto;
         }
@@ -363,7 +363,7 @@
         .expense-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #6B5B5B;
+            color: #4A5568;
         }
 
         .expense-table {
@@ -374,20 +374,20 @@
         .expense-table th {
             text-align: left;
             padding: 15px;
-            color: #9B8585;
+            color: #7A8B9A;
             font-weight: 600;
-            border-bottom: 2px solid #FFE4E6;
+            border-bottom: 2px solid #D6E9F8;
             font-size: 0.9rem;
         }
 
         .expense-table td {
             padding: 15px;
-            border-bottom: 1px solid #FFF0F3;
+            border-bottom: 1px solid #EDF5FC;
             font-size: 0.9rem;
         }
 
         .expense-table tr:hover {
-            background: #FFF5F5;
+            background: #F5FAFD;
         }
 
         .category-badge {
@@ -398,21 +398,21 @@
             font-weight: 600;
         }
 
-        /* Soft Pink theme - harmonized category colors */
-        .category-badge.housing { background: #FFE4E6; color: #B07580; }
-        .category-badge.utilities { background: #F5D6D9; color: #9B7580; }
-        .category-badge.insurance { background: #FFEEF0; color: #A07580; }
-        .category-badge.food { background: #D4EDDA; color: #5B8B6B; }
-        .category-badge.transport { background: #FFF0F3; color: #A08585; }
-        .category-badge.giving { background: #F5C6CB; color: #9B6B75; }
-        .category-badge.savings { background: #E8F5E9; color: #5B8B6B; }
-        .category-badge.pet { background: #FFEEF0; color: #B08080; }
-        .category-badge.entertainment { background: #F5D6D9; color: #9B7580; }
-        .category-badge.other { background: #F5F0F0; color: #8B8080; }
+        /* Winter theme - harmonized category colors */
+        .category-badge.housing { background: #E57373; color: #fff; }
+        .category-badge.utilities { background: #4FC3F7; color: #fff; }
+        .category-badge.insurance { background: #FF8A65; color: #fff; }
+        .category-badge.food { background: #81C784; color: #fff; }
+        .category-badge.transport { background: #90A4AE; color: #fff; }
+        .category-badge.giving { background: #CE93D8; color: #fff; }
+        .category-badge.savings { background: #66BB6A; color: #fff; }
+        .category-badge.pet { background: #FFB74D; color: #fff; }
+        .category-badge.entertainment { background: #BA68C8; color: #fff; }
+        .category-badge.other { background: #B0BEC5; color: #fff; }
 
         .progress-bar {
             height: 8px;
-            background: #FFF0F3;
+            background: #E0EEF8;
             border-radius: 4px;
             overflow: hidden;
             margin-top: 5px;
@@ -421,7 +421,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #E8929C, #D4A5AA);
+            background: linear-gradient(90deg, #5B9BD5, #9DC3E6);
         }
 
         /* Savings Goals */
@@ -429,14 +429,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             margin-bottom: 25px;
         }
 
         .savings-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #6B5B5B;
+            color: #4A5568;
         }
 
         .goal-item {
@@ -444,20 +444,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
+            background: linear-gradient(135deg, #EDF5FC 0%, #E0EEF8 100%);
             border-radius: 15px;
             margin-bottom: 12px;
         }
 
         .goal-info h4 {
             font-size: 0.95rem;
-            color: #6B5B5B;
+            color: #4A5568;
             margin-bottom: 3px;
         }
 
         .goal-info p {
             font-size: 0.8rem;
-            color: #B09A9A;
+            color: #9AABB8;
         }
 
         .goal-amount {
@@ -467,7 +467,7 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #D47580;
+            color: #5B9BD5;
         }
 
         /* Footer Cat */
@@ -490,7 +490,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
+            box-shadow: 0 8px 30px rgba(100, 150, 200, 0.3);
             transition: transform 0.3s;
         }
 
@@ -499,7 +499,7 @@
         }
 
         .footer-text {
-            color: #9B8585;
+            color: #7A8B9A;
             font-size: 0.9rem;
         }
 
@@ -541,7 +541,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
+            box-shadow: 0 10px 40px rgba(100, 150, 200, 0.12);
             text-align: center;
         }
 
@@ -556,7 +556,7 @@
 
         .game-title {
             font-size: 1.1rem;
-            color: #6B5B5B;
+            color: #4A5568;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -566,12 +566,12 @@
             display: flex;
             gap: 12px;
             font-size: 0.85rem;
-            color: #9B8585;
+            color: #7A8B9A;
             flex-wrap: wrap;
         }
 
         .game-stats span {
-            background: #FFE4E6;
+            background: #D6E9F8;
             padding: 5px 12px;
             border-radius: 15px;
         }
@@ -589,7 +589,7 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #E8929C 100%);
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8A65 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -603,7 +603,7 @@
         }
 
         .skill-btn:disabled {
-            background: #ccc;
+            background: #B0BEC5;
             cursor: not-allowed;
         }
 
@@ -612,7 +612,7 @@
         }
 
         .phase-indicator {
-            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
+            background: linear-gradient(135deg, #5B9BD5 0%, #7BAFD4 100%);
             color: #fff;
             padding: 5px 15px;
             border-radius: 15px;
@@ -624,8 +624,8 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: #F5C6CB;
-            color: #6B5B5B;
+            background: #B8D4E8;
+            color: #4A5568;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 0.85rem;
@@ -634,7 +634,7 @@
         }
 
         .leaderboard-btn:hover {
-            background: #E8929C;
+            background: #5B9BD5;
             color: #fff;
         }
 
@@ -642,7 +642,7 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            background: linear-gradient(to bottom, #FFF5F5 0%, #FFE4E6 100%);
+            background: linear-gradient(to bottom, #EDF5FC 0%, #D6E9F8 100%);
         }
 
         .game-canvas {
@@ -655,7 +655,7 @@
         .game-instructions {
             margin-top: 12px;
             font-size: 0.85rem;
-            color: #B09A9A;
+            color: #9AABB8;
         }
 
         .game-over-overlay {
@@ -664,7 +664,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(107, 91, 91, 0.9);
+            background: rgba(74, 85, 104, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -711,7 +711,7 @@
             padding: 8px 20px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
+            background: linear-gradient(135deg, #5B9BD5 0%, #7BAFD4 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -749,7 +749,7 @@
         }
 
         .leaderboard-content h3 {
-            color: #6B5B5B;
+            color: #4A5568;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -762,7 +762,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 15px;
-            background: #FFF5F5;
+            background: #EDF5FC;
             border-radius: 10px;
             margin-bottom: 8px;
         }
@@ -1091,11 +1091,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } }
+                        legend: { labels: { color: '#4A5568', font: { family: 'Nunito' } } }
                     },
                     scales: {
-                        y: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
-                        x: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
+                        y: { ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } },
+                        x: { ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } }
                     }
                 }
             });
@@ -1161,7 +1161,7 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { color: '#6B5B5B', padding: 8, font: { family: 'Nunito', size: 11 } }
+                            labels: { color: '#4A5568', padding: 8, font: { family: 'Nunito', size: 11 } }
                         }
                     }
                 }
@@ -1188,10 +1188,10 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#4A5568', font: { family: 'Nunito' } } } },
                     scales: {
-                        y: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
-                        x: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
+                        y: { stacked: true, ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } },
+                        x: { stacked: true, ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } }
                     }
                 }
             });
@@ -1218,8 +1218,8 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
-                        y: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
+                        x: { ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } },
+                        y: { ticks: { color: '#7A8B9A' }, grid: { color: 'rgba(100, 150, 200, 0.1)' } }
                     }
                 }
             });
@@ -1358,7 +1358,7 @@
                     </div>
                 </div>
             `).join('') + `
-                <div class="goal-item" style="background: linear-gradient(135deg, #FFE4E6 0%, #F5C6CB 100%);">
+                <div class="goal-item" style="background: linear-gradient(135deg, #D6E9F8 0%, #B8D4E8 100%);">
                     <div class="goal-info">
                         <h4>TOTAL GOAL</h4>
                         <p>총 저축 목표</p>
@@ -1418,19 +1418,19 @@
         images.dead.src = '01_pictures/억울.jpg';     // 게임오버: 억울한 표정
         images.idle.src = '01_pictures/궁금.jpg';     // 대기: 궁금한 표정
 
-        // 페이즈 설정 (10단계, 공중 적 포함)
+        // 페이즈 설정 (10단계, 공중 적 포함) - 겨울 테마 색상
         // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
-            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
-            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
-            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFE0E5', bgColor2: '#FFC8D0', groundColor: '#E8A8B0' },
-            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E0A0A0' },
-            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFD0D0', bgColor2: '#FFB0B0', groundColor: '#D89090' },
-            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#FFC5C5', bgColor2: '#FFA0A0', groundColor: '#D08080' },
-            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#FFB5B5', bgColor2: '#FF9090', groundColor: '#C87070' },
-            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#FFA5A5', bgColor2: '#FF7070', groundColor: '#B06060' },
-            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#FF9090', bgColor2: '#FF5050', groundColor: '#904040' }
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#EDF5FC', bgColor2: '#D6E9F8', groundColor: '#B8D4E8' },
+            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#E8F4FC', bgColor2: '#D0E8F5', groundColor: '#A8CCE0' },
+            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#E0EEF8', bgColor2: '#C8E0F0', groundColor: '#98C4D8' },
+            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#D8E8F5', bgColor2: '#C0D8E8', groundColor: '#88B8D0' },
+            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#D0E4F2', bgColor2: '#B0D0E5', groundColor: '#78A8C0' },
+            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#C8DEF0', bgColor2: '#A0C8DD', groundColor: '#6898B0' },
+            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#C0D8E8', bgColor2: '#90BCD0', groundColor: '#5888A0' },
+            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#B8D0E0', bgColor2: '#80B0C8', groundColor: '#487890' },
+            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#A8C8D8', bgColor2: '#70A0B8', groundColor: '#386880' },
+            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#98C0D0', bgColor2: '#6090A8', groundColor: '#285870' }
         ];
 
         // 게임 상태
@@ -1554,7 +1554,7 @@
             } else {
                 gameStats.style.background = '';
                 gameStats.style.animation = '';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%)';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #5B9BD5 0%, #7BAFD4 100%)';
                 phaseIndicator.textContent = phases[currentPhase].name;
             }
         }
@@ -1793,7 +1793,7 @@
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
-            ctx.strokeStyle = '#E8929C';
+            ctx.strokeStyle = '#5B9BD5';
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
             ctx.moveTo(0, groundY);
@@ -1989,7 +1989,7 @@
 
             document.getElementById('gameCoins').textContent = 0;
             document.getElementById('phaseIndicator').textContent = phases[0].name;
-            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%)';
+            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #5B9BD5 0%, #7BAFD4 100%)';
             document.querySelector('.game-stats').style.background = '';
             document.querySelector('.game-stats').style.animation = '';
             document.getElementById('playerName').value = '';
