@@ -59,7 +59,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background: linear-gradient(90deg, #E8B4B8, #EED6D3, #A49393);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -101,7 +101,7 @@
         }
 
         .month-btn.active {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            background: #E8B4B8;
             color: #fff;
         }
 
@@ -123,7 +123,7 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #ff9a9e, #fecfef, #a18cd1, #fbc2eb);
+            background: linear-gradient(90deg, #E8B4B8, #EED6D3);
         }
 
         .info-section h2 {
@@ -206,10 +206,10 @@
             height: 4px;
         }
 
-        .card.income::after { background: linear-gradient(90deg, #56ab2f, #a8e063); }
-        .card.expense::after { background: linear-gradient(90deg, #ff6b6b, #feca57); }
-        .card.balance::after { background: linear-gradient(90deg, #667eea, #764ba2); }
-        .card.savings::after { background: linear-gradient(90deg, #f093fb, #f5576c); }
+        .card.income::after { background: #A8D5BA; }
+        .card.expense::after { background: #E8B4B8; }
+        .card.balance::after { background: #B8C5D6; }
+        .card.savings::after { background: #D4C5E2; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -232,10 +232,10 @@
             font-size: 24px;
         }
 
-        .card-icon.income { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
-        .card-icon.expense { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
-        .card-icon.balance { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
-        .card-icon.savings { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+        .card-icon.income { background: #A8D5BA; }
+        .card-icon.expense { background: #EED6D3; }
+        .card-icon.balance { background: #B8C5D6; }
+        .card-icon.savings { background: #D4C5E2; }
 
         .card h3 {
             color: #8b7355;
@@ -249,9 +249,9 @@
             margin-top: 5px;
         }
 
-        .card .amount.positive { color: #56ab2f; }
-        .card .amount.negative { color: #ff6b6b; }
-        .card .amount.neutral { color: #667eea; }
+        .card .amount.positive { color: #6B9B7A; }
+        .card .amount.negative { color: #C97B84; }
+        .card .amount.neutral { color: #7B8FA1; }
 
         .card .sub-text {
             font-size: 0.8rem;
@@ -329,11 +329,11 @@
             flex-shrink: 0;
         }
 
-        .insight-icon.good { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
-        .insight-icon.warning { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
-        .insight-icon.info { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
-        .insight-icon.tip { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
-        .insight-icon.cat { background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%); }
+        .insight-icon.good { background: #A8D5BA; }
+        .insight-icon.warning { background: #EED6D3; }
+        .insight-icon.info { background: #B8C5D6; }
+        .insight-icon.tip { background: #D4C5E2; }
+        .insight-icon.cat { background: #F5E6CC; }
 
         .insight-content h4 {
             font-size: 0.95rem;
@@ -395,16 +395,17 @@
             font-weight: 600;
         }
 
-        .category-badge.housing { background: #ffe8e8; color: #d63031; }
-        .category-badge.utilities { background: #e8f4ff; color: #0984e3; }
-        .category-badge.insurance { background: #f3e8ff; color: #6c5ce7; }
-        .category-badge.food { background: #e8ffe8; color: #00b894; }
-        .category-badge.transport { background: #fff8e8; color: #e17055; }
-        .category-badge.giving { background: #ffe8f3; color: #e84393; }
-        .category-badge.savings { background: #e8ffff; color: #00cec9; }
-        .category-badge.pet { background: #fff0e8; color: #f39c12; }
-        .category-badge.entertainment { background: #f8e8ff; color: #9b59b6; }
-        .category-badge.other { background: #f0f0f0; color: #636e72; }
+        /* Consistent pastel color palette for categories */
+        .category-badge.housing { background: #F5D6D6; color: #8B6B6B; }
+        .category-badge.utilities { background: #D6E5F5; color: #6B7B8B; }
+        .category-badge.insurance { background: #E5D6F5; color: #7B6B8B; }
+        .category-badge.food { background: #D6F5E0; color: #6B8B75; }
+        .category-badge.transport { background: #F5ECD6; color: #8B7B6B; }
+        .category-badge.giving { background: #F5D6E8; color: #8B6B7B; }
+        .category-badge.savings { background: #D6F5F5; color: #6B8B8B; }
+        .category-badge.pet { background: #F5E6CC; color: #8B7A5E; }
+        .category-badge.entertainment { background: #E8D6F5; color: #7B6B8B; }
+        .category-badge.other { background: #E8E8E8; color: #6B6B6B; }
 
         .progress-bar {
             height: 8px;
@@ -417,7 +418,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #ff9a9e, #fecfef);
+            background: #E8B4B8;
         }
 
         /* Savings Goals */
@@ -463,7 +464,7 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #f093fb;
+            color: #A49393;
         }
 
         /* Footer Cat */
@@ -703,7 +704,6 @@
         };
 
         const savingsGoals = [
-            { name: "Korean Nurse Cert", nameKo: "한국 간호사", target: "15만원", targetNum: 1500 },
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
             { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$2,600", targetNum: 2600 },
             { name: "Car Purchase", nameKo: "차", target: "$26,000", targetNum: 26000 }
@@ -770,16 +770,16 @@
                     datasets: [{
                         label: 'Income',
                         data: incomeData,
-                        borderColor: '#56ab2f',
-                        backgroundColor: 'rgba(86, 171, 47, 0.1)',
+                        borderColor: '#6B9B7A',
+                        backgroundColor: 'rgba(168, 213, 186, 0.2)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
                     }, {
                         label: 'Expenses',
                         data: expenseData,
-                        borderColor: '#ff6b6b',
-                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        borderColor: '#C97B84',
+                        backgroundColor: 'rgba(232, 180, 184, 0.2)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
@@ -804,24 +804,41 @@
 
             const categories = [];
             const values = [];
-            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#10ac84', '#636e72'];
+            // Consistent pastel colors: Housing, Tithing/Giving, Utilities, Insurance, Pet, Food, Entertainment, Transport, Other
+            const categoryColors = {
+                'Housing': '#E8B4B8',
+                'Tithing': '#F5D6E8',
+                'Utilities': '#B8C5D6',
+                'Insurance': '#D4C5E2',
+                'Pet (Namong)': '#F5E6CC',
+                'Grocery': '#A8D5BA',
+                'Entertainment': '#E8D6F5',
+                'Dining': '#C5E8D6',
+                'Gas': '#F5ECD6',
+                'Membership': '#E8E8E8',
+                'Shopping': '#E0E0E0',
+                'Travel': '#D6E5F5',
+                'Giving': '#F5D6E8',
+                'Other': '#E8E8E8'
+            };
+            const colors = [];
 
             if (monthData.expenses) {
                 const exp = monthData.expenses;
-                if (exp.housing?.sum) { categories.push('Housing'); values.push(exp.housing.sum); }
-                if (exp.tithing?.sum) { categories.push('Tithing'); values.push(exp.tithing.sum); }
-                if (exp.utilities?.sum) { categories.push('Utilities'); values.push(exp.utilities.sum); }
-                if (exp.insurance?.sum) { categories.push('Insurance'); values.push(exp.insurance.sum); }
-                if (exp.pet?.sum) { categories.push('Pet (Namong)'); values.push(exp.pet.sum); }
-                if (exp.grocery?.sum) { categories.push('Grocery'); values.push(exp.grocery.sum); }
-                if (exp.entertainment?.sum) { categories.push('Entertainment'); values.push(exp.entertainment.sum); }
-                if (exp.dining?.sum) { categories.push('Dining'); values.push(exp.dining.sum); }
-                if (exp.gas?.sum) { categories.push('Gas'); values.push(exp.gas.sum); }
-                if (exp.membership?.sum) { categories.push('Membership'); values.push(exp.membership.sum); }
-                if (exp.shopping?.sum) { categories.push('Shopping'); values.push(exp.shopping.sum); }
-                if (exp.travel?.sum) { categories.push('Travel'); values.push(exp.travel.sum); }
-                if (exp.giving?.sum) { categories.push('Giving'); values.push(exp.giving.sum); }
-                if (exp.other?.sum) { categories.push('Other'); values.push(exp.other.sum); }
+                if (exp.housing?.sum) { categories.push('Housing'); values.push(exp.housing.sum); colors.push(categoryColors['Housing']); }
+                if (exp.tithing?.sum) { categories.push('Tithing'); values.push(exp.tithing.sum); colors.push(categoryColors['Tithing']); }
+                if (exp.utilities?.sum) { categories.push('Utilities'); values.push(exp.utilities.sum); colors.push(categoryColors['Utilities']); }
+                if (exp.insurance?.sum) { categories.push('Insurance'); values.push(exp.insurance.sum); colors.push(categoryColors['Insurance']); }
+                if (exp.pet?.sum) { categories.push('Pet (Namong)'); values.push(exp.pet.sum); colors.push(categoryColors['Pet (Namong)']); }
+                if (exp.grocery?.sum) { categories.push('Grocery'); values.push(exp.grocery.sum); colors.push(categoryColors['Grocery']); }
+                if (exp.entertainment?.sum) { categories.push('Entertainment'); values.push(exp.entertainment.sum); colors.push(categoryColors['Entertainment']); }
+                if (exp.dining?.sum) { categories.push('Dining'); values.push(exp.dining.sum); colors.push(categoryColors['Dining']); }
+                if (exp.gas?.sum) { categories.push('Gas'); values.push(exp.gas.sum); colors.push(categoryColors['Gas']); }
+                if (exp.membership?.sum) { categories.push('Membership'); values.push(exp.membership.sum); colors.push(categoryColors['Membership']); }
+                if (exp.shopping?.sum) { categories.push('Shopping'); values.push(exp.shopping.sum); colors.push(categoryColors['Shopping']); }
+                if (exp.travel?.sum) { categories.push('Travel'); values.push(exp.travel.sum); colors.push(categoryColors['Travel']); }
+                if (exp.giving?.sum) { categories.push('Giving'); values.push(exp.giving.sum); colors.push(categoryColors['Giving']); }
+                if (exp.other?.sum) { categories.push('Other'); values.push(exp.other.sum); colors.push(categoryColors['Other']); }
             }
 
             if (categoryChart) categoryChart.destroy();
@@ -832,7 +849,7 @@
                     labels: categories,
                     datasets: [{
                         data: values,
-                        backgroundColor: colors.slice(0, categories.length),
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 },
@@ -860,10 +877,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#ff6b6b' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#48dbfb' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#ff9ff3' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#feca57' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E8B4B8' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#B8C5D6' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#D4C5E2' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#E8E8E8' }
                     ]
                 },
                 options: {
@@ -890,7 +907,7 @@
                     datasets: [{
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#ff9ff3', '#48dbfb', '#54a0ff', '#5f27cd']
+                        backgroundColor: ['#D4C5E2', '#B8C5D6', '#A8D5BA']
                     }]
                 },
                 options: {
@@ -1039,13 +1056,13 @@
                     </div>
                 </div>
             `).join('') + `
-                <div class="goal-item" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                <div class="goal-item" style="background: #EED6D3;">
                     <div class="goal-info">
                         <h4>TOTAL GOAL</h4>
                         <p>총 저축 목표</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target">$36,600+</div>
+                        <div class="target">$36,600</div>
                     </div>
                 </div>
             `;
