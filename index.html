@@ -561,15 +561,78 @@
 
         .game-stats {
             display: flex;
-            gap: 20px;
-            font-size: 0.9rem;
+            gap: 12px;
+            font-size: 0.85rem;
             color: #9B8585;
+            flex-wrap: wrap;
         }
 
         .game-stats span {
             background: #FFE4E6;
             padding: 5px 12px;
             border-radius: 15px;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .skill-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #E8929C 100%);
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .skill-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .skill-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .skill-charges {
+            font-size: 1.2rem;
+        }
+
+        .phase-indicator {
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .leaderboard-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 15px;
+            background: #F5C6CB;
+            color: #6B5B5B;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .leaderboard-btn:hover {
+            background: #E8929C;
+            color: #fff;
         }
 
         .game-canvas-container {
@@ -582,7 +645,7 @@
         .game-canvas {
             display: block;
             width: 100%;
-            height: 150px;
+            height: 220px;
             cursor: pointer;
         }
 
@@ -598,7 +661,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(107, 91, 91, 0.7);
+            background: rgba(107, 91, 91, 0.85);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -613,7 +676,30 @@
         }
 
         .game-over-overlay p {
+            margin-bottom: 10px;
+        }
+
+        .game-over-overlay img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
             margin-bottom: 15px;
+        }
+
+        .name-input-container {
+            margin: 15px 0;
+        }
+
+        .name-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            width: 200px;
+            text-align: center;
         }
 
         .restart-btn {
@@ -626,10 +712,68 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s;
+            margin: 5px;
         }
 
         .restart-btn:hover {
             transform: scale(1.05);
+        }
+
+        .leaderboard-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .leaderboard-content {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .leaderboard-content h3 {
+            color: #6B5B5B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #FFF5F5;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .leaderboard-list li:first-child {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #fff;
+        }
+
+        .close-modal {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        @keyframes crazyGlow {
+            0%, 100% { box-shadow: 0 0 20px #FF6B6B; }
+            50% { box-shadow: 0 0 40px #FF0000; }
         }
     </style>
 </head>
@@ -654,18 +798,40 @@
                 </div>
                 <div class="game-stats">
                     <span>💰 <span id="gameCoins">0</span></span>
+                    <span id="phaseIndicator" class="phase-indicator">Phase 1</span>
                     <span>🏆 <span id="gameHighScore">0</span></span>
                 </div>
+            </div>
+            <div class="game-controls">
+                <button id="skillBtn" class="skill-btn" onclick="activateCrazyMode()">🔥 미친냥 모드</button>
+                <span class="skill-charges" id="skillCharges">🐾🐾🐾</span>
+                <button class="leaderboard-btn" onclick="showLeaderboard()">🏅 리더보드</button>
             </div>
             <div class="game-canvas-container">
                 <canvas id="gameCanvas" class="game-canvas"></canvas>
                 <div id="gameOverlay" class="game-over-overlay" style="display: none;">
+                    <img id="gameOverCat" src="01_pictures/억울.jpg" alt="Game Over">
                     <h3>Game Over!</h3>
                     <p>코인: <span id="finalScore">0</span>개 💰</p>
-                    <button class="restart-btn" onclick="restartGame()">다시 하기</button>
+                    <div class="name-input-container">
+                        <input type="text" id="playerName" class="name-input" placeholder="이름을 입력하세요" maxlength="10">
+                    </div>
+                    <div>
+                        <button class="restart-btn" onclick="saveAndRestart()">저장 & 다시하기</button>
+                        <button class="restart-btn" onclick="restartGame()">그냥 다시하기</button>
+                    </div>
                 </div>
             </div>
-            <p class="game-instructions">스페이스바 또는 화면을 클릭해서 점프! 장애물을 피하고 코인을 모으세요 🐱</p>
+            <p class="game-instructions">Space/클릭: 점프 | F키: 미친냥 모드 (무적 3초) | 장애물을 피하고 코인을 모으세요! 🐱</p>
+        </div>
+
+        <!-- Leaderboard Modal -->
+        <div id="leaderboardModal" class="leaderboard-modal" style="display: none;">
+            <div class="leaderboard-content">
+                <h3>🏆 리더보드 TOP 5</h3>
+                <ul id="leaderboardList" class="leaderboard-list"></ul>
+                <button class="restart-btn close-modal" onclick="hideLeaderboard()">닫기</button>
+            </div>
         </div>
 
         <div class="month-selector">
@@ -1226,17 +1392,34 @@
         init();
 
         // ============================================
-        // 나몽의 저축 점프 게임
+        // 나몽의 저축 점프 게임 v2.0
         // ============================================
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const overlay = document.getElementById('gameOverlay');
 
         // 이미지 로드
-        const namongImg = new Image();
-        namongImg.src = '01_pictures/놀람.jpg';
-        const namongRunImg = new Image();
-        namongRunImg.src = '01_pictures/느긋.jpg';
+        const images = {
+            run: new Image(),
+            jump: new Image(),
+            crazy: new Image(),
+            dead: new Image(),
+            idle: new Image()
+        };
+        images.run.src = '01_pictures/느긋.jpg';
+        images.jump.src = '01_pictures/놀람.jpg';
+        images.crazy.src = '01_pictures/화남.jpg';
+        images.dead.src = '01_pictures/억울.jpg';
+        images.idle.src = '01_pictures/멋짐.jpg';
+
+        // 페이즈 설정
+        const phases = [
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 3, emojis: ['💸', '🛒'], bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
+            { name: 'Phase 2: 소비의 유혹', time: 20, speed: 3.5, emojis: ['💳', '🍔', '☕', '🛒'], bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
+            { name: 'Phase 3: 고정지출', time: 40, speed: 4, emojis: ['🏠', '💡', '⛽', '📱'], bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
+            { name: 'Phase 4: 지출폭풍', time: 60, speed: 5, emojis: ['📱', '💻', '🎮', '✈️', '💳'], bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E8A0A0' },
+            { name: 'Phase 5: 인플레이션', time: 90, speed: 6, emojis: ['📈', '💀', '🔥', '😈', '💣'], bgColor1: '#FFC0C0', bgColor2: '#FF9090', groundColor: '#D08080' }
+        ];
 
         // 게임 상태
         let gameRunning = false;
@@ -1245,35 +1428,47 @@
         let highScore = parseInt(localStorage.getItem('namongHighScore')) || 0;
         let gameSpeed = 3;
         let frameCount = 0;
+        let gameTime = 0;
+        let currentPhase = 0;
 
-        // 나몽 (플레이어)
+        // 미친냥 모드
+        let crazyMode = false;
+        let crazyModeTimer = 0;
+        let crazyCharges = 3;
+        const CRAZY_DURATION = 180; // 3초 (60fps * 3)
+
+        // 리더보드
+        let leaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
+
+        // 나몽 (플레이어) - 크기 증가
         const namong = {
-            x: 50,
+            x: 60,
             y: 0,
-            width: 50,
-            height: 50,
+            width: 65,
+            height: 65,
             velocityY: 0,
             jumping: false,
             grounded: true
         };
 
+        // 히트박스 비율 (60% 크기로 충돌 판정)
+        const HITBOX_RATIO = 0.6;
+
         // 장애물과 코인 배열
         let obstacles = [];
         let coinItems = [];
 
-        // 장애물 이모지들 (지출 항목)
-        const obstacleEmojis = ['💸', '🏠', '🛒', '⛽', '📱', '💳'];
-
         // 물리 상수
-        const gravity = 0.5;
-        const jumpForce = -10;
-        const groundY = 100;
+        const gravity = 0.6;
+        const jumpForce = -13;
+        let groundY = 170;
 
         // 캔버스 크기 설정
         function resizeCanvas() {
             const container = canvas.parentElement;
             canvas.width = container.clientWidth;
-            canvas.height = 150;
+            canvas.height = 220;
+            groundY = 170;
             namong.y = groundY - namong.height;
         }
 
@@ -1282,6 +1477,7 @@
 
         // 하이스코어 표시
         document.getElementById('gameHighScore').textContent = highScore;
+        updateSkillDisplay();
 
         // 점프 함수
         function jump() {
@@ -1298,11 +1494,46 @@
             }
         }
 
+        // 미친냥 모드 활성화
+        function activateCrazyMode() {
+            if (crazyCharges > 0 && !crazyMode && gameRunning) {
+                crazyMode = true;
+                crazyModeTimer = CRAZY_DURATION;
+                crazyCharges--;
+                updateSkillDisplay();
+            }
+        }
+
+        // 스킬 표시 업데이트
+        function updateSkillDisplay() {
+            const charges = '🐾'.repeat(crazyCharges) + '⚫'.repeat(3 - crazyCharges);
+            document.getElementById('skillCharges').textContent = charges;
+            document.getElementById('skillBtn').disabled = crazyCharges <= 0 || !gameRunning;
+        }
+
+        // 페이즈 업데이트
+        function updatePhase() {
+            for (let i = phases.length - 1; i >= 0; i--) {
+                if (gameTime >= phases[i].time) {
+                    if (currentPhase !== i) {
+                        currentPhase = i;
+                        gameSpeed = phases[i].speed;
+                        document.getElementById('phaseIndicator').textContent = phases[i].name;
+                    }
+                    break;
+                }
+            }
+        }
+
         // 이벤트 리스너
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
                 e.preventDefault();
                 jump();
+            }
+            if (e.code === 'KeyF') {
+                e.preventDefault();
+                activateCrazyMode();
             }
         });
 
@@ -1314,12 +1545,13 @@
 
         // 장애물 생성
         function spawnObstacle() {
+            const phase = phases[currentPhase];
             const obstacle = {
                 x: canvas.width,
-                y: groundY - 30,
-                width: 30,
-                height: 30,
-                emoji: obstacleEmojis[Math.floor(Math.random() * obstacleEmojis.length)]
+                y: groundY - 35,
+                width: 35,
+                height: 35,
+                emoji: phase.emojis[Math.floor(Math.random() * phase.emojis.length)]
             };
             obstacles.push(obstacle);
         }
@@ -1328,29 +1560,55 @@
         function spawnCoin() {
             const coin = {
                 x: canvas.width,
-                y: groundY - 60 - Math.random() * 40,
-                width: 25,
-                height: 25,
+                y: groundY - 70 - Math.random() * 60,
+                width: 30,
+                height: 30,
                 collected: false
             };
             coinItems.push(coin);
         }
 
-        // 충돌 감지
+        // 축소된 히트박스로 충돌 감지
         function checkCollision(rect1, rect2) {
-            return rect1.x < rect2.x + rect2.width &&
-                   rect1.x + rect1.width > rect2.x &&
-                   rect1.y < rect2.y + rect2.height &&
-                   rect1.y + rect1.height > rect2.y;
+            // 나몽의 히트박스를 중앙 기준으로 축소
+            const r1 = {
+                x: rect1.x + rect1.width * (1 - HITBOX_RATIO) / 2,
+                y: rect1.y + rect1.height * (1 - HITBOX_RATIO) / 2,
+                width: rect1.width * HITBOX_RATIO,
+                height: rect1.height * HITBOX_RATIO
+            };
+            // 장애물도 약간 축소
+            const r2 = {
+                x: rect2.x + rect2.width * 0.15,
+                y: rect2.y + rect2.height * 0.15,
+                width: rect2.width * 0.7,
+                height: rect2.height * 0.7
+            };
+            return r1.x < r2.x + r2.width &&
+                   r1.x + r1.width > r2.x &&
+                   r1.y < r2.y + r2.height &&
+                   r1.y + r1.height > r2.y;
         }
 
         // 게임 업데이트
         function update() {
             frameCount++;
+            if (frameCount % 60 === 0) gameTime++;
 
-            // 속도 증가
-            if (frameCount % 500 === 0) {
-                gameSpeed += 0.3;
+            // 페이즈 업데이트
+            updatePhase();
+
+            // 미친냥 모드 타이머
+            if (crazyMode) {
+                crazyModeTimer--;
+                if (crazyModeTimer <= 0) {
+                    crazyMode = false;
+                }
+            }
+
+            // 속도 점진적 증가
+            if (frameCount % 300 === 0 && gameSpeed < 8) {
+                gameSpeed += 0.2;
             }
 
             // 나몽 물리
@@ -1365,23 +1623,32 @@
                 namong.jumping = false;
             }
 
-            // 장애물 생성
-            if (frameCount % Math.floor(100 / (gameSpeed / 3)) === 0) {
-                if (Math.random() > 0.3) spawnObstacle();
+            // 장애물 생성 (페이즈에 따라 빈도 조절)
+            const spawnRate = Math.max(60, 120 - currentPhase * 15);
+            if (frameCount % spawnRate === 0) {
+                if (Math.random() > 0.25) spawnObstacle();
             }
 
             // 코인 생성
-            if (frameCount % Math.floor(80 / (gameSpeed / 3)) === 0) {
-                if (Math.random() > 0.5) spawnCoin();
+            if (frameCount % 70 === 0) {
+                if (Math.random() > 0.4) spawnCoin();
             }
 
             // 장애물 이동 및 충돌 체크
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 obstacles[i].x -= gameSpeed;
 
-                if (checkCollision(namong, obstacles[i])) {
+                if (!crazyMode && checkCollision(namong, obstacles[i])) {
                     gameOver();
                     return;
+                }
+
+                // 미친냥 모드에서 적 파괴시 보너스
+                if (crazyMode && checkCollision(namong, obstacles[i])) {
+                    obstacles.splice(i, 1);
+                    coins += 2;
+                    document.getElementById('gameCoins').textContent = coins;
+                    continue;
                 }
 
                 if (obstacles[i].x + obstacles[i].width < 0) {
@@ -1409,15 +1676,17 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            const phase = phases[currentPhase];
+
             // 배경 그라디언트
             const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            gradient.addColorStop(0, '#FFF5F5');
-            gradient.addColorStop(1, '#FFE4E6');
+            gradient.addColorStop(0, phase.bgColor1);
+            gradient.addColorStop(1, phase.bgColor2);
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // 바닥
-            ctx.fillStyle = '#F5C6CB';
+            ctx.fillStyle = phase.groundColor;
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
@@ -1429,10 +1698,26 @@
             ctx.stroke();
             ctx.setLineDash([]);
 
+            // 나몽 이미지 선택
+            let img;
+            if (crazyMode) {
+                img = images.crazy;
+            } else if (namong.jumping) {
+                img = images.jump;
+            } else {
+                img = images.run;
+            }
+
             // 나몽 그리기
-            const img = namong.jumping ? namongImg : namongRunImg;
             if (img.complete) {
                 ctx.save();
+
+                // 미친냥 모드 글로우 효과
+                if (crazyMode) {
+                    ctx.shadowColor = '#FF0000';
+                    ctx.shadowBlur = 20 + Math.sin(frameCount * 0.3) * 10;
+                }
+
                 ctx.beginPath();
                 ctx.arc(namong.x + namong.width/2, namong.y + namong.height/2, namong.width/2, 0, Math.PI * 2);
                 ctx.closePath();
@@ -1441,8 +1726,8 @@
                 ctx.restore();
 
                 // 나몽 테두리
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 3;
+                ctx.strokeStyle = crazyMode ? '#FF0000' : '#fff';
+                ctx.lineWidth = crazyMode ? 4 : 3;
                 ctx.beginPath();
                 ctx.arc(namong.x + namong.width/2, namong.y + namong.height/2, namong.width/2, 0, Math.PI * 2);
                 ctx.stroke();
@@ -1450,7 +1735,7 @@
 
             // 장애물 그리기
             obstacles.forEach(obs => {
-                ctx.font = '28px serif';
+                ctx.font = '32px serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(obs.emoji, obs.x + obs.width/2, obs.y + obs.height/2);
@@ -1459,7 +1744,7 @@
             // 코인 그리기
             coinItems.forEach(coin => {
                 if (!coin.collected) {
-                    ctx.font = '22px serif';
+                    ctx.font = '26px serif';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText('💰', coin.x + coin.width/2, coin.y + coin.height/2);
@@ -1468,12 +1753,34 @@
 
             // 시작 안내 (게임 시작 전)
             if (!gameStarted) {
-                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                ctx.fillStyle = 'rgba(0,0,0,0.4)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // 대기 이미지
+                if (images.idle.complete) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(canvas.width/2, canvas.height/2 - 20, 40, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(images.idle, canvas.width/2 - 40, canvas.height/2 - 60, 80, 80);
+                    ctx.restore();
+                }
+
                 ctx.fillStyle = '#fff';
                 ctx.font = 'bold 16px Nunito, sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('클릭 또는 스페이스바로 시작!', canvas.width/2, canvas.height/2);
+                ctx.fillText('클릭 또는 스페이스바로 시작!', canvas.width/2, canvas.height/2 + 50);
+            }
+
+            // 미친냥 모드 표시
+            if (crazyMode) {
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#FF0000';
+                ctx.font = 'bold 20px Nunito, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🔥 미친냥 모드! 🔥', canvas.width/2, 30);
             }
         }
 
@@ -1488,26 +1795,71 @@
             }
 
             document.getElementById('finalScore').textContent = coins;
+            document.getElementById('gameOverCat').src = '01_pictures/억울.jpg';
             overlay.style.display = 'flex';
+            updateSkillDisplay();
+        }
+
+        // 저장 후 재시작
+        function saveAndRestart() {
+            const name = document.getElementById('playerName').value.trim() || '익명';
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+
+            leaderboard.push({ name, score: coins, date: dateStr });
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 5);
+            localStorage.setItem('namongLeaderboard', JSON.stringify(leaderboard));
+
+            document.getElementById('playerName').value = '';
+            restartGame();
         }
 
         // 게임 재시작
         function restartGame() {
             coins = 0;
-            gameSpeed = 3;
+            gameSpeed = phases[0].speed;
             frameCount = 0;
+            gameTime = 0;
+            currentPhase = 0;
             obstacles = [];
             coinItems = [];
+            crazyMode = false;
+            crazyModeTimer = 0;
+            crazyCharges = 3;
             namong.y = groundY - namong.height;
             namong.velocityY = 0;
             namong.grounded = true;
             namong.jumping = false;
 
             document.getElementById('gameCoins').textContent = 0;
+            document.getElementById('phaseIndicator').textContent = phases[0].name;
+            document.getElementById('playerName').value = '';
             overlay.style.display = 'none';
+            updateSkillDisplay();
 
             gameRunning = true;
+            gameStarted = true;
             gameLoop();
+        }
+
+        // 리더보드 표시
+        function showLeaderboard() {
+            const list = document.getElementById('leaderboardList');
+            list.innerHTML = leaderboard.length === 0
+                ? '<li style="text-align:center;">아직 기록이 없습니다</li>'
+                : leaderboard.map((r, i) => `
+                    <li>
+                        <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
+                        <span>${r.score}개 (${r.date})</span>
+                    </li>
+                `).join('');
+            document.getElementById('leaderboardModal').style.display = 'flex';
+        }
+
+        // 리더보드 숨기기
+        function hideLeaderboard() {
+            document.getElementById('leaderboardModal').style.display = 'none';
         }
 
         // 게임 루프
