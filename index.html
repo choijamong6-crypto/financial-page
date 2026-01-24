@@ -781,12 +781,12 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <img src="01_pictures/놀람.jpg" alt="Namong" class="header-cat">
+                <img src="01_pictures/놀람.jpg" alt="Namong" class="header-cat" id="headerCatLeft">
                 <div>
                     <h1>Our Budget Dashboard</h1>
                     <p>Chamsae & Hani's Money Tracker</p>
                 </div>
-                <img src="01_pictures/오손도손.jpg" alt="Family" class="header-cat">
+                <img src="01_pictures/궁금.jpg" alt="Family" class="header-cat" id="headerCatRight">
             </div>
         </header>
 
@@ -822,7 +822,7 @@
                     </div>
                 </div>
             </div>
-            <p class="game-instructions">Space/클릭: 점프 | F키: 미친냥 모드 (무적 3초) | 장애물을 피하고 코인을 모으세요! 🐱</p>
+            <p class="game-instructions">Space/클릭: 점프 | F키: 미친냥 모드 (무적 3초) | 💰30개마다 🐾1개 충전! 장애물을 피하고 코인을 모으세요! 🐱</p>
         </div>
 
         <!-- Leaderboard Modal -->
@@ -1398,7 +1398,7 @@
         const ctx = canvas.getContext('2d');
         const overlay = document.getElementById('gameOverlay');
 
-        // 이미지 로드
+        // 이미지 로드 (모두 고양이 사진으로 변경)
         const images = {
             run: new Image(),
             jump: new Image(),
@@ -1406,19 +1406,19 @@
             dead: new Image(),
             idle: new Image()
         };
-        images.run.src = '01_pictures/느긋.jpg';
-        images.jump.src = '01_pictures/놀람.jpg';
-        images.crazy.src = '01_pictures/화남.jpg';
-        images.dead.src = '01_pictures/억울.jpg';
-        images.idle.src = '01_pictures/멋짐.jpg';
+        images.run.src = '01_pictures/애기.jpg';      // 달리기: 귀여운 애기 나몽
+        images.jump.src = '01_pictures/놀람.jpg';     // 점프: 놀란 표정
+        images.crazy.src = '01_pictures/화남.jpg';    // 미친냥 모드: 화난 표정
+        images.dead.src = '01_pictures/억울.jpg';     // 게임오버: 억울한 표정
+        images.idle.src = '01_pictures/궁금.jpg';     // 대기: 궁금한 표정
 
-        // 페이즈 설정
+        // 페이즈 설정 (난이도 상향: 초기 속도 증가)
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 3, emojis: ['💸', '🛒'], bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
-            { name: 'Phase 2: 소비의 유혹', time: 20, speed: 3.5, emojis: ['💳', '🍔', '☕', '🛒'], bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
-            { name: 'Phase 3: 고정지출', time: 40, speed: 4, emojis: ['🏠', '💡', '⛽', '📱'], bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
-            { name: 'Phase 4: 지출폭풍', time: 60, speed: 5, emojis: ['📱', '💻', '🎮', '✈️', '💳'], bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E8A0A0' },
-            { name: 'Phase 5: 인플레이션', time: 90, speed: 6, emojis: ['📈', '💀', '🔥', '😈', '💣'], bgColor1: '#FFC0C0', bgColor2: '#FF9090', groundColor: '#D08080' }
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
+            { name: 'Phase 2: 소비의 유혹', time: 15, speed: 5.5, emojis: ['💳', '🍔', '☕', '🛒'], bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
+            { name: 'Phase 3: 고정지출', time: 30, speed: 6.5, emojis: ['🏠', '💡', '⛽', '📱'], bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
+            { name: 'Phase 4: 지출폭풍', time: 50, speed: 7.5, emojis: ['📱', '💻', '🎮', '✈️', '💳'], bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E8A0A0' },
+            { name: 'Phase 5: 인플레이션', time: 75, speed: 9, emojis: ['📈', '💀', '🔥', '😈', '💣'], bgColor1: '#FFC0C0', bgColor2: '#FF9090', groundColor: '#D08080' }
         ];
 
         // 게임 상태
@@ -1431,11 +1431,13 @@
         let gameTime = 0;
         let currentPhase = 0;
 
-        // 미친냥 모드
+        // 미친냥 모드 (골드 30개당 1회 적립)
         let crazyMode = false;
         let crazyModeTimer = 0;
-        let crazyCharges = 3;
+        let crazyCharges = 0;  // 처음엔 0개로 시작
+        let coinsForNextCharge = 30;  // 다음 충전까지 필요한 코인
         const CRAZY_DURATION = 180; // 3초 (60fps * 3)
+        const COINS_PER_CHARGE = 30;  // 충전당 필요 코인
 
         // 리더보드
         let leaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
@@ -1506,9 +1508,34 @@
 
         // 스킬 표시 업데이트
         function updateSkillDisplay() {
-            const charges = '🐾'.repeat(crazyCharges) + '⚫'.repeat(3 - crazyCharges);
-            document.getElementById('skillCharges').textContent = charges;
+            const maxDisplay = Math.min(crazyCharges, 5);  // 최대 5개까지 표시
+            const charges = '🐾'.repeat(maxDisplay) + (crazyCharges > 5 ? `+${crazyCharges - 5}` : '');
+            document.getElementById('skillCharges').textContent = charges || '⚫';
             document.getElementById('skillBtn').disabled = crazyCharges <= 0 || !gameRunning;
+
+            // 미친냥 모드 상태에 따른 상태창 스타일
+            const gameStats = document.querySelector('.game-stats');
+            const phaseIndicator = document.getElementById('phaseIndicator');
+            if (crazyMode) {
+                gameStats.style.background = 'linear-gradient(135deg, #FF6B6B, #FF0000)';
+                gameStats.style.animation = 'crazyGlow 0.5s ease-in-out infinite';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #FF0000, #FF6B6B)';
+                phaseIndicator.textContent = '🔥 미친냥 모드! 🔥';
+            } else {
+                gameStats.style.background = '';
+                gameStats.style.animation = '';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%)';
+                phaseIndicator.textContent = phases[currentPhase].name;
+            }
+        }
+
+        // 코인 수집시 미친냥 충전 체크
+        function checkCrazyCharge() {
+            if (coins >= coinsForNextCharge) {
+                crazyCharges++;
+                coinsForNextCharge += COINS_PER_CHARGE;
+                updateSkillDisplay();
+            }
         }
 
         // 페이즈 업데이트
@@ -1603,6 +1630,7 @@
                 crazyModeTimer--;
                 if (crazyModeTimer <= 0) {
                     crazyMode = false;
+                    updateSkillDisplay();  // 상태창 일반 상태로 복원
                 }
             }
 
@@ -1648,6 +1676,7 @@
                     obstacles.splice(i, 1);
                     coins += 2;
                     document.getElementById('gameCoins').textContent = coins;
+                    checkCrazyCharge();  // 미친냥 충전 체크
                     continue;
                 }
 
@@ -1664,6 +1693,7 @@
                     coinItems[i].collected = true;
                     coins++;
                     document.getElementById('gameCoins').textContent = coins;
+                    checkCrazyCharge();  // 미친냥 충전 체크
                 }
 
                 if (coinItems[i].x + coinItems[i].width < 0) {
@@ -1708,8 +1738,8 @@
                 img = images.run;
             }
 
-            // 나몽 그리기
-            if (img.complete) {
+            // 나몽 그리기 (찌그러짐 방지: object-fit cover 효과 구현)
+            if (img.complete && img.naturalWidth > 0) {
                 ctx.save();
 
                 // 미친냥 모드 글로우 효과
@@ -1718,11 +1748,32 @@
                     ctx.shadowBlur = 20 + Math.sin(frameCount * 0.3) * 10;
                 }
 
+                // 원형 클리핑
                 ctx.beginPath();
                 ctx.arc(namong.x + namong.width/2, namong.y + namong.height/2, namong.width/2, 0, Math.PI * 2);
                 ctx.closePath();
                 ctx.clip();
-                ctx.drawImage(img, namong.x, namong.y, namong.width, namong.height);
+
+                // object-fit: cover 효과 구현 (비율 유지하며 중앙 크롭)
+                const imgRatio = img.naturalWidth / img.naturalHeight;
+                const targetRatio = namong.width / namong.height;
+                let sx, sy, sWidth, sHeight;
+
+                if (imgRatio > targetRatio) {
+                    // 이미지가 더 넓음 - 좌우 크롭
+                    sHeight = img.naturalHeight;
+                    sWidth = sHeight * targetRatio;
+                    sx = (img.naturalWidth - sWidth) / 2;
+                    sy = 0;
+                } else {
+                    // 이미지가 더 높음 - 상하 크롭
+                    sWidth = img.naturalWidth;
+                    sHeight = sWidth / targetRatio;
+                    sx = 0;
+                    sy = (img.naturalHeight - sHeight) / 2;
+                }
+
+                ctx.drawImage(img, sx, sy, sWidth, sHeight, namong.x, namong.y, namong.width, namong.height);
                 ctx.restore();
 
                 // 나몽 테두리
@@ -1756,14 +1807,30 @@
                 ctx.fillStyle = 'rgba(0,0,0,0.4)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 대기 이미지
-                if (images.idle.complete) {
+                // 대기 이미지 (찌그러짐 방지)
+                const idleImg = images.idle;
+                if (idleImg.complete && idleImg.naturalWidth > 0) {
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(canvas.width/2, canvas.height/2 - 20, 40, 0, Math.PI * 2);
                     ctx.closePath();
                     ctx.clip();
-                    ctx.drawImage(images.idle, canvas.width/2 - 40, canvas.height/2 - 60, 80, 80);
+
+                    // object-fit: cover 효과
+                    const imgR = idleImg.naturalWidth / idleImg.naturalHeight;
+                    let sx2, sy2, sw2, sh2;
+                    if (imgR > 1) {
+                        sh2 = idleImg.naturalHeight;
+                        sw2 = sh2;
+                        sx2 = (idleImg.naturalWidth - sw2) / 2;
+                        sy2 = 0;
+                    } else {
+                        sw2 = idleImg.naturalWidth;
+                        sh2 = sw2;
+                        sx2 = 0;
+                        sy2 = (idleImg.naturalHeight - sh2) / 2;
+                    }
+                    ctx.drawImage(idleImg, sx2, sy2, sw2, sh2, canvas.width/2 - 40, canvas.height/2 - 60, 80, 80);
                     ctx.restore();
                 }
 
@@ -1826,7 +1893,8 @@
             coinItems = [];
             crazyMode = false;
             crazyModeTimer = 0;
-            crazyCharges = 3;
+            crazyCharges = 0;  // 처음엔 0개로 시작
+            coinsForNextCharge = COINS_PER_CHARGE;  // 다음 충전까지 30코인
             namong.y = groundY - namong.height;
             namong.velocityY = 0;
             namong.grounded = true;
@@ -1834,6 +1902,9 @@
 
             document.getElementById('gameCoins').textContent = 0;
             document.getElementById('phaseIndicator').textContent = phases[0].name;
+            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%)';
+            document.querySelector('.game-stats').style.background = '';
+            document.querySelector('.game-stats').style.animation = '';
             document.getElementById('playerName').value = '';
             overlay.style.display = 'none';
             updateSkillDisplay();
@@ -1873,6 +1944,30 @@
 
         // 초기 화면 그리기
         draw();
+
+        // ============================================
+        // 헤더 사진 10초마다 랜덤 변경
+        // ============================================
+        const catImages = [
+            '01_pictures/궁금.jpg',
+            '01_pictures/놀람.jpg',
+            '01_pictures/애기.jpg',
+            '01_pictures/억울.jpg',
+            '01_pictures/화남.jpg'
+        ];
+
+        function changeHeaderCats() {
+            const leftCat = document.getElementById('headerCatLeft');
+            const rightCat = document.getElementById('headerCatRight');
+
+            // 랜덤하게 두 개의 다른 이미지 선택
+            const shuffled = [...catImages].sort(() => Math.random() - 0.5);
+            leftCat.src = shuffled[0];
+            rightCat.src = shuffled[1];
+        }
+
+        // 10초마다 헤더 사진 변경
+        setInterval(changeHeaderCats, 10000);
     </script>
 </body>
 </html>
