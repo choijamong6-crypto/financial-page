@@ -6,6 +6,9 @@
     <title>Our Budget Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -828,7 +831,7 @@
         <!-- Leaderboard Modal -->
         <div id="leaderboardModal" class="leaderboard-modal" style="display: none;">
             <div class="leaderboard-content">
-                <h3>🏆 리더보드 TOP 5</h3>
+                <h3>🏆 리더보드 TOP 10</h3>
                 <ul id="leaderboardList" class="leaderboard-list"></ul>
                 <button class="restart-btn close-modal" onclick="hideLeaderboard()">닫기</button>
             </div>
@@ -1439,8 +1442,26 @@
         const CRAZY_DURATION = 180; // 3초 (60fps * 3)
         const COINS_PER_CHARGE = 30;  // 충전당 필요 코인
 
-        // 리더보드
-        let leaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
+        // ============================================
+        // Firebase 설정 및 리더보드
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHZDTcgacva0tMh3AE5IAq1ovg4Vr7COk",
+            authDomain: "namong-leaderboard.firebaseapp.com",
+            databaseURL: "https://namong-leaderboard-default-rtdb.firebaseio.com",
+            projectId: "namong-leaderboard",
+            storageBucket: "namong-leaderboard.firebasestorage.app",
+            messagingSenderId: "248181592546",
+            appId: "1:248181592546:web:1809d689b6a19ecc7729bb"
+        };
+
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const leaderboardRef = database.ref('leaderboard');
+
+        // 리더보드 (Firebase에서 실시간 동기화)
+        let leaderboard = [];
 
         // 나몽 (플레이어) - 크기 증가
         const namong = {
@@ -1867,16 +1888,30 @@
             updateSkillDisplay();
         }
 
-        // 저장 후 재시작
+        // 저장 후 재시작 (Firebase에 저장)
         function saveAndRestart() {
             const name = document.getElementById('playerName').value.trim() || '익명';
             const now = new Date();
             const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 
-            leaderboard.push({ name, score: coins, date: dateStr });
-            leaderboard.sort((a, b) => b.score - a.score);
-            leaderboard = leaderboard.slice(0, 5);
-            localStorage.setItem('namongLeaderboard', JSON.stringify(leaderboard));
+            // Firebase에 새 기록 저장
+            const newScoreRef = leaderboardRef.push();
+            newScoreRef.set({
+                name: name,
+                score: coins,
+                date: dateStr,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                console.log('Score saved to Firebase!');
+            }).catch((error) => {
+                console.error('Error saving score:', error);
+                // 오프라인 fallback: localStorage에 저장
+                let localLeaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
+                localLeaderboard.push({ name, score: coins, date: dateStr });
+                localLeaderboard.sort((a, b) => b.score - a.score);
+                localLeaderboard = localLeaderboard.slice(0, 10);
+                localStorage.setItem('namongLeaderboard', JSON.stringify(localLeaderboard));
+            });
 
             document.getElementById('playerName').value = '';
             restartGame();
@@ -1914,18 +1949,49 @@
             gameLoop();
         }
 
-        // 리더보드 표시
+        // 리더보드 표시 (Firebase에서 실시간 로드)
         function showLeaderboard() {
             const list = document.getElementById('leaderboardList');
-            list.innerHTML = leaderboard.length === 0
-                ? '<li style="text-align:center;">아직 기록이 없습니다</li>'
-                : leaderboard.map((r, i) => `
-                    <li>
-                        <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
-                        <span>${r.score}개 (${r.date})</span>
-                    </li>
-                `).join('');
+            list.innerHTML = '<li style="text-align:center;">로딩 중...</li>';
             document.getElementById('leaderboardModal').style.display = 'flex';
+
+            // Firebase에서 상위 10개 점수 가져오기 (점수 내림차순)
+            leaderboardRef.orderByChild('score').limitToLast(10).once('value')
+                .then((snapshot) => {
+                    const scores = [];
+                    snapshot.forEach((childSnapshot) => {
+                        scores.push(childSnapshot.val());
+                    });
+                    // 점수 내림차순 정렬
+                    scores.sort((a, b) => b.score - a.score);
+                    leaderboard = scores;
+
+                    if (scores.length === 0) {
+                        list.innerHTML = '<li style="text-align:center;">아직 기록이 없습니다</li>';
+                    } else {
+                        list.innerHTML = scores.map((r, i) => `
+                            <li>
+                                <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
+                                <span>${r.score}개 (${r.date})</span>
+                            </li>
+                        `).join('');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading leaderboard:', error);
+                    // 오프라인 fallback: localStorage에서 로드
+                    const localLeaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
+                    if (localLeaderboard.length === 0) {
+                        list.innerHTML = '<li style="text-align:center;">아직 기록이 없습니다</li>';
+                    } else {
+                        list.innerHTML = localLeaderboard.map((r, i) => `
+                            <li>
+                                <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
+                                <span>${r.score}개 (${r.date})</span>
+                            </li>
+                        `).join('');
+                    }
+                });
         }
 
         // 리더보드 숨기기
