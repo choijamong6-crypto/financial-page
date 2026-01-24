@@ -15,9 +15,9 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffecd2 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E6 50%, #FFF0F3 100%);
             min-height: 100vh;
-            color: #5a4a42;
+            color: #6B5B5B;
         }
 
         .container {
@@ -47,7 +47,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -59,7 +59,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #E8B4B8, #EED6D3, #A49393);
+            background: linear-gradient(90deg, #E8929C, #D4A5AA, #C7929C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -67,7 +67,7 @@
         }
 
         header p {
-            color: #8b7355;
+            color: #9B8585;
             margin-top: 5px;
             font-size: 1.1rem;
         }
@@ -86,22 +86,22 @@
             border: none;
             border-radius: 25px;
             background: #fff;
-            color: #5a4a42;
+            color: #6B5B5B;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(199, 146, 156, 0.15);
         }
 
         .month-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(199, 146, 156, 0.25);
         }
 
         .month-btn.active {
-            background: #E8B4B8;
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
             color: #fff;
         }
 
@@ -111,7 +111,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -123,13 +123,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #E8B4B8, #EED6D3);
+            background: linear-gradient(90deg, #E8929C, #F5C6CB);
         }
 
         .info-section h2 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: #5a4a42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -146,7 +146,7 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #fff5f5 0%, #fef5ff 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             transition: transform 0.2s;
         }
@@ -160,7 +160,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #fecfef;
+            border: 3px solid #F5C6CB;
         }
 
         .info-item .emoji {
@@ -169,13 +169,13 @@
 
         .info-text h4 {
             font-size: 1rem;
-            color: #5a4a42;
+            color: #6B5B5B;
             margin-bottom: 3px;
         }
 
         .info-text p {
             font-size: 0.85rem;
-            color: #8b7355;
+            color: #9B8585;
             line-height: 1.4;
         }
 
@@ -191,7 +191,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -206,10 +206,10 @@
             height: 4px;
         }
 
-        .card.income::after { background: #A8D5BA; }
-        .card.expense::after { background: #E8B4B8; }
-        .card.balance::after { background: #B8C5D6; }
-        .card.savings::after { background: #D4C5E2; }
+        .card.income::after { background: #7EC8A3; }
+        .card.expense::after { background: #E8929C; }
+        .card.balance::after { background: #D4A5AA; }
+        .card.savings::after { background: #F5C6CB; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -232,13 +232,13 @@
             font-size: 24px;
         }
 
-        .card-icon.income { background: #A8D5BA; }
-        .card-icon.expense { background: #EED6D3; }
-        .card-icon.balance { background: #B8C5D6; }
-        .card-icon.savings { background: #D4C5E2; }
+        .card-icon.income { background: #D4EDDA; }
+        .card-icon.expense { background: #FFE4E6; }
+        .card-icon.balance { background: #F5D6D9; }
+        .card-icon.savings { background: #FFF0F3; }
 
         .card h3 {
-            color: #8b7355;
+            color: #9B8585;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -249,13 +249,13 @@
             margin-top: 5px;
         }
 
-        .card .amount.positive { color: #6B9B7A; }
-        .card .amount.negative { color: #C97B84; }
-        .card .amount.neutral { color: #7B8FA1; }
+        .card .amount.positive { color: #5B9B7A; }
+        .card .amount.negative { color: #D47580; }
+        .card .amount.neutral { color: #B08B90; }
 
         .card .sub-text {
             font-size: 0.8rem;
-            color: #a89080;
+            color: #B09A9A;
             margin-top: 5px;
         }
 
@@ -271,13 +271,13 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
         }
 
         .chart-card h2 {
             font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #5a4a42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -293,14 +293,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
         }
 
         .insights-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5a4a42;
+            color: #6B5B5B;
         }
 
         .insight-item {
@@ -308,7 +308,7 @@
             align-items: flex-start;
             gap: 15px;
             padding: 18px;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             margin-bottom: 12px;
             transition: transform 0.2s;
@@ -329,21 +329,21 @@
             flex-shrink: 0;
         }
 
-        .insight-icon.good { background: #A8D5BA; }
-        .insight-icon.warning { background: #EED6D3; }
-        .insight-icon.info { background: #B8C5D6; }
-        .insight-icon.tip { background: #D4C5E2; }
-        .insight-icon.cat { background: #F5E6CC; }
+        .insight-icon.good { background: #D4EDDA; }
+        .insight-icon.warning { background: #FFE4E6; }
+        .insight-icon.info { background: #F5D6D9; }
+        .insight-icon.tip { background: #FFF0F3; }
+        .insight-icon.cat { background: #FFEEF0; }
 
         .insight-content h4 {
             font-size: 0.95rem;
             margin-bottom: 5px;
-            color: #5a4a42;
+            color: #6B5B5B;
         }
 
         .insight-content p {
             font-size: 0.85rem;
-            color: #8b7355;
+            color: #9B8585;
             line-height: 1.5;
         }
 
@@ -352,7 +352,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
             overflow-x: auto;
         }
@@ -360,7 +360,7 @@
         .expense-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5a4a42;
+            color: #6B5B5B;
         }
 
         .expense-table {
@@ -371,20 +371,20 @@
         .expense-table th {
             text-align: left;
             padding: 15px;
-            color: #8b7355;
+            color: #9B8585;
             font-weight: 600;
-            border-bottom: 2px solid #ffecd2;
+            border-bottom: 2px solid #FFE4E6;
             font-size: 0.9rem;
         }
 
         .expense-table td {
             padding: 15px;
-            border-bottom: 1px solid #fef5f5;
+            border-bottom: 1px solid #FFF0F3;
             font-size: 0.9rem;
         }
 
         .expense-table tr:hover {
-            background: #fff9f9;
+            background: #FFF5F5;
         }
 
         .category-badge {
@@ -395,21 +395,21 @@
             font-weight: 600;
         }
 
-        /* Consistent pastel color palette for categories */
-        .category-badge.housing { background: #F5D6D6; color: #8B6B6B; }
-        .category-badge.utilities { background: #D6E5F5; color: #6B7B8B; }
-        .category-badge.insurance { background: #E5D6F5; color: #7B6B8B; }
-        .category-badge.food { background: #D6F5E0; color: #6B8B75; }
-        .category-badge.transport { background: #F5ECD6; color: #8B7B6B; }
-        .category-badge.giving { background: #F5D6E8; color: #8B6B7B; }
-        .category-badge.savings { background: #D6F5F5; color: #6B8B8B; }
-        .category-badge.pet { background: #F5E6CC; color: #8B7A5E; }
-        .category-badge.entertainment { background: #E8D6F5; color: #7B6B8B; }
-        .category-badge.other { background: #E8E8E8; color: #6B6B6B; }
+        /* Soft Pink theme - harmonized category colors */
+        .category-badge.housing { background: #FFE4E6; color: #B07580; }
+        .category-badge.utilities { background: #F5D6D9; color: #9B7580; }
+        .category-badge.insurance { background: #FFEEF0; color: #A07580; }
+        .category-badge.food { background: #D4EDDA; color: #5B8B6B; }
+        .category-badge.transport { background: #FFF0F3; color: #A08585; }
+        .category-badge.giving { background: #F5C6CB; color: #9B6B75; }
+        .category-badge.savings { background: #E8F5E9; color: #5B8B6B; }
+        .category-badge.pet { background: #FFEEF0; color: #B08080; }
+        .category-badge.entertainment { background: #F5D6D9; color: #9B7580; }
+        .category-badge.other { background: #F5F0F0; color: #8B8080; }
 
         .progress-bar {
             height: 8px;
-            background: #f0f0f0;
+            background: #FFF0F3;
             border-radius: 4px;
             overflow: hidden;
             margin-top: 5px;
@@ -418,7 +418,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: #E8B4B8;
+            background: linear-gradient(90deg, #E8929C, #D4A5AA);
         }
 
         /* Savings Goals */
@@ -426,14 +426,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
         }
 
         .savings-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5a4a42;
+            color: #6B5B5B;
         }
 
         .goal-item {
@@ -441,20 +441,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px;
-            background: linear-gradient(135deg, #fff5f5 0%, #fef9ff 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             margin-bottom: 12px;
         }
 
         .goal-info h4 {
             font-size: 0.95rem;
-            color: #5a4a42;
+            color: #6B5B5B;
             margin-bottom: 3px;
         }
 
         .goal-info p {
             font-size: 0.8rem;
-            color: #a89080;
+            color: #B09A9A;
         }
 
         .goal-amount {
@@ -464,7 +464,7 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #A49393;
+            color: #D47580;
         }
 
         /* Footer Cat */
@@ -487,7 +487,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
             transition: transform 0.3s;
         }
 
@@ -496,7 +496,7 @@
         }
 
         .footer-text {
-            color: #8b7355;
+            color: #9B8585;
             font-size: 0.9rem;
         }
 
@@ -538,7 +538,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             text-align: center;
         }
 
@@ -553,7 +553,7 @@
 
         .game-title {
             font-size: 1.1rem;
-            color: #5a4a42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -563,11 +563,11 @@
             display: flex;
             gap: 20px;
             font-size: 0.9rem;
-            color: #8b7355;
+            color: #9B8585;
         }
 
         .game-stats span {
-            background: #EED6D3;
+            background: #FFE4E6;
             padding: 5px 12px;
             border-radius: 15px;
         }
@@ -576,7 +576,7 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            background: linear-gradient(to bottom, #ffecd2 0%, #fcb69f 100%);
+            background: linear-gradient(to bottom, #FFF5F5 0%, #FFE4E6 100%);
         }
 
         .game-canvas {
@@ -589,7 +589,7 @@
         .game-instructions {
             margin-top: 12px;
             font-size: 0.85rem;
-            color: #a89080;
+            color: #B09A9A;
         }
 
         .game-over-overlay {
@@ -598,7 +598,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(107, 91, 91, 0.7);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -620,7 +620,7 @@
             padding: 10px 25px;
             border: none;
             border-radius: 20px;
-            background: #E8B4B8;
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -900,16 +900,16 @@
                     datasets: [{
                         label: 'Income',
                         data: incomeData,
-                        borderColor: '#6B9B7A',
-                        backgroundColor: 'rgba(168, 213, 186, 0.2)',
+                        borderColor: '#5B9B7A',
+                        backgroundColor: 'rgba(91, 155, 122, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
                     }, {
                         label: 'Expenses',
                         data: expenseData,
-                        borderColor: '#C97B84',
-                        backgroundColor: 'rgba(232, 180, 184, 0.2)',
+                        borderColor: '#D47580',
+                        backgroundColor: 'rgba(212, 117, 128, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
@@ -919,11 +919,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#5a4a42', font: { family: 'Nunito' } } }
+                        legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } }
                     },
                     scales: {
-                        y: { ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        x: { ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                        y: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        x: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -934,22 +934,22 @@
 
             const categories = [];
             const values = [];
-            // Consistent pastel colors: Housing, Tithing/Giving, Utilities, Insurance, Pet, Food, Entertainment, Transport, Other
+            // Soft Pink harmonized color palette
             const categoryColors = {
-                'Housing': '#E8B4B8',
-                'Tithing': '#F5D6E8',
-                'Utilities': '#B8C5D6',
-                'Insurance': '#D4C5E2',
-                'Pet (Namong)': '#F5E6CC',
-                'Grocery': '#A8D5BA',
-                'Entertainment': '#E8D6F5',
-                'Dining': '#C5E8D6',
-                'Gas': '#F5ECD6',
-                'Membership': '#E8E8E8',
-                'Shopping': '#E0E0E0',
-                'Travel': '#D6E5F5',
-                'Giving': '#F5D6E8',
-                'Other': '#E8E8E8'
+                'Housing': '#E8929C',
+                'Tithing': '#F5C6CB',
+                'Utilities': '#D4A5AA',
+                'Insurance': '#FFEEF0',
+                'Pet (Namong)': '#FFD6DA',
+                'Grocery': '#7EC8A3',
+                'Entertainment': '#F5D6D9',
+                'Dining': '#B8D9C5',
+                'Gas': '#FFF0F3',
+                'Membership': '#F5E8E9',
+                'Shopping': '#F0E5E6',
+                'Travel': '#E8D5D8',
+                'Giving': '#F5C6CB',
+                'Other': '#F5F0F0'
             };
             const colors = [];
 
@@ -989,7 +989,7 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { color: '#5a4a42', padding: 8, font: { family: 'Nunito', size: 11 } }
+                            labels: { color: '#6B5B5B', padding: 8, font: { family: 'Nunito', size: 11 } }
                         }
                     }
                 }
@@ -1007,19 +1007,19 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E8B4B8' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#B8C5D6' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#D4C5E2' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#E8E8E8' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E8929C' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#D4A5AA' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#F5C6CB' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#F5E8E9' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5a4a42', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } } },
                     scales: {
-                        y: { stacked: true, ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        x: { stacked: true, ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                        y: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        x: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -1037,7 +1037,7 @@
                     datasets: [{
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#D4C5E2', '#B8C5D6', '#A8D5BA']
+                        backgroundColor: ['#E8929C', '#D4A5AA', '#F5C6CB']
                     }]
                 },
                 options: {
@@ -1046,8 +1046,8 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        y: { ticks: { color: '#8b7355' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                        x: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        y: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -1186,7 +1186,7 @@
                     </div>
                 </div>
             `).join('') + `
-                <div class="goal-item" style="background: #EED6D3;">
+                <div class="goal-item" style="background: linear-gradient(135deg, #FFE4E6 0%, #F5C6CB 100%);">
                     <div class="goal-info">
                         <h4>TOTAL GOAL</h4>
                         <p>총 저축 목표</p>
@@ -1411,17 +1411,17 @@
 
             // 배경 그라디언트
             const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            gradient.addColorStop(0, '#ffecd2');
-            gradient.addColorStop(1, '#fcb69f');
+            gradient.addColorStop(0, '#FFF5F5');
+            gradient.addColorStop(1, '#FFE4E6');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // 바닥
-            ctx.fillStyle = '#E8B4B8';
+            ctx.fillStyle = '#F5C6CB';
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
-            ctx.strokeStyle = '#D4A5A9';
+            ctx.strokeStyle = '#E8929C';
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
             ctx.moveTo(0, groundY);
