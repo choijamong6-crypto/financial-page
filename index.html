@@ -1106,22 +1106,22 @@
 
             const categories = [];
             const values = [];
-            // Soft Pink harmonized color palette
+            // 다양한 색상 팔레트 (항목별 구분이 쉽도록)
             const categoryColors = {
-                'Housing': '#E8929C',
-                'Tithing': '#F5C6CB',
-                'Utilities': '#D4A5AA',
-                'Insurance': '#FFEEF0',
-                'Pet (Namong)': '#FFD6DA',
-                'Grocery': '#7EC8A3',
-                'Entertainment': '#F5D6D9',
-                'Dining': '#B8D9C5',
-                'Gas': '#FFF0F3',
-                'Membership': '#F5E8E9',
-                'Shopping': '#F0E5E6',
-                'Travel': '#E8D5D8',
-                'Giving': '#F5C6CB',
-                'Other': '#F5F0F0'
+                'Housing': '#E57373',      // 빨강 - 가장 큰 지출
+                'Tithing': '#9575CD',      // 보라 - 헌금
+                'Utilities': '#4FC3F7',    // 하늘색 - 공과금
+                'Insurance': '#FF8A65',    // 주황 - 보험
+                'Pet (Namong)': '#FFB74D', // 오렌지 - 나몽
+                'Grocery': '#81C784',      // 초록 - 식료품
+                'Entertainment': '#BA68C8', // 자주 - 오락
+                'Dining': '#4DB6AC',       // 청록 - 외식
+                'Gas': '#90A4AE',          // 회색 - 주유
+                'Membership': '#A1887F',   // 갈색 - 멤버십
+                'Shopping': '#F06292',     // 핑크 - 쇼핑
+                'Travel': '#7986CB',       // 인디고 - 여행
+                'Giving': '#CE93D8',       // 연보라 - 용돈
+                'Other': '#B0BEC5'         // 연회색 - 기타
             };
             const colors = [];
 
@@ -1179,10 +1179,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E8929C' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#D4A5AA' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#F5C6CB' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#F5E8E9' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E57373' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#4FC3F7' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#FF8A65' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#B0BEC5' }
                     ]
                 },
                 options: {
@@ -1209,7 +1209,7 @@
                     datasets: [{
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#E8929C', '#D4A5AA', '#F5C6CB']
+                        backgroundColor: ['#66BB6A', '#42A5F5', '#FFA726']  // 초록(영주권), 파랑(비행기), 주황(차)
                     }]
                 },
                 options: {
