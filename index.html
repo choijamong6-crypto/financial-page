@@ -1418,13 +1418,19 @@
         images.dead.src = '01_pictures/억울.jpg';     // 게임오버: 억울한 표정
         images.idle.src = '01_pictures/궁금.jpg';     // 대기: 궁금한 표정
 
-        // 페이즈 설정 (난이도 상향: 초기 속도 증가)
+        // 페이즈 설정 (10단계, 공중 적 포함)
+        // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
-            { name: 'Phase 2: 소비의 유혹', time: 15, speed: 5.5, emojis: ['💳', '🍔', '☕', '🛒'], bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
-            { name: 'Phase 3: 고정지출', time: 30, speed: 6.5, emojis: ['🏠', '💡', '⛽', '📱'], bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
-            { name: 'Phase 4: 지출폭풍', time: 50, speed: 7.5, emojis: ['📱', '💻', '🎮', '✈️', '💳'], bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E8A0A0' },
-            { name: 'Phase 5: 인플레이션', time: 75, speed: 9, emojis: ['📈', '💀', '🔥', '😈', '💣'], bgColor1: '#FFC0C0', bgColor2: '#FF9090', groundColor: '#D08080' }
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
+            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
+            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
+            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFE0E5', bgColor2: '#FFC8D0', groundColor: '#E8A8B0' },
+            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E0A0A0' },
+            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFD0D0', bgColor2: '#FFB0B0', groundColor: '#D89090' },
+            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#FFC5C5', bgColor2: '#FFA0A0', groundColor: '#D08080' },
+            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#FFB5B5', bgColor2: '#FF9090', groundColor: '#C87070' },
+            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#FFA5A5', bgColor2: '#FF7070', groundColor: '#B06060' },
+            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#FF9090', bgColor2: '#FF5050', groundColor: '#904040' }
         ];
 
         // 게임 상태
@@ -1594,17 +1600,52 @@
             jump();
         });
 
-        // 장애물 생성
+        // 장애물 생성 (지상 + 공중)
         function spawnObstacle() {
             const phase = phases[currentPhase];
-            const obstacle = {
-                x: canvas.width,
-                y: groundY - 35,
+
+            // 공중 적 생성 여부 확인
+            const isAirEnemy = phase.airEnemyChance > 0 && Math.random() < phase.airEnemyChance && phase.airEmojis.length > 0;
+
+            if (isAirEnemy) {
+                // 공중 적 (점프 높이에서 등장 - 점프를 방해)
+                const airObstacle = {
+                    x: canvas.width,
+                    y: groundY - 100 - Math.random() * 40,  // 점프 높이 근처
+                    width: 35,
+                    height: 35,
+                    emoji: phase.airEmojis[Math.floor(Math.random() * phase.airEmojis.length)],
+                    isAir: true
+                };
+                obstacles.push(airObstacle);
+            } else {
+                // 지상 적
+                const obstacle = {
+                    x: canvas.width,
+                    y: groundY - 35,
+                    width: 35,
+                    height: 35,
+                    emoji: phase.emojis[Math.floor(Math.random() * phase.emojis.length)],
+                    isAir: false
+                };
+                obstacles.push(obstacle);
+            }
+        }
+
+        // 공중 적 추가 생성 (높은 페이즈에서 지상+공중 동시 등장)
+        function spawnAirObstacle() {
+            const phase = phases[currentPhase];
+            if (phase.airEmojis.length === 0) return;
+
+            const airObstacle = {
+                x: canvas.width + Math.random() * 50,
+                y: groundY - 90 - Math.random() * 50,
                 width: 35,
                 height: 35,
-                emoji: phase.emojis[Math.floor(Math.random() * phase.emojis.length)]
+                emoji: phase.airEmojis[Math.floor(Math.random() * phase.airEmojis.length)],
+                isAir: true
             };
-            obstacles.push(obstacle);
+            obstacles.push(airObstacle);
         }
 
         // 코인 생성
@@ -1658,9 +1699,9 @@
                 }
             }
 
-            // 속도 점진적 증가
-            if (frameCount % 300 === 0 && gameSpeed < 8) {
-                gameSpeed += 0.2;
+            // 속도 점진적 증가 (최대 12까지)
+            if (frameCount % 300 === 0 && gameSpeed < 12) {
+                gameSpeed += 0.15;
             }
 
             // 나몽 물리
@@ -1675,10 +1716,18 @@
                 namong.jumping = false;
             }
 
-            // 장애물 생성 (페이즈에 따라 빈도 조절)
-            const spawnRate = Math.max(60, 120 - currentPhase * 15);
+            // 장애물 생성 (페이즈의 density 값 사용 - 낮을수록 자주 등장)
+            const phase = phases[currentPhase];
+            const spawnRate = Math.max(40, phase.density);
             if (frameCount % spawnRate === 0) {
-                if (Math.random() > 0.25) spawnObstacle();
+                if (Math.random() > 0.2) spawnObstacle();
+            }
+
+            // 높은 페이즈에서 추가 공중 적 생성 (7페이즈 이상)
+            if (currentPhase >= 6 && frameCount % 80 === 0) {
+                if (Math.random() < phase.airEnemyChance) {
+                    spawnAirObstacle();
+                }
             }
 
             // 코인 생성
