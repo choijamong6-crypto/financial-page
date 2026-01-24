@@ -531,7 +531,7 @@
             }
 
             .game-canvas {
-                height: 120px;
+                height: 260px;
             }
         }
 
@@ -648,7 +648,7 @@
         .game-canvas {
             display: block;
             width: 100%;
-            height: 220px;
+            height: 280px;
             cursor: pointer;
         }
 
@@ -664,49 +664,51 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(107, 91, 91, 0.85);
+            background: rgba(107, 91, 91, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #fff;
             border-radius: 15px;
+            padding: 15px;
+            gap: 8px;
         }
 
         .game-over-overlay h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            margin: 0;
         }
 
         .game-over-overlay p {
-            margin-bottom: 10px;
+            margin: 0;
+            font-size: 1rem;
         }
 
         .game-over-overlay img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fff;
-            margin-bottom: 15px;
         }
 
         .name-input-container {
-            margin: 15px 0;
+            margin: 5px 0;
         }
 
         .name-input {
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: none;
             border-radius: 10px;
             font-family: 'Nunito', sans-serif;
-            font-size: 1rem;
-            width: 200px;
+            font-size: 0.9rem;
+            width: 180px;
             text-align: center;
         }
 
         .restart-btn {
-            padding: 10px 25px;
+            padding: 8px 20px;
             border: none;
             border-radius: 20px;
             background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
@@ -715,7 +717,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s;
-            margin: 5px;
+            margin: 3px;
+            font-size: 0.9rem;
         }
 
         .restart-btn:hover {
@@ -1484,14 +1487,14 @@
         // 물리 상수
         const gravity = 0.6;
         const jumpForce = -13;
-        let groundY = 170;
+        let groundY = 230;
 
         // 캔버스 크기 설정
         function resizeCanvas() {
             const container = canvas.parentElement;
             canvas.width = container.clientWidth;
-            canvas.height = 220;
-            groundY = 170;
+            canvas.height = 280;
+            groundY = 230;
             namong.y = groundY - namong.height;
         }
 
