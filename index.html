@@ -42,12 +42,12 @@
         }
 
         .header-cat {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -481,12 +481,12 @@
         }
 
         .footer-cat {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            border-radius: 16px;
             object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 4px solid #fff;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             transition: transform 0.3s;
         }
 
@@ -513,8 +513,13 @@
             }
 
             .header-cat {
-                width: 60px;
-                height: 60px;
+                width: 120px;
+                height: 120px;
+            }
+
+            .footer-cat {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -538,33 +543,6 @@
             <button class="month-btn" onclick="selectMonth('nov')">11월</button>
             <button class="month-btn" onclick="selectMonth('dec')">12월</button>
             <button class="month-btn active" onclick="selectMonth('jan')">1월</button>
-        </div>
-
-        <div class="info-section">
-            <h2>About Us</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <img src="01_pictures/놀람.jpg" alt="Namong">
-                    <div class="info-text">
-                        <h4>Namong (나몽)</h4>
-                        <p>Our beloved pet cat! All '나몽' expenses are for pet care: insurance ($38.47), food & supplies ($68.51)</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <span class="emoji">🏠</span>
-                    <div class="info-text">
-                        <h4>Seonhan Rent (선한)</h4>
-                        <p>$1,200/month that Haeun (하은) pays for her brother's rent - tracked separately!</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <img src="01_pictures/오손도손.jpg" alt="Family">
-                    <div class="info-text">
-                        <h4>Chamsae & Hani</h4>
-                        <p>참새 (Sparrow) & 하니 - Our household with combined income tracking!</p>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="summary-cards" id="summaryCards">
