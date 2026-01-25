@@ -1271,7 +1271,7 @@
                         <div class="card-icon income">💰</div>
                         <h3>Total Income</h3>
                     </div>
-                    <div class="amount positive">$${income.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    <div class="amount positive">$${Math.round(income).toLocaleString('en-US')}</div>
                     <div class="sub-text">Chamsae + Hani</div>
                 </div>
                 <div class="card expense">
@@ -1279,7 +1279,7 @@
                         <div class="card-icon expense">💸</div>
                         <h3>Total Expenses</h3>
                     </div>
-                    <div class="amount negative">$${expenses.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    <div class="amount negative">$${Math.round(expenses).toLocaleString('en-US')}</div>
                     <div class="sub-text">All categories</div>
                 </div>
                 <div class="card balance">
@@ -1287,7 +1287,7 @@
                         <div class="card-icon balance">📊</div>
                         <h3>Net Balance</h3>
                     </div>
-                    <div class="amount ${balance >= 0 ? 'positive' : 'negative'}">$${balance.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    <div class="amount ${balance >= 0 ? 'positive' : 'negative'}">$${Math.round(balance).toLocaleString('en-US')}</div>
                     <div class="sub-text">${balance >= 0 ? 'Surplus!' : 'Deficit'}</div>
                 </div>
                 <div class="card savings">
@@ -1295,7 +1295,7 @@
                         <div class="card-icon savings">🐷</div>
                         <h3>Monthly Savings</h3>
                     </div>
-                    <div class="amount neutral">$${savings.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    <div class="amount neutral">$${Math.round(savings).toLocaleString('en-US')}</div>
                     <div class="sub-text">대혀니 + 하니</div>
                 </div>
             `;
@@ -1581,7 +1581,7 @@
                 insights.push({
                     icon: '🐱', type: 'cat',
                     title: '나몽이 비용',
-                    text: `$${monthData.expenses.pet.sum.toFixed(2)}로 나몽이 잘 챙기고 있어요! ${monthData.expenses.pet.sum > 100 ? '이번 달은 좀 많이 썼네요. 미용했나?' : '효율적인 집사생활!'}`
+                    text: `$${Math.round(monthData.expenses.pet.sum)}로 나몽이 잘 챙기고 있어요! ${monthData.expenses.pet.sum > 100 ? '이번 달은 좀 많이 썼네요. 미용했나?' : '효율적인 집사생활!'}`
                 });
             }
 
@@ -1638,7 +1638,7 @@
                         <tr>
                             <td><span class="category-badge ${cat.badge}">${cat.name}</span></td>
                             <td>${cat.desc}</td>
-                            <td>$${amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                            <td>$${Math.round(amount).toLocaleString('en-US')}</td>
                             <td>
                                 ${percent}%
                                 <div class="progress-bar">
@@ -1664,7 +1664,7 @@
                         <p>현재 저축 잔고 (계좌 합계)</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target" style="color: #5B8C5A;">$${currentSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                        <div class="target" style="color: #5B8C5A;">$${Math.round(currentSavingsBalance).toLocaleString('en-US')}</div>
                     </div>
                 </div>
             ` + savingsGoals.map(goal => {
@@ -1704,7 +1704,7 @@
 
             // 퍼센트와 금액 업데이트
             document.getElementById('namongPercent').textContent = `${displayPercent}%`;
-            document.getElementById('namongCurrent').textContent = `$${currentSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById('namongCurrent').textContent = `$${Math.round(currentSavingsBalance).toLocaleString('en-US')}`;
 
             // 100% 달성 시 특별 효과
             if (percent >= 100) {
