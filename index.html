@@ -1070,37 +1070,37 @@
         <div class="savings-section">
             <h2>Savings Goals</h2>
 
-            <!-- Namong Running to Churu Progress -->
-            <div class="namong-progress-container" id="namongProgressContainer">
-                <span class="snow-decoration" style="top: 10px; left: 20%;">❄️</span>
-                <span class="snow-decoration" style="top: 5px; left: 50%; animation-delay: 0.5s;">❄️</span>
-                <span class="snow-decoration" style="top: 15px; left: 80%; animation-delay: 1s;">❄️</span>
-
-                <div class="namong-progress-title">
-                    <span>🏃</span>
-                    <span>나몽이의 츄르 대장정!</span>
-                </div>
-
-                <div class="namong-track">
-                    <div class="namong-track-fill" id="namongTrackFill" style="width: 0%;"></div>
-                    <img src="01_pictures/애기.jpg" alt="Namong" class="namong-runner" id="namongRunner" style="left: 0%;">
-                    <div class="churu-goal">🍖</div>
-                </div>
-
-                <div class="namong-progress-info">
-                    <div>
-                        <span class="namong-progress-percent" id="namongPercent">0%</span>
-                        <span> 달성!</span>
-                    </div>
-                    <div class="namong-progress-text">
-                        <span class="current" id="namongCurrent">$0</span>
-                        <span class="total"> / $43,500</span>
-                    </div>
-                </div>
-            </div>
-
             <div id="savingsGoalsContainer">
                 <!-- Filled by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Namong Running to Churu Progress (맨 아래) -->
+        <div class="namong-progress-container" id="namongProgressContainer">
+            <span class="snow-decoration" style="top: 10px; left: 20%;">❄️</span>
+            <span class="snow-decoration" style="top: 5px; left: 50%; animation-delay: 0.5s;">❄️</span>
+            <span class="snow-decoration" style="top: 15px; left: 80%; animation-delay: 1s;">❄️</span>
+
+            <div class="namong-progress-title">
+                <span>🏃</span>
+                <span>나몽이의 츄르 대장정!</span>
+            </div>
+
+            <div class="namong-track">
+                <div class="namong-track-fill" id="namongTrackFill" style="width: 0%;"></div>
+                <img src="01_pictures/애기.jpg" alt="Namong" class="namong-runner" id="namongRunner" style="left: 0%;">
+                <div class="churu-goal">🍖</div>
+            </div>
+
+            <div class="namong-progress-info">
+                <div>
+                    <span class="namong-progress-percent" id="namongPercent">0%</span>
+                    <span> 달성!</span>
+                </div>
+                <div class="namong-progress-text">
+                    <span class="current" id="namongCurrent">$0</span>
+                    <span class="total"> / $43,500</span>
+                </div>
             </div>
         </div>
 
@@ -1683,21 +1683,7 @@
                         <div class="target">${goal.target}</div>
                     </div>
                 </div>
-            `}).join('') + `
-                <div class="goal-item" style="background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%);">
-                    <div class="goal-info">
-                        <h4>나몽이의 츄르 대장정!</h4>
-                        <p>Namong🍖</p>
-                        <div class="progress-bar" style="margin-top: 8px; width: 150px;">
-                            <div class="progress-fill" style="width: ${progressPercent}%;"></div>
-                        </div>
-                        <p style="font-size: 0.75rem; margin-top: 3px;">${progressPercent}% 달성!</p>
-                    </div>
-                    <div class="goal-amount">
-                        <div class="target">$${totalGoal.toLocaleString('en-US')}</div>
-                    </div>
-                </div>
-            `;
+            `}).join('');
 
             document.getElementById('savingsGoalsContainer').innerHTML = html;
         }
