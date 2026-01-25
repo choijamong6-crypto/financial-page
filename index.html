@@ -1105,7 +1105,7 @@
         </div>
 
         <div class="footer-section">
-            <p class="footer-text">Made with love for our family budget</p>
+            <p class="footer-text">참새와 냥이의 츄르참기 대작전 🐦🐱</p>
         </div>
     </div>
 
@@ -1150,10 +1150,11 @@
 
         // 랜덤 사진 초기화
         function initRandomPhotos() {
-            const usedPhotos = [];
+            // 나몽이 러너 사진은 미리 제외 (진행률 트랙에서 사용)
+            const usedPhotos = ['01_pictures/애기.jpg'];
 
             // 헤더 사진 2개
-            const headerPhotos = getRandomPhotos(2);
+            const headerPhotos = getRandomPhotos(2, usedPhotos);
             document.getElementById('headerCatLeft').src = headerPhotos[0];
             document.getElementById('headerCatRight').src = headerPhotos[1];
             usedPhotos.push(...headerPhotos);
@@ -1685,12 +1686,12 @@
             `}).join('') + `
                 <div class="goal-item" style="background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%);">
                     <div class="goal-info">
-                        <h4>TOTAL GOAL</h4>
-                        <p>총 저축 목표</p>
+                        <h4>나몽이의 츄르 대장정!</h4>
+                        <p>Namong🍖</p>
                         <div class="progress-bar" style="margin-top: 8px; width: 150px;">
                             <div class="progress-fill" style="width: ${progressPercent}%;"></div>
                         </div>
-                        <p style="font-size: 0.75rem; margin-top: 3px;">${progressPercent}% 달성</p>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${progressPercent}% 달성!</p>
                     </div>
                     <div class="goal-amount">
                         <div class="target">$${totalGoal.toLocaleString('en-US')}</div>
