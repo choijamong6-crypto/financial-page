@@ -1038,6 +1038,8 @@
             <div class="namong-gallery">
                 <img src="01_pictures/애기.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto1">
                 <img src="01_pictures/느긋.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto2">
+                <img src="01_pictures/멋짐.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto3">
+                <img src="01_pictures/궁금.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto4">
             </div>
         </div>
 
@@ -1103,9 +1105,6 @@
         </div>
 
         <div class="footer-section">
-            <div class="footer-cats" id="footerGallery">
-                <!-- Filled by JavaScript with random photos -->
-            </div>
             <p class="footer-text">Made with love for our family budget</p>
         </div>
     </div>
@@ -1159,18 +1158,12 @@
             document.getElementById('headerCatRight').src = headerPhotos[1];
             usedPhotos.push(...headerPhotos);
 
-            // 갤러리 사진 2개
-            const galleryPhotos = getRandomPhotos(2, usedPhotos);
+            // 갤러리 사진 4개
+            const galleryPhotos = getRandomPhotos(4, usedPhotos);
             document.getElementById('galleryPhoto1').src = galleryPhotos[0];
             document.getElementById('galleryPhoto2').src = galleryPhotos[1];
-            usedPhotos.push(...galleryPhotos);
-
-            // 푸터 갤러리 8개
-            const footerPhotos = getRandomPhotos(8, usedPhotos);
-            const footerGallery = document.getElementById('footerGallery');
-            footerGallery.innerHTML = footerPhotos.map(photo =>
-                `<img src="${photo}" alt="Namong" class="footer-cat">`
-            ).join('');
+            document.getElementById('galleryPhoto3').src = galleryPhotos[2];
+            document.getElementById('galleryPhoto4').src = galleryPhotos[3];
         }
 
         // Updated Budget Data from Excel
