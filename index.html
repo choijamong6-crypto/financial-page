@@ -1736,11 +1736,13 @@
             dead: new Image(),
             idle: new Image()
         };
-        images.run.src = '01_pictures/애기.jpg';      // 달리기: 귀여운 애기 나몽
+        images.run.src = '01_pictures/화남.jpg';      // 달리기: 화난 표정 (평소)
         images.jump.src = '01_pictures/놀람.jpg';     // 점프: 놀란 표정
         images.crazy.src = '01_pictures/화남.jpg';    // 미친냥 모드: 화난 표정
-        images.dead.src = '01_pictures/억울.jpg';     // 게임오버: 억울한 표정
+        images.dead.src = '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-44 001.jpeg';     // 게임오버: 슬픈 표정
         images.idle.src = '01_pictures/궁금.jpg';     // 대기: 궁금한 표정
+        images.happy = new Image();
+        images.happy.src = '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-01 009.jpeg';  // 돈 먹을 때: 행복한 표정
 
         // 페이즈 설정 (10단계, 공중 적 포함) - 따뜻한 겨울 테마 색상 (눈/모닥불/오두막)
         // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
@@ -1774,6 +1776,11 @@
         let coinsForNextCharge = 30;  // 다음 충전까지 필요한 코인
         const CRAZY_DURATION = 180; // 3초 (60fps * 3)
         const COINS_PER_CHARGE = 30;  // 충전당 필요 코인
+
+        // 행복 모드 (돈 먹을 때 잠깐 행복한 표정)
+        let happyMode = false;
+        let happyModeTimer = 0;
+        const HAPPY_DURATION = 20; // 약 0.33초 (60fps 기준)
 
         // ============================================
         // Firebase 설정 및 리더보드
@@ -2023,6 +2030,14 @@
                 }
             }
 
+            // 행복 모드 타이머
+            if (happyMode) {
+                happyModeTimer--;
+                if (happyModeTimer <= 0) {
+                    happyMode = false;
+                }
+            }
+
             // 속도 점진적 증가 (최대 12까지)
             if (frameCount % 300 === 0 && gameSpeed < 12) {
                 gameSpeed += 0.15;
@@ -2091,6 +2106,10 @@
                     coins++;
                     document.getElementById('gameCoins').textContent = coins;
                     checkCrazyCharge();  // 미친냥 충전 체크
+
+                    // 행복 모드 활성화 (돈 먹으면 잠깐 행복!)
+                    happyMode = true;
+                    happyModeTimer = HAPPY_DURATION;
                 }
 
                 if (coinItems[i].x + coinItems[i].width < 0) {
@@ -2127,7 +2146,9 @@
 
             // 나몽 이미지 선택
             let img;
-            if (crazyMode) {
+            if (happyMode) {
+                img = images.happy;  // 돈 먹으면 행복!
+            } else if (crazyMode) {
                 img = images.crazy;
             } else if (namong.jumping) {
                 img = images.jump;
@@ -2312,6 +2333,8 @@
             crazyModeTimer = 0;
             crazyCharges = 0;  // 처음엔 0개로 시작
             coinsForNextCharge = COINS_PER_CHARGE;  // 다음 충전까지 30코인
+            happyMode = false;
+            happyModeTimer = 0;
             namong.y = groundY - namong.height;
             namong.velocityY = 0;
             namong.grounded = true;
