@@ -611,22 +611,42 @@
             transform: scale(1.1) rotate(5deg);
         }
 
-        /* Section Feature Photo */
-        .section-photo {
+        /* 나몽 갤러리 섹션 */
+        .namong-gallery-section {
             width: 100%;
-            max-width: 400px;
-            height: 300px;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FDF8F3 0%, #F5EDE4 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+        }
+
+        .namong-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .gallery-photo {
+            width: 280px;
+            height: 280px;
             border-radius: 20px;
             object-fit: cover;
             border: 5px solid #fff;
             box-shadow: 0 10px 40px rgba(139, 90, 43, 0.2);
-            margin: 20px auto;
-            display: block;
             transition: transform 0.3s;
         }
 
-        .section-photo:hover {
-            transform: scale(1.02);
+        .gallery-photo:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-photo {
+                width: 160px;
+                height: 160px;
+            }
         }
 
         .footer-text {
@@ -1004,14 +1024,20 @@
                 <div class="chart-container">
                     <canvas id="expenseBarChart"></canvas>
                 </div>
-                <img src="01_pictures/애기.jpg" alt="Namong" class="section-photo" id="breakdownPhoto">
             </div>
             <div class="chart-card">
                 <h2>Savings Goals</h2>
                 <div class="chart-container">
                     <canvas id="savingsChart"></canvas>
                 </div>
-                <img src="01_pictures/느긋.jpg" alt="Namong" class="section-photo" id="savingsPhoto">
+            </div>
+        </div>
+
+        <!-- 나몽 갤러리 (차트 사이) -->
+        <div class="namong-gallery-section">
+            <div class="namong-gallery">
+                <img src="01_pictures/애기.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto1">
+                <img src="01_pictures/느긋.jpg" alt="Namong" class="gallery-photo" id="galleryPhoto2">
             </div>
         </div>
 
@@ -1066,7 +1092,7 @@
                     </div>
                     <div class="namong-progress-text">
                         <span class="current" id="namongCurrent">$0</span>
-                        <span class="total"> / $36,600</span>
+                        <span class="total"> / $43,500</span>
                     </div>
                 </div>
             </div>
@@ -1133,15 +1159,11 @@
             document.getElementById('headerCatRight').src = headerPhotos[1];
             usedPhotos.push(...headerPhotos);
 
-            // Monthly Breakdown 사진
-            const breakdownPhoto = getRandomPhotos(1, usedPhotos)[0];
-            document.getElementById('breakdownPhoto').src = breakdownPhoto;
-            usedPhotos.push(breakdownPhoto);
-
-            // Savings Goals 사진
-            const savingsPhoto = getRandomPhotos(1, usedPhotos)[0];
-            document.getElementById('savingsPhoto').src = savingsPhoto;
-            usedPhotos.push(savingsPhoto);
+            // 갤러리 사진 2개
+            const galleryPhotos = getRandomPhotos(2, usedPhotos);
+            document.getElementById('galleryPhoto1').src = galleryPhotos[0];
+            document.getElementById('galleryPhoto2').src = galleryPhotos[1];
+            usedPhotos.push(...galleryPhotos);
 
             // 푸터 갤러리 8개
             const footerPhotos = getRandomPhotos(8, usedPhotos);
@@ -1233,9 +1255,12 @@
 
         const savingsGoals = [
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
-            { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$2,600", targetNum: 2600 },
-            { name: "Car Purchase", nameKo: "차", target: "$26,000", targetNum: 26000 }
+            { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
+            { name: "Car Purchase", nameKo: "차", target: "$30,000", targetNum: 30000 }
         ];
+
+        // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
+        const currentSavingsBalance = 554.48 + 135.11 + 402.57 + 600.00; // $1,692.16
 
         let currentMonth = 'jan';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
@@ -1433,6 +1458,10 @@
                 data: {
                     labels: savingsGoals.map(g => g.name),
                     datasets: [{
+                        label: 'Current',
+                        data: savingsGoals.map(() => currentSavingsBalance),
+                        backgroundColor: '#7EC8A3'  // 현재 저축 (초록)
+                    }, {
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
                         backgroundColor: ['#5B8C5A', '#D4784A', '#8B5A2B']  // 상록수(영주권), 모닥불(비행기), 오두막(차)
@@ -1442,7 +1471,7 @@
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } } },
                     scales: {
                         x: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
                         y: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
@@ -1631,24 +1660,47 @@
         }
 
         function updateSavingsGoals() {
-            const html = savingsGoals.map(goal => `
+            const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);
+            const progressPercent = Math.min((currentSavingsBalance / totalGoal) * 100, 100).toFixed(1);
+
+            const html = `
+                <div class="goal-item" style="background: linear-gradient(135deg, #D4EDDA 0%, #B8D9C5 100%);">
+                    <div class="goal-info">
+                        <h4>Current Savings</h4>
+                        <p>현재 저축 잔고 (계좌 합계)</p>
+                    </div>
+                    <div class="goal-amount">
+                        <div class="target" style="color: #5B8C5A;">$${currentSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    </div>
+                </div>
+            ` + savingsGoals.map(goal => {
+                const goalProgress = Math.min((currentSavingsBalance / goal.targetNum) * 100, 100).toFixed(1);
+                return `
                 <div class="goal-item">
                     <div class="goal-info">
                         <h4>${goal.name}</h4>
                         <p>${goal.nameKo}</p>
+                        <div class="progress-bar" style="margin-top: 8px; width: 150px;">
+                            <div class="progress-fill" style="width: ${goalProgress}%;"></div>
+                        </div>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${goalProgress}% 달성</p>
                     </div>
                     <div class="goal-amount">
                         <div class="target">${goal.target}</div>
                     </div>
                 </div>
-            `).join('') + `
+            `}).join('') + `
                 <div class="goal-item" style="background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%);">
                     <div class="goal-info">
                         <h4>TOTAL GOAL</h4>
                         <p>총 저축 목표</p>
+                        <div class="progress-bar" style="margin-top: 8px; width: 150px;">
+                            <div class="progress-fill" style="width: ${progressPercent}%;"></div>
+                        </div>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${progressPercent}% 달성</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target">$36,600</div>
+                        <div class="target">$${totalGoal.toLocaleString('en-US')}</div>
                     </div>
                 </div>
             `;
@@ -1656,21 +1708,11 @@
             document.getElementById('savingsGoalsContainer').innerHTML = html;
         }
 
-        // 나몽이 달리기 진행률 업데이트
+        // 나몽이 달리기 진행률 업데이트 (현재 저축 잔고 기준)
         function updateNamongProgress() {
-            const totalGoal = 36600;  // 총 저축 목표
-            const monthlySavings = budgetData.jan.savings?.total || 0;  // 이번 달 저축액
+            const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);  // $43,500
 
-            // 누적 저축액 계산 (9월부터 1월까지)
-            let cumulativeSavings = 0;
-            const months = ['sep', 'oct', 'nov', 'dec', 'jan'];
-            months.forEach(month => {
-                if (budgetData[month]?.savings?.total) {
-                    cumulativeSavings += budgetData[month].savings.total;
-                }
-            });
-
-            const percent = Math.min((cumulativeSavings / totalGoal) * 100, 100);
+            const percent = Math.min((currentSavingsBalance / totalGoal) * 100, 100);
             const displayPercent = percent.toFixed(1);
 
             // 트랙 채우기
@@ -1682,7 +1724,7 @@
 
             // 퍼센트와 금액 업데이트
             document.getElementById('namongPercent').textContent = `${displayPercent}%`;
-            document.getElementById('namongCurrent').textContent = `$${cumulativeSavings.toLocaleString('en-US', {minimumFractionDigits: 0})}`;
+            document.getElementById('namongCurrent').textContent = `$${currentSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
 
             // 100% 달성 시 특별 효과
             if (percent >= 100) {
