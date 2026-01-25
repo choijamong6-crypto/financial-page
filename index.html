@@ -6,9 +6,6 @@
     <title>Our Budget Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -18,9 +15,9 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FDF8F3 0%, #F5EDE4 50%, #FFF9F5 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E6 50%, #FFF0F3 100%);
             min-height: 100vh;
-            color: #5D4E42;
+            color: #6B5B5B;
         }
 
         .container {
@@ -50,7 +47,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(139, 90, 43, 0.25);
+            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -62,7 +59,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #D4784A, #E89B6C, #C96B42);
+            background: linear-gradient(90deg, #E8929C, #D4A5AA, #C7929C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -70,7 +67,7 @@
         }
 
         header p {
-            color: #8B7355;
+            color: #9B8585;
             margin-top: 5px;
             font-size: 1.1rem;
         }
@@ -89,22 +86,22 @@
             border: none;
             border-radius: 25px;
             background: #fff;
-            color: #5D4E42;
+            color: #6B5B5B;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.12);
+            box-shadow: 0 4px 15px rgba(199, 146, 156, 0.15);
         }
 
         .month-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(139, 90, 43, 0.2);
+            box-shadow: 0 6px 20px rgba(199, 146, 156, 0.25);
         }
 
         .month-btn.active {
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
             color: #fff;
         }
 
@@ -114,7 +111,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -126,13 +123,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #D4784A, #5B8C5A, #E89B6C);
+            background: linear-gradient(90deg, #E8929C, #F5C6CB);
         }
 
         .info-section h2 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -149,7 +146,7 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             transition: transform 0.2s;
         }
@@ -163,7 +160,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #E89B6C;
+            border: 3px solid #F5C6CB;
         }
 
         .info-item .emoji {
@@ -172,13 +169,13 @@
 
         .info-text h4 {
             font-size: 1rem;
-            color: #5D4E42;
+            color: #6B5B5B;
             margin-bottom: 3px;
         }
 
         .info-text p {
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #9B8585;
             line-height: 1.4;
         }
 
@@ -194,7 +191,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -209,10 +206,10 @@
             height: 4px;
         }
 
-        .card.income::after { background: #5B8C5A; }
-        .card.expense::after { background: #D4784A; }
-        .card.balance::after { background: #E89B6C; }
-        .card.savings::after { background: #8B5A2B; }
+        .card.income::after { background: #7EC8A3; }
+        .card.expense::after { background: #E8929C; }
+        .card.balance::after { background: #D4A5AA; }
+        .card.savings::after { background: #F5C6CB; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -235,13 +232,13 @@
             font-size: 24px;
         }
 
-        .card-icon.income { background: #E8F5E8; }
-        .card-icon.expense { background: #FFF0E8; }
-        .card-icon.balance { background: #FFF5ED; }
-        .card-icon.savings { background: #F5EDE4; }
+        .card-icon.income { background: #D4EDDA; }
+        .card-icon.expense { background: #FFE4E6; }
+        .card-icon.balance { background: #F5D6D9; }
+        .card-icon.savings { background: #FFF0F3; }
 
         .card h3 {
-            color: #8B7355;
+            color: #9B8585;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -252,13 +249,13 @@
             margin-top: 5px;
         }
 
-        .card .amount.positive { color: #5B8C5A; }
-        .card .amount.negative { color: #D4784A; }
-        .card .amount.neutral { color: #8B5A2B; }
+        .card .amount.positive { color: #5B9B7A; }
+        .card .amount.negative { color: #D47580; }
+        .card .amount.neutral { color: #B08B90; }
 
         .card .sub-text {
             font-size: 0.8rem;
-            color: #A08060;
+            color: #B09A9A;
             margin-top: 5px;
         }
 
@@ -274,13 +271,13 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
         }
 
         .chart-card h2 {
             font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -296,14 +293,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
         }
 
         .insights-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #6B5B5B;
         }
 
         .insight-item {
@@ -311,7 +308,7 @@
             align-items: flex-start;
             gap: 15px;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             margin-bottom: 12px;
             transition: transform 0.2s;
@@ -332,21 +329,21 @@
             flex-shrink: 0;
         }
 
-        .insight-icon.good { background: #E8F5E8; }
-        .insight-icon.warning { background: #FFE8DC; }
-        .insight-icon.info { background: #FFF0E8; }
-        .insight-icon.tip { background: #F5EDE4; }
-        .insight-icon.cat { background: #FFE5D0; }
+        .insight-icon.good { background: #D4EDDA; }
+        .insight-icon.warning { background: #FFE4E6; }
+        .insight-icon.info { background: #F5D6D9; }
+        .insight-icon.tip { background: #FFF0F3; }
+        .insight-icon.cat { background: #FFEEF0; }
 
         .insight-content h4 {
             font-size: 0.95rem;
             margin-bottom: 5px;
-            color: #5D4E42;
+            color: #6B5B5B;
         }
 
         .insight-content p {
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #9B8585;
             line-height: 1.5;
         }
 
@@ -355,7 +352,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
             overflow-x: auto;
         }
@@ -363,7 +360,7 @@
         .expense-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #6B5B5B;
         }
 
         .expense-table {
@@ -374,20 +371,20 @@
         .expense-table th {
             text-align: left;
             padding: 15px;
-            color: #8B7355;
+            color: #9B8585;
             font-weight: 600;
-            border-bottom: 2px solid #E8DDD0;
+            border-bottom: 2px solid #FFE4E6;
             font-size: 0.9rem;
         }
 
         .expense-table td {
             padding: 15px;
-            border-bottom: 1px solid #F5EDE4;
+            border-bottom: 1px solid #FFF0F3;
             font-size: 0.9rem;
         }
 
         .expense-table tr:hover {
-            background: #FFF8F2;
+            background: #FFF5F5;
         }
 
         .category-badge {
@@ -398,21 +395,21 @@
             font-weight: 600;
         }
 
-        /* Warm winter theme - cozy cabin colors */
-        .category-badge.housing { background: #8B5A2B; color: #fff; }
-        .category-badge.utilities { background: #D4784A; color: #fff; }
-        .category-badge.insurance { background: #E89B6C; color: #fff; }
-        .category-badge.food { background: #5B8C5A; color: #fff; }
-        .category-badge.transport { background: #8B7355; color: #fff; }
-        .category-badge.giving { background: #C96B42; color: #fff; }
-        .category-badge.savings { background: #4A7C4A; color: #fff; }
-        .category-badge.pet { background: #D4784A; color: #fff; }
-        .category-badge.entertainment { background: #A06040; color: #fff; }
-        .category-badge.other { background: #9A8B7A; color: #fff; }
+        /* Soft Pink theme - harmonized category colors */
+        .category-badge.housing { background: #FFE4E6; color: #B07580; }
+        .category-badge.utilities { background: #F5D6D9; color: #9B7580; }
+        .category-badge.insurance { background: #FFEEF0; color: #A07580; }
+        .category-badge.food { background: #D4EDDA; color: #5B8B6B; }
+        .category-badge.transport { background: #FFF0F3; color: #A08585; }
+        .category-badge.giving { background: #F5C6CB; color: #9B6B75; }
+        .category-badge.savings { background: #E8F5E9; color: #5B8B6B; }
+        .category-badge.pet { background: #FFEEF0; color: #B08080; }
+        .category-badge.entertainment { background: #F5D6D9; color: #9B7580; }
+        .category-badge.other { background: #F5F0F0; color: #8B8080; }
 
         .progress-bar {
             height: 8px;
-            background: #F5EDE4;
+            background: #FFF0F3;
             border-radius: 4px;
             overflow: hidden;
             margin-top: 5px;
@@ -421,7 +418,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #D4784A, #E89B6C);
+            background: linear-gradient(90deg, #E8929C, #D4A5AA);
         }
 
         /* Savings Goals */
@@ -429,14 +426,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             margin-bottom: 25px;
         }
 
         .savings-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #6B5B5B;
         }
 
         .goal-item {
@@ -444,20 +441,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F3 100%);
             border-radius: 15px;
             margin-bottom: 12px;
         }
 
         .goal-info h4 {
             font-size: 0.95rem;
-            color: #5D4E42;
+            color: #6B5B5B;
             margin-bottom: 3px;
         }
 
         .goal-info p {
             font-size: 0.8rem;
-            color: #A08060;
+            color: #B09A9A;
         }
 
         .goal-amount {
@@ -467,120 +464,7 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #D4784A;
-        }
-
-        /* Namong Progress Track */
-        .namong-progress-container {
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .namong-progress-title {
-            font-size: 1rem;
-            color: #5D4E42;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .namong-track {
-            position: relative;
-            height: 80px;
-            background: linear-gradient(to right, #E8DDD0 0%, #D4C4B0 100%);
-            border-radius: 40px;
-            overflow: visible;
-            margin: 10px 0;
-        }
-
-        .namong-track-fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            background: linear-gradient(to right, #5B8C5A, #7AA87A);
-            border-radius: 40px 0 0 40px;
-            transition: width 1s ease-out;
-        }
-
-        .namong-runner {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.3);
-            transition: left 1s ease-out;
-            z-index: 10;
-            animation: namongBounce 0.5s ease-in-out infinite;
-        }
-
-        @keyframes namongBounce {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-55%) translateX(2px); }
-        }
-
-        .churu-goal {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            z-index: 5;
-            animation: churuWiggle 1s ease-in-out infinite;
-        }
-
-        @keyframes churuWiggle {
-            0%, 100% { transform: translateY(-50%) rotate(-5deg); }
-            50% { transform: translateY(-50%) rotate(5deg); }
-        }
-
-        .namong-progress-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #8B7355;
-        }
-
-        .namong-progress-percent {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #5B8C5A;
-        }
-
-        .namong-progress-text {
-            text-align: right;
-        }
-
-        .namong-progress-text .current {
-            font-weight: 700;
-            color: #D4784A;
-        }
-
-        .namong-progress-text .total {
-            color: #8B7355;
-        }
-
-        .snow-decoration {
-            position: absolute;
-            font-size: 20px;
-            opacity: 0.6;
-            animation: snowFall 3s ease-in-out infinite;
-        }
-
-        @keyframes snowFall {
-            0%, 100% { transform: translateY(0); opacity: 0.6; }
-            50% { transform: translateY(5px); opacity: 0.3; }
+            color: #D47580;
         }
 
         /* Footer Cat */
@@ -603,7 +487,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(139, 90, 43, 0.25);
+            box-shadow: 0 8px 30px rgba(199, 146, 156, 0.3);
             transition: transform 0.3s;
         }
 
@@ -612,7 +496,7 @@
         }
 
         .footer-text {
-            color: #8B7355;
+            color: #9B8585;
             font-size: 0.9rem;
         }
 
@@ -644,7 +528,7 @@
             }
 
             .game-canvas {
-                height: 260px;
+                height: 120px;
             }
         }
 
@@ -654,7 +538,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(199, 146, 156, 0.12);
             text-align: center;
         }
 
@@ -669,7 +553,7 @@
 
         .game-title {
             font-size: 1.1rem;
-            color: #5D4E42;
+            color: #6B5B5B;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -679,12 +563,12 @@
             display: flex;
             gap: 12px;
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #9B8585;
             flex-wrap: wrap;
         }
 
         .game-stats span {
-            background: #FFF0E8;
+            background: #FFE4E6;
             padding: 5px 12px;
             border-radius: 15px;
         }
@@ -702,7 +586,7 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #FF6B6B 0%, #E8929C 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -716,7 +600,7 @@
         }
 
         .skill-btn:disabled {
-            background: #C4B5A5;
+            background: #ccc;
             cursor: not-allowed;
         }
 
@@ -725,7 +609,7 @@
         }
 
         .phase-indicator {
-            background: linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%);
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
             color: #fff;
             padding: 5px 15px;
             border-radius: 15px;
@@ -737,8 +621,8 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: #E8DDD0;
-            color: #5D4E42;
+            background: #F5C6CB;
+            color: #6B5B5B;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 0.85rem;
@@ -747,7 +631,7 @@
         }
 
         .leaderboard-btn:hover {
-            background: #D4784A;
+            background: #E8929C;
             color: #fff;
         }
 
@@ -755,20 +639,22 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            background: linear-gradient(to bottom, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(to bottom, #FFF5F5 0%, #FFE4E6 100%);
         }
 
         .game-canvas {
             display: block;
             width: 100%;
-            height: 280px;
+            height: 220px;
             cursor: pointer;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .game-instructions {
             margin-top: 12px;
             font-size: 0.85rem;
-            color: #A08060;
+            color: #B09A9A;
         }
 
         .game-over-overlay {
@@ -777,61 +663,58 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(93, 78, 66, 0.9);
+            background: rgba(107, 91, 91, 0.85);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #fff;
             border-radius: 15px;
-            padding: 15px;
-            gap: 8px;
         }
 
         .game-over-overlay h3 {
-            font-size: 1.3rem;
-            margin: 0;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
 
         .game-over-overlay p {
-            margin: 0;
-            font-size: 1rem;
+            margin-bottom: 10px;
         }
 
         .game-over-overlay img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fff;
+            margin-bottom: 15px;
         }
 
         .name-input-container {
-            margin: 5px 0;
+            margin: 15px 0;
         }
 
         .name-input {
-            padding: 8px 12px;
+            padding: 10px 15px;
             border: none;
             border-radius: 10px;
             font-family: 'Nunito', sans-serif;
-            font-size: 0.9rem;
-            width: 180px;
+            font-size: 1rem;
+            width: 200px;
             text-align: center;
         }
 
         .restart-btn {
-            padding: 8px 20px;
+            padding: 10px 25px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #E8929C 0%, #D4A5AA 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s;
-            margin: 3px;
-            font-size: 0.9rem;
+            margin: 5px;
         }
 
         .restart-btn:hover {
@@ -862,7 +745,7 @@
         }
 
         .leaderboard-content h3 {
-            color: #5D4E42;
+            color: #6B5B5B;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -875,7 +758,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 15px;
-            background: #FFF8F2;
+            background: #FFF5F5;
             border-radius: 10px;
             margin-bottom: 8px;
         }
@@ -900,12 +783,12 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <img src="01_pictures/놀람.jpg" alt="Namong" class="header-cat" id="headerCatLeft">
+                <img src="01_pictures/놀람.jpg" alt="Namong" class="header-cat">
                 <div>
                     <h1>Our Budget Dashboard</h1>
                     <p>Chamsae & Hani's Money Tracker</p>
                 </div>
-                <img src="01_pictures/궁금.jpg" alt="Family" class="header-cat" id="headerCatRight">
+                <img src="01_pictures/오손도손.jpg" alt="Family" class="header-cat">
             </div>
         </header>
 
@@ -941,13 +824,13 @@
                     </div>
                 </div>
             </div>
-            <p class="game-instructions">Space/클릭: 점프 | F키: 미친냥 모드 (무적 3초) | 💰30개마다 🐾1개 충전! 장애물을 피하고 코인을 모으세요! 🐱</p>
+            <p class="game-instructions">Space/클릭: 점프 | F키: 미친냥 모드 (무적 3초) | 장애물을 피하고 코인을 모으세요! 🐱</p>
         </div>
 
         <!-- Leaderboard Modal -->
         <div id="leaderboardModal" class="leaderboard-modal" style="display: none;">
             <div class="leaderboard-content">
-                <h3>🏆 리더보드 TOP 10</h3>
+                <h3>🏆 리더보드 TOP 5</h3>
                 <ul id="leaderboardList" class="leaderboard-list"></ul>
                 <button class="restart-btn close-modal" onclick="hideLeaderboard()">닫기</button>
             </div>
@@ -1021,36 +904,6 @@
 
         <div class="savings-section">
             <h2>Savings Goals</h2>
-
-            <!-- Namong Running to Churu Progress -->
-            <div class="namong-progress-container" id="namongProgressContainer">
-                <span class="snow-decoration" style="top: 10px; left: 20%;">❄️</span>
-                <span class="snow-decoration" style="top: 5px; left: 50%; animation-delay: 0.5s;">❄️</span>
-                <span class="snow-decoration" style="top: 15px; left: 80%; animation-delay: 1s;">❄️</span>
-
-                <div class="namong-progress-title">
-                    <span>🏃</span>
-                    <span>나몽이의 츄르 대장정!</span>
-                </div>
-
-                <div class="namong-track">
-                    <div class="namong-track-fill" id="namongTrackFill" style="width: 0%;"></div>
-                    <img src="01_pictures/애기.jpg" alt="Namong" class="namong-runner" id="namongRunner" style="left: 0%;">
-                    <div class="churu-goal">🍖</div>
-                </div>
-
-                <div class="namong-progress-info">
-                    <div>
-                        <span class="namong-progress-percent" id="namongPercent">0%</span>
-                        <span> 달성!</span>
-                    </div>
-                    <div class="namong-progress-text">
-                        <span class="current" id="namongCurrent">$0</span>
-                        <span class="total"> / $36,600</span>
-                    </div>
-                </div>
-            </div>
-
             <div id="savingsGoalsContainer">
                 <!-- Filled by JavaScript -->
             </div>
@@ -1089,7 +942,7 @@
                     gas: { gas1: 26.53, gas2: 24.59, sum: 51.12 },
                     membership: { costco: 65, sum: 65 }
                 },
-                totalExpenses: 7630.49,
+                totalExpenses: 7670.25,
                 savings: { daehyuni: 1500, hani: 700, total: 2200 },
                 travel: {
                     portland: {
@@ -1150,9 +1003,12 @@
 
         const savingsGoals = [
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
-            { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$2,600", targetNum: 2600 },
-            { name: "Car Purchase", nameKo: "차", target: "$26,000", targetNum: 26000 }
+            { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
+            { name: "Car Purchase", nameKo: "차", target: "$30,000", targetNum: 30000 }
         ];
+
+        // 현재 저축 잔고 (참새통장 + 냥이통장 + 공동통장 + Savings)
+        const currentSavingsBalance = 554.48 + 135.11 + 402.57 + 600.00; // $1,692.16
 
         let currentMonth = 'jan';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
@@ -1204,7 +1060,7 @@
             const ctx = document.getElementById('trendChart').getContext('2d');
             const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
             const incomeData = [4153, 5300, 4333.87, 5461.22, 9069.99];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 7630.49];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 7670.25];
 
             if (trendChart) trendChart.destroy();
 
@@ -1234,11 +1090,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } }
+                        legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } }
                     },
                     scales: {
-                        y: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        x: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        y: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        x: { ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -1249,22 +1105,22 @@
 
             const categories = [];
             const values = [];
-            // 따뜻한 겨울 색상 팔레트 (모닥불/오두막/상록수)
+            // Soft Pink harmonized color palette
             const categoryColors = {
-                'Housing': '#8B5A2B',      // 나무색 - 오두막
-                'Tithing': '#C96B42',      // 모닥불 오렌지
-                'Utilities': '#D4784A',    // 따뜻한 오렌지
-                'Insurance': '#E89B6C',    // 연한 오렌지
-                'Pet (Namong)': '#D4784A', // 모닥불색 - 나몽
-                'Grocery': '#5B8C5A',      // 상록수 초록
-                'Entertainment': '#A06040', // 진한 나무색
-                'Dining': '#4A7C4A',       // 진한 상록수
-                'Gas': '#8B7355',          // 나무 갈색
-                'Membership': '#9A8B7A',   // 따뜻한 회색
-                'Shopping': '#C96B42',     // 불꽃 색상
-                'Travel': '#7AA87A',       // 연한 상록수
-                'Giving': '#B08060',       // 따뜻한 갈색
-                'Other': '#A08060'         // 베이지 갈색
+                'Housing': '#E8929C',
+                'Tithing': '#F5C6CB',
+                'Utilities': '#D4A5AA',
+                'Insurance': '#FFEEF0',
+                'Pet (Namong)': '#FFD6DA',
+                'Grocery': '#7EC8A3',
+                'Entertainment': '#F5D6D9',
+                'Dining': '#B8D9C5',
+                'Gas': '#FFF0F3',
+                'Membership': '#F5E8E9',
+                'Shopping': '#F0E5E6',
+                'Travel': '#E8D5D8',
+                'Giving': '#F5C6CB',
+                'Other': '#F5F0F0'
             };
             const colors = [];
 
@@ -1304,7 +1160,7 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { color: '#5D4E42', padding: 8, font: { family: 'Nunito', size: 11 } }
+                            labels: { color: '#6B5B5B', padding: 8, font: { family: 'Nunito', size: 11 } }
                         }
                     }
                 }
@@ -1322,19 +1178,19 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#8B5A2B' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#D4784A' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#E89B6C' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#A08060' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80], backgroundColor: '#E8929C' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99], backgroundColor: '#D4A5AA' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93], backgroundColor: '#F5C6CB' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 2489.59], backgroundColor: '#F5E8E9' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } } },
                     scales: {
-                        y: { stacked: true, ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        x: { stacked: true, ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        y: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        x: { stacked: true, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -1350,19 +1206,23 @@
                 data: {
                     labels: savingsGoals.map(g => g.name),
                     datasets: [{
+                        label: 'Current',
+                        data: savingsGoals.map(() => currentSavingsBalance),
+                        backgroundColor: ['#7EC8A3', '#7EC8A3', '#7EC8A3']
+                    }, {
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#5B8C5A', '#D4784A', '#8B5A2B']  // 상록수(영주권), 모닥불(비행기), 오두막(차)
+                        backgroundColor: ['#E8929C', '#D4A5AA', '#F5C6CB']
                     }]
                 },
                 options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: '#6B5B5B', font: { family: 'Nunito' } } } },
                     scales: {
-                        x: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        y: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        x: { stacked: false, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } },
+                        y: { stacked: false, ticks: { color: '#9B8585' }, grid: { color: 'rgba(199, 146, 156, 0.1)' } }
                     }
                 }
             });
@@ -1490,64 +1350,52 @@
         }
 
         function updateSavingsGoals() {
-            const html = savingsGoals.map(goal => `
+            const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);
+            const progressPercent = Math.min((currentSavingsBalance / totalGoal) * 100, 100).toFixed(1);
+
+            const html = `
+                <div class="goal-item" style="background: linear-gradient(135deg, #D4EDDA 0%, #B8D9C5 100%);">
+                    <div class="goal-info">
+                        <h4>Current Savings</h4>
+                        <p>현재 저축 잔고</p>
+                    </div>
+                    <div class="goal-amount">
+                        <div class="target" style="color: #5B9B7A;">$${currentSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                    </div>
+                </div>
+            ` + savingsGoals.map(goal => {
+                const goalProgress = Math.min((currentSavingsBalance / goal.targetNum) * 100, 100).toFixed(1);
+                return `
                 <div class="goal-item">
                     <div class="goal-info">
                         <h4>${goal.name}</h4>
                         <p>${goal.nameKo}</p>
+                        <div class="progress-bar" style="margin-top: 8px; width: 150px;">
+                            <div class="progress-fill" style="width: ${goalProgress}%;"></div>
+                        </div>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${goalProgress}% 달성</p>
                     </div>
                     <div class="goal-amount">
                         <div class="target">${goal.target}</div>
                     </div>
                 </div>
-            `).join('') + `
-                <div class="goal-item" style="background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%);">
+            `}).join('') + `
+                <div class="goal-item" style="background: linear-gradient(135deg, #FFE4E6 0%, #F5C6CB 100%);">
                     <div class="goal-info">
                         <h4>TOTAL GOAL</h4>
                         <p>총 저축 목표</p>
+                        <div class="progress-bar" style="margin-top: 8px; width: 150px;">
+                            <div class="progress-fill" style="width: ${progressPercent}%;"></div>
+                        </div>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${progressPercent}% 달성</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target">$36,600</div>
+                        <div class="target">$${totalGoal.toLocaleString('en-US')}</div>
                     </div>
                 </div>
             `;
 
             document.getElementById('savingsGoalsContainer').innerHTML = html;
-        }
-
-        // 나몽이 달리기 진행률 업데이트
-        function updateNamongProgress() {
-            const totalGoal = 36600;  // 총 저축 목표
-            const monthlySavings = budgetData.jan.savings?.total || 0;  // 이번 달 저축액
-
-            // 누적 저축액 계산 (9월부터 1월까지)
-            let cumulativeSavings = 0;
-            const months = ['sep', 'oct', 'nov', 'dec', 'jan'];
-            months.forEach(month => {
-                if (budgetData[month]?.savings?.total) {
-                    cumulativeSavings += budgetData[month].savings.total;
-                }
-            });
-
-            const percent = Math.min((cumulativeSavings / totalGoal) * 100, 100);
-            const displayPercent = percent.toFixed(1);
-
-            // 트랙 채우기
-            document.getElementById('namongTrackFill').style.width = `${percent}%`;
-
-            // 나몽이 위치 (트랙 너비 - 나몽이 크기 고려)
-            const namongPosition = Math.min(percent, 85);  // 최대 85%까지 (츄르 위치 고려)
-            document.getElementById('namongRunner').style.left = `calc(${namongPosition}% - 30px)`;
-
-            // 퍼센트와 금액 업데이트
-            document.getElementById('namongPercent').textContent = `${displayPercent}%`;
-            document.getElementById('namongCurrent').textContent = `$${cumulativeSavings.toLocaleString('en-US', {minimumFractionDigits: 0})}`;
-
-            // 100% 달성 시 특별 효과
-            if (percent >= 100) {
-                document.getElementById('namongRunner').src = '01_pictures/화남.jpg';  // 기쁜(?) 표정
-                document.getElementById('namongProgressContainer').style.background = 'linear-gradient(135deg, #E8F5E8 0%, #D4EDDA 100%)';
-            }
         }
 
         function selectMonth(month) {
@@ -1571,8 +1419,6 @@
             updateInsights(budgetData.jan);
             updateExpenseTable(budgetData.jan);
             updateSavingsGoals();
-            // 약간 딜레이 후 나몽이 달리기 애니메이션 시작
-            setTimeout(updateNamongProgress, 500);
         }
 
         init();
@@ -1584,7 +1430,7 @@
         const ctx = canvas.getContext('2d');
         const overlay = document.getElementById('gameOverlay');
 
-        // 이미지 로드 (모두 고양이 사진으로 변경)
+        // 이미지 로드
         const images = {
             run: new Image(),
             jump: new Image(),
@@ -1592,25 +1438,19 @@
             dead: new Image(),
             idle: new Image()
         };
-        images.run.src = '01_pictures/애기.jpg';      // 달리기: 귀여운 애기 나몽
-        images.jump.src = '01_pictures/놀람.jpg';     // 점프: 놀란 표정
-        images.crazy.src = '01_pictures/화남.jpg';    // 미친냥 모드: 화난 표정
-        images.dead.src = '01_pictures/억울.jpg';     // 게임오버: 억울한 표정
-        images.idle.src = '01_pictures/궁금.jpg';     // 대기: 궁금한 표정
+        images.run.src = '01_pictures/느긋.jpg';
+        images.jump.src = '01_pictures/놀람.jpg';
+        images.crazy.src = '01_pictures/화남.jpg';
+        images.dead.src = '01_pictures/억울.jpg';
+        images.idle.src = '01_pictures/멋짐.jpg';
 
-        // 페이즈 설정 (10단계, 공중 적 포함) - 따뜻한 겨울 테마 색상 (눈/모닥불/오두막)
-        // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
+        // 페이즈 설정
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF8F2', bgColor2: '#FAEEE5', groundColor: '#E8DDD0' },
-            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF5ED', bgColor2: '#F5E8DC', groundColor: '#DED0C0' },
-            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFF0E8', bgColor2: '#F0E0D0', groundColor: '#D4C4B0' },
-            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFEEE0', bgColor2: '#E8D8C8', groundColor: '#C8B8A0' },
-            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFE8D8', bgColor2: '#E0D0C0', groundColor: '#B8A890' },
-            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFE0D0', bgColor2: '#D8C8B8', groundColor: '#A89880' },
-            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#FFD8C8', bgColor2: '#D0C0B0', groundColor: '#988870' },
-            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#FFD0C0', bgColor2: '#C8B8A8', groundColor: '#887860' },
-            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#FFC8B8', bgColor2: '#C0B0A0', groundColor: '#786850' },
-            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#FFC0B0', bgColor2: '#B8A898', groundColor: '#685840' }
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 3, emojis: ['💸', '🛒'], bgColor1: '#FFF5F5', bgColor2: '#FFE4E6', groundColor: '#F5C6CB' },
+            { name: 'Phase 2: 소비의 유혹', time: 20, speed: 3.5, emojis: ['💳', '🍔', '☕', '🛒'], bgColor1: '#FFF0E5', bgColor2: '#FFE0D0', groundColor: '#F5D0C0' },
+            { name: 'Phase 3: 고정지출', time: 40, speed: 4, emojis: ['🏠', '💡', '⛽', '📱'], bgColor1: '#FFE5E5', bgColor2: '#FFD0D0', groundColor: '#F5B0B0' },
+            { name: 'Phase 4: 지출폭풍', time: 60, speed: 5, emojis: ['📱', '💻', '🎮', '✈️', '💳'], bgColor1: '#FFD5D5', bgColor2: '#FFC0C0', groundColor: '#E8A0A0' },
+            { name: 'Phase 5: 인플레이션', time: 90, speed: 6, emojis: ['📈', '💀', '🔥', '😈', '💣'], bgColor1: '#FFC0C0', bgColor2: '#FF9090', groundColor: '#D08080' }
         ];
 
         // 게임 상태
@@ -1623,34 +1463,14 @@
         let gameTime = 0;
         let currentPhase = 0;
 
-        // 미친냥 모드 (골드 30개당 1회 적립)
+        // 미친냥 모드
         let crazyMode = false;
         let crazyModeTimer = 0;
-        let crazyCharges = 0;  // 처음엔 0개로 시작
-        let coinsForNextCharge = 30;  // 다음 충전까지 필요한 코인
+        let crazyCharges = 3;
         const CRAZY_DURATION = 180; // 3초 (60fps * 3)
-        const COINS_PER_CHARGE = 30;  // 충전당 필요 코인
 
-        // ============================================
-        // Firebase 설정 및 리더보드
-        // ============================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyAHZDTcgacva0tMh3AE5IAq1ovg4Vr7COk",
-            authDomain: "namong-leaderboard.firebaseapp.com",
-            databaseURL: "https://namong-leaderboard-default-rtdb.firebaseio.com",
-            projectId: "namong-leaderboard",
-            storageBucket: "namong-leaderboard.firebasestorage.app",
-            messagingSenderId: "248181592546",
-            appId: "1:248181592546:web:1809d689b6a19ecc7729bb"
-        };
-
-        // Firebase 초기화
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const leaderboardRef = database.ref('leaderboard');
-
-        // 리더보드 (Firebase에서 실시간 동기화)
-        let leaderboard = [];
+        // 리더보드
+        let leaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
 
         // 나몽 (플레이어) - 크기 증가
         const namong = {
@@ -1673,15 +1493,19 @@
         // 물리 상수
         const gravity = 0.6;
         const jumpForce = -13;
-        let groundY = 230;
+        let groundY = 170;
 
         // 캔버스 크기 설정
         function resizeCanvas() {
             const container = canvas.parentElement;
             canvas.width = container.clientWidth;
-            canvas.height = 280;
-            groundY = 230;
+            canvas.height = 220;
+            groundY = 170;
             namong.y = groundY - namong.height;
+
+            // 이미지 렌더링 품질 설정
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
         }
 
         resizeCanvas();
@@ -1718,34 +1542,9 @@
 
         // 스킬 표시 업데이트
         function updateSkillDisplay() {
-            const maxDisplay = Math.min(crazyCharges, 5);  // 최대 5개까지 표시
-            const charges = '🐾'.repeat(maxDisplay) + (crazyCharges > 5 ? `+${crazyCharges - 5}` : '');
-            document.getElementById('skillCharges').textContent = charges || '⚫';
+            const charges = '🐾'.repeat(crazyCharges) + '⚫'.repeat(3 - crazyCharges);
+            document.getElementById('skillCharges').textContent = charges;
             document.getElementById('skillBtn').disabled = crazyCharges <= 0 || !gameRunning;
-
-            // 미친냥 모드 상태에 따른 상태창 스타일
-            const gameStats = document.querySelector('.game-stats');
-            const phaseIndicator = document.getElementById('phaseIndicator');
-            if (crazyMode) {
-                gameStats.style.background = 'linear-gradient(135deg, #D4784A, #C96B42)';
-                gameStats.style.animation = 'crazyGlow 0.5s ease-in-out infinite';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #C96B42, #D4784A)';
-                phaseIndicator.textContent = '🔥 미친냥 모드! 🔥';
-            } else {
-                gameStats.style.background = '';
-                gameStats.style.animation = '';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%)';
-                phaseIndicator.textContent = phases[currentPhase].name;
-            }
-        }
-
-        // 코인 수집시 미친냥 충전 체크
-        function checkCrazyCharge() {
-            if (coins >= coinsForNextCharge) {
-                crazyCharges++;
-                coinsForNextCharge += COINS_PER_CHARGE;
-                updateSkillDisplay();
-            }
         }
 
         // 페이즈 업데이트
@@ -1780,52 +1579,17 @@
             jump();
         });
 
-        // 장애물 생성 (지상 + 공중)
+        // 장애물 생성
         function spawnObstacle() {
             const phase = phases[currentPhase];
-
-            // 공중 적 생성 여부 확인
-            const isAirEnemy = phase.airEnemyChance > 0 && Math.random() < phase.airEnemyChance && phase.airEmojis.length > 0;
-
-            if (isAirEnemy) {
-                // 공중 적 (점프 높이에서 등장 - 점프를 방해)
-                const airObstacle = {
-                    x: canvas.width,
-                    y: groundY - 100 - Math.random() * 40,  // 점프 높이 근처
-                    width: 35,
-                    height: 35,
-                    emoji: phase.airEmojis[Math.floor(Math.random() * phase.airEmojis.length)],
-                    isAir: true
-                };
-                obstacles.push(airObstacle);
-            } else {
-                // 지상 적
-                const obstacle = {
-                    x: canvas.width,
-                    y: groundY - 35,
-                    width: 35,
-                    height: 35,
-                    emoji: phase.emojis[Math.floor(Math.random() * phase.emojis.length)],
-                    isAir: false
-                };
-                obstacles.push(obstacle);
-            }
-        }
-
-        // 공중 적 추가 생성 (높은 페이즈에서 지상+공중 동시 등장)
-        function spawnAirObstacle() {
-            const phase = phases[currentPhase];
-            if (phase.airEmojis.length === 0) return;
-
-            const airObstacle = {
-                x: canvas.width + Math.random() * 50,
-                y: groundY - 90 - Math.random() * 50,
+            const obstacle = {
+                x: canvas.width,
+                y: groundY - 35,
                 width: 35,
                 height: 35,
-                emoji: phase.airEmojis[Math.floor(Math.random() * phase.airEmojis.length)],
-                isAir: true
+                emoji: phase.emojis[Math.floor(Math.random() * phase.emojis.length)]
             };
-            obstacles.push(airObstacle);
+            obstacles.push(obstacle);
         }
 
         // 코인 생성
@@ -1875,13 +1639,12 @@
                 crazyModeTimer--;
                 if (crazyModeTimer <= 0) {
                     crazyMode = false;
-                    updateSkillDisplay();  // 상태창 일반 상태로 복원
                 }
             }
 
-            // 속도 점진적 증가 (최대 12까지)
-            if (frameCount % 300 === 0 && gameSpeed < 12) {
-                gameSpeed += 0.15;
+            // 속도 점진적 증가
+            if (frameCount % 300 === 0 && gameSpeed < 8) {
+                gameSpeed += 0.2;
             }
 
             // 나몽 물리
@@ -1896,18 +1659,10 @@
                 namong.jumping = false;
             }
 
-            // 장애물 생성 (페이즈의 density 값 사용 - 낮을수록 자주 등장)
-            const phase = phases[currentPhase];
-            const spawnRate = Math.max(40, phase.density);
+            // 장애물 생성 (페이즈에 따라 빈도 조절)
+            const spawnRate = Math.max(60, 120 - currentPhase * 15);
             if (frameCount % spawnRate === 0) {
-                if (Math.random() > 0.2) spawnObstacle();
-            }
-
-            // 높은 페이즈에서 추가 공중 적 생성 (7페이즈 이상)
-            if (currentPhase >= 6 && frameCount % 80 === 0) {
-                if (Math.random() < phase.airEnemyChance) {
-                    spawnAirObstacle();
-                }
+                if (Math.random() > 0.25) spawnObstacle();
             }
 
             // 코인 생성
@@ -1929,7 +1684,6 @@
                     obstacles.splice(i, 1);
                     coins += 2;
                     document.getElementById('gameCoins').textContent = coins;
-                    checkCrazyCharge();  // 미친냥 충전 체크
                     continue;
                 }
 
@@ -1946,7 +1700,6 @@
                     coinItems[i].collected = true;
                     coins++;
                     document.getElementById('gameCoins').textContent = coins;
-                    checkCrazyCharge();  // 미친냥 충전 체크
                 }
 
                 if (coinItems[i].x + coinItems[i].width < 0) {
@@ -1973,7 +1726,7 @@
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
-            ctx.strokeStyle = '#8B7355';
+            ctx.strokeStyle = '#E8929C';
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
             ctx.moveTo(0, groundY);
@@ -1991,8 +1744,8 @@
                 img = images.run;
             }
 
-            // 나몽 그리기 (찌그러짐 방지: object-fit cover 효과 구현)
-            if (img.complete && img.naturalWidth > 0) {
+            // 나몽 그리기
+            if (img.complete) {
                 ctx.save();
 
                 // 미친냥 모드 글로우 효과
@@ -2001,32 +1754,15 @@
                     ctx.shadowBlur = 20 + Math.sin(frameCount * 0.3) * 10;
                 }
 
-                // 원형 클리핑
+                // 고품질 이미지 렌더링
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+
                 ctx.beginPath();
                 ctx.arc(namong.x + namong.width/2, namong.y + namong.height/2, namong.width/2, 0, Math.PI * 2);
                 ctx.closePath();
                 ctx.clip();
-
-                // object-fit: cover 효과 구현 (비율 유지하며 중앙 크롭)
-                const imgRatio = img.naturalWidth / img.naturalHeight;
-                const targetRatio = namong.width / namong.height;
-                let sx, sy, sWidth, sHeight;
-
-                if (imgRatio > targetRatio) {
-                    // 이미지가 더 넓음 - 좌우 크롭
-                    sHeight = img.naturalHeight;
-                    sWidth = sHeight * targetRatio;
-                    sx = (img.naturalWidth - sWidth) / 2;
-                    sy = 0;
-                } else {
-                    // 이미지가 더 높음 - 상하 크롭
-                    sWidth = img.naturalWidth;
-                    sHeight = sWidth / targetRatio;
-                    sx = 0;
-                    sy = (img.naturalHeight - sHeight) / 2;
-                }
-
-                ctx.drawImage(img, sx, sy, sWidth, sHeight, namong.x, namong.y, namong.width, namong.height);
+                ctx.drawImage(img, namong.x, namong.y, namong.width, namong.height);
                 ctx.restore();
 
                 // 나몽 테두리
@@ -2060,30 +1796,16 @@
                 ctx.fillStyle = 'rgba(0,0,0,0.4)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 대기 이미지 (찌그러짐 방지)
-                const idleImg = images.idle;
-                if (idleImg.complete && idleImg.naturalWidth > 0) {
+                // 대기 이미지
+                if (images.idle.complete) {
                     ctx.save();
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
                     ctx.beginPath();
                     ctx.arc(canvas.width/2, canvas.height/2 - 20, 40, 0, Math.PI * 2);
                     ctx.closePath();
                     ctx.clip();
-
-                    // object-fit: cover 효과
-                    const imgR = idleImg.naturalWidth / idleImg.naturalHeight;
-                    let sx2, sy2, sw2, sh2;
-                    if (imgR > 1) {
-                        sh2 = idleImg.naturalHeight;
-                        sw2 = sh2;
-                        sx2 = (idleImg.naturalWidth - sw2) / 2;
-                        sy2 = 0;
-                    } else {
-                        sw2 = idleImg.naturalWidth;
-                        sh2 = sw2;
-                        sx2 = 0;
-                        sy2 = (idleImg.naturalHeight - sh2) / 2;
-                    }
-                    ctx.drawImage(idleImg, sx2, sy2, sw2, sh2, canvas.width/2 - 40, canvas.height/2 - 60, 80, 80);
+                    ctx.drawImage(images.idle, canvas.width/2 - 40, canvas.height/2 - 60, 80, 80);
                     ctx.restore();
                 }
 
@@ -2120,30 +1842,16 @@
             updateSkillDisplay();
         }
 
-        // 저장 후 재시작 (Firebase에 저장)
+        // 저장 후 재시작
         function saveAndRestart() {
             const name = document.getElementById('playerName').value.trim() || '익명';
             const now = new Date();
             const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 
-            // Firebase에 새 기록 저장
-            const newScoreRef = leaderboardRef.push();
-            newScoreRef.set({
-                name: name,
-                score: coins,
-                date: dateStr,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            }).then(() => {
-                console.log('Score saved to Firebase!');
-            }).catch((error) => {
-                console.error('Error saving score:', error);
-                // 오프라인 fallback: localStorage에 저장
-                let localLeaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
-                localLeaderboard.push({ name, score: coins, date: dateStr });
-                localLeaderboard.sort((a, b) => b.score - a.score);
-                localLeaderboard = localLeaderboard.slice(0, 10);
-                localStorage.setItem('namongLeaderboard', JSON.stringify(localLeaderboard));
-            });
+            leaderboard.push({ name, score: coins, date: dateStr });
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 5);
+            localStorage.setItem('namongLeaderboard', JSON.stringify(leaderboard));
 
             document.getElementById('playerName').value = '';
             restartGame();
@@ -2160,8 +1868,7 @@
             coinItems = [];
             crazyMode = false;
             crazyModeTimer = 0;
-            crazyCharges = 0;  // 처음엔 0개로 시작
-            coinsForNextCharge = COINS_PER_CHARGE;  // 다음 충전까지 30코인
+            crazyCharges = 3;
             namong.y = groundY - namong.height;
             namong.velocityY = 0;
             namong.grounded = true;
@@ -2169,9 +1876,6 @@
 
             document.getElementById('gameCoins').textContent = 0;
             document.getElementById('phaseIndicator').textContent = phases[0].name;
-            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%)';
-            document.querySelector('.game-stats').style.background = '';
-            document.querySelector('.game-stats').style.animation = '';
             document.getElementById('playerName').value = '';
             overlay.style.display = 'none';
             updateSkillDisplay();
@@ -2181,49 +1885,18 @@
             gameLoop();
         }
 
-        // 리더보드 표시 (Firebase에서 실시간 로드)
+        // 리더보드 표시
         function showLeaderboard() {
             const list = document.getElementById('leaderboardList');
-            list.innerHTML = '<li style="text-align:center;">로딩 중...</li>';
+            list.innerHTML = leaderboard.length === 0
+                ? '<li style="text-align:center;">아직 기록이 없습니다</li>'
+                : leaderboard.map((r, i) => `
+                    <li>
+                        <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
+                        <span>${r.score}개 (${r.date})</span>
+                    </li>
+                `).join('');
             document.getElementById('leaderboardModal').style.display = 'flex';
-
-            // Firebase에서 상위 10개 점수 가져오기 (점수 내림차순)
-            leaderboardRef.orderByChild('score').limitToLast(10).once('value')
-                .then((snapshot) => {
-                    const scores = [];
-                    snapshot.forEach((childSnapshot) => {
-                        scores.push(childSnapshot.val());
-                    });
-                    // 점수 내림차순 정렬
-                    scores.sort((a, b) => b.score - a.score);
-                    leaderboard = scores;
-
-                    if (scores.length === 0) {
-                        list.innerHTML = '<li style="text-align:center;">아직 기록이 없습니다</li>';
-                    } else {
-                        list.innerHTML = scores.map((r, i) => `
-                            <li>
-                                <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
-                                <span>${r.score}개 (${r.date})</span>
-                            </li>
-                        `).join('');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error loading leaderboard:', error);
-                    // 오프라인 fallback: localStorage에서 로드
-                    const localLeaderboard = JSON.parse(localStorage.getItem('namongLeaderboard')) || [];
-                    if (localLeaderboard.length === 0) {
-                        list.innerHTML = '<li style="text-align:center;">아직 기록이 없습니다</li>';
-                    } else {
-                        list.innerHTML = localLeaderboard.map((r, i) => `
-                            <li>
-                                <span>${i === 0 ? '👑' : i + 1 + '.'} ${r.name}</span>
-                                <span>${r.score}개 (${r.date})</span>
-                            </li>
-                        `).join('');
-                    }
-                });
         }
 
         // 리더보드 숨기기
@@ -2242,30 +1915,6 @@
 
         // 초기 화면 그리기
         draw();
-
-        // ============================================
-        // 헤더 사진 10초마다 랜덤 변경
-        // ============================================
-        const catImages = [
-            '01_pictures/궁금.jpg',
-            '01_pictures/놀람.jpg',
-            '01_pictures/애기.jpg',
-            '01_pictures/억울.jpg',
-            '01_pictures/화남.jpg'
-        ];
-
-        function changeHeaderCats() {
-            const leftCat = document.getElementById('headerCatLeft');
-            const rightCat = document.getElementById('headerCatRight');
-
-            // 랜덤하게 두 개의 다른 이미지 선택
-            const shuffled = [...catImages].sort(() => Math.random() - 0.5);
-            leftCat.src = shuffled[0];
-            rightCat.src = shuffled[1];
-        }
-
-        // 10초마다 헤더 사진 변경
-        setInterval(changeHeaderCats, 10000);
     </script>
 </body>
 </html>
