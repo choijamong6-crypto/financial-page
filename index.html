@@ -611,6 +611,24 @@
             transform: scale(1.1) rotate(5deg);
         }
 
+        /* Section Feature Photo */
+        .section-photo {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.2);
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .section-photo:hover {
+            transform: scale(1.02);
+        }
+
         .footer-text {
             color: #8B7355;
             font-size: 0.9rem;
@@ -986,12 +1004,14 @@
                 <div class="chart-container">
                     <canvas id="expenseBarChart"></canvas>
                 </div>
+                <img src="01_pictures/애기.jpg" alt="Namong" class="section-photo" id="breakdownPhoto">
             </div>
             <div class="chart-card">
                 <h2>Savings Goals</h2>
                 <div class="chart-container">
                     <canvas id="savingsChart"></canvas>
                 </div>
+                <img src="01_pictures/느긋.jpg" alt="Namong" class="section-photo" id="savingsPhoto">
             </div>
         </div>
 
@@ -1057,17 +1077,80 @@
         </div>
 
         <div class="footer-section">
-            <div class="footer-cats">
-                <img src="01_pictures/궁금.jpg" alt="Curious" class="footer-cat">
-                <img src="01_pictures/멋짐.jpg" alt="Cool" class="footer-cat">
-                <img src="01_pictures/느긋.jpg" alt="Relaxed" class="footer-cat">
-                <img src="01_pictures/놀람.jpg" alt="Surprised" class="footer-cat">
+            <div class="footer-cats" id="footerGallery">
+                <!-- Filled by JavaScript with random photos -->
             </div>
             <p class="footer-text">Made with love for our family budget</p>
         </div>
     </div>
 
     <script>
+        // 모든 나몽 사진 배열
+        const allNamongPhotos = [
+            '01_pictures/궁금.jpg',
+            '01_pictures/깨우지마.jpg',
+            '01_pictures/놀람.jpg',
+            '01_pictures/느긋.jpg',
+            '01_pictures/멋짐.jpg',
+            '01_pictures/멍청.jpg',
+            '01_pictures/애기.jpg',
+            '01_pictures/애기잠.jpg',
+            '01_pictures/억울.jpg',
+            '01_pictures/엉덩이.jpg',
+            '01_pictures/오손도손.jpg',
+            '01_pictures/이제정신이드나요.jpg',
+            '01_pictures/화남.jpg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-44 001.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-47 002.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-48 003.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-53 004.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-55 005.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-56 006.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-58 007.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-49-59 008.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-01 009.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-03 010.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-04 011.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-05 012.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-07 013.jpeg',
+            '01_pictures/KakaoTalk_Photo_2026-01-24-20-50-09 014.jpeg'
+        ];
+
+        // 랜덤 사진 선택 함수 (중복 방지)
+        function getRandomPhotos(count, exclude = []) {
+            const available = allNamongPhotos.filter(p => !exclude.includes(p));
+            const shuffled = available.sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        // 랜덤 사진 초기화
+        function initRandomPhotos() {
+            const usedPhotos = [];
+
+            // 헤더 사진 2개
+            const headerPhotos = getRandomPhotos(2);
+            document.getElementById('headerCatLeft').src = headerPhotos[0];
+            document.getElementById('headerCatRight').src = headerPhotos[1];
+            usedPhotos.push(...headerPhotos);
+
+            // Monthly Breakdown 사진
+            const breakdownPhoto = getRandomPhotos(1, usedPhotos)[0];
+            document.getElementById('breakdownPhoto').src = breakdownPhoto;
+            usedPhotos.push(breakdownPhoto);
+
+            // Savings Goals 사진
+            const savingsPhoto = getRandomPhotos(1, usedPhotos)[0];
+            document.getElementById('savingsPhoto').src = savingsPhoto;
+            usedPhotos.push(savingsPhoto);
+
+            // 푸터 갤러리 8개
+            const footerPhotos = getRandomPhotos(8, usedPhotos);
+            const footerGallery = document.getElementById('footerGallery');
+            footerGallery.innerHTML = footerPhotos.map(photo =>
+                `<img src="${photo}" alt="Namong" class="footer-cat">`
+            ).join('');
+        }
+
         // Updated Budget Data from Excel
         const budgetData = {
             jan: {
@@ -1621,6 +1704,9 @@
         }
 
         function init() {
+            // 랜덤 사진 초기화
+            initRandomPhotos();
+
             updateSummaryCards(budgetData.jan);
             updateTrendChart();
             updateCategoryChart(budgetData.jan);
