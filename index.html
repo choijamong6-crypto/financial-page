@@ -18,9 +18,9 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FDF8F3 0%, #F5EDE4 50%, #FFF9F5 100%);
+            background: linear-gradient(135deg, #FDF5FA 0%, #F0EAF5 50%, #FFF8FC 100%);
             min-height: 100vh;
-            color: #5D4E42;
+            color: #5A4E62;
         }
 
         .container {
@@ -50,7 +50,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(139, 90, 43, 0.25);
+            box-shadow: 0 8px 30px rgba(140, 120, 160, 0.25);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -62,7 +62,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #D4784A, #E89B6C, #C96B42);
+            background: linear-gradient(90deg, #B8A0D4, #DCCCEC, #9E88B8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -70,7 +70,7 @@
         }
 
         header p {
-            color: #8B7355;
+            color: #8B7890;
             margin-top: 5px;
             font-size: 1.1rem;
         }
@@ -89,22 +89,22 @@
             border: none;
             border-radius: 25px;
             background: #fff;
-            color: #5D4E42;
+            color: #5A4E62;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.12);
+            box-shadow: 0 4px 15px rgba(140, 120, 160, 0.12);
         }
 
         .month-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(139, 90, 43, 0.2);
+            box-shadow: 0 6px 20px rgba(140, 120, 160, 0.2);
         }
 
         .month-btn.active {
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
             color: #fff;
         }
 
@@ -114,7 +114,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -126,13 +126,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #D4784A, #5B8C5A, #E89B6C);
+            background: linear-gradient(90deg, #FFCBE1, #D6E5BD, #BCD8EC);
         }
 
         .info-section h2 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #5A4E62;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -149,7 +149,7 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
             border-radius: 15px;
             transition: transform 0.2s;
         }
@@ -163,7 +163,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #E89B6C;
+            border: 3px solid #DCCCEC;
         }
 
         .info-item .emoji {
@@ -172,13 +172,13 @@
 
         .info-text h4 {
             font-size: 1rem;
-            color: #5D4E42;
+            color: #5A4E62;
             margin-bottom: 3px;
         }
 
         .info-text p {
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #8B7890;
             line-height: 1.4;
         }
 
@@ -194,7 +194,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -209,10 +209,10 @@
             height: 4px;
         }
 
-        .card.income::after { background: #5B8C5A; }
-        .card.expense::after { background: #D4784A; }
-        .card.balance::after { background: #E89B6C; }
-        .card.savings::after { background: #8B5A2B; }
+        .card.income::after { background: #8BAA6C; }
+        .card.expense::after { background: #D4829E; }
+        .card.balance::after { background: #88B4D0; }
+        .card.savings::after { background: #D4B468; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -235,13 +235,13 @@
             font-size: 24px;
         }
 
-        .card-icon.income { background: #E8F5E8; }
-        .card-icon.expense { background: #FFF0E8; }
-        .card-icon.balance { background: #FFF5ED; }
-        .card-icon.savings { background: #F5EDE4; }
+        .card-icon.income { background: #ECF5E0; }
+        .card-icon.expense { background: #FFE8F0; }
+        .card-icon.balance { background: #E8F0F8; }
+        .card-icon.savings { background: #FDF5E8; }
 
         .card h3 {
-            color: #8B7355;
+            color: #8B7890;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -252,13 +252,13 @@
             margin-top: 5px;
         }
 
-        .card .amount.positive { color: #5B8C5A; }
-        .card .amount.negative { color: #D4784A; }
-        .card .amount.neutral { color: #8B5A2B; }
+        .card .amount.positive { color: #6E9E50; }
+        .card .amount.negative { color: #D4829E; }
+        .card .amount.neutral { color: #B89840; }
 
         .card .sub-text {
             font-size: 0.8rem;
-            color: #A08060;
+            color: #A08898;
             margin-top: 5px;
         }
 
@@ -274,13 +274,13 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
         }
 
         .chart-card h2 {
             font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #5A4E62;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -296,14 +296,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             margin-bottom: 25px;
         }
 
         .insights-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #5A4E62;
         }
 
         .insight-item {
@@ -311,7 +311,7 @@
             align-items: flex-start;
             gap: 15px;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
             border-radius: 15px;
             margin-bottom: 12px;
             transition: transform 0.2s;
@@ -332,21 +332,21 @@
             flex-shrink: 0;
         }
 
-        .insight-icon.good { background: #E8F5E8; }
-        .insight-icon.warning { background: #FFE8DC; }
-        .insight-icon.info { background: #FFF0E8; }
-        .insight-icon.tip { background: #F5EDE4; }
-        .insight-icon.cat { background: #FFE5D0; }
+        .insight-icon.good { background: #ECF5E0; }
+        .insight-icon.warning { background: #FFE0EC; }
+        .insight-icon.info { background: #E8F0F8; }
+        .insight-icon.tip { background: #F0EAF5; }
+        .insight-icon.cat { background: #FFE8F0; }
 
         .insight-content h4 {
             font-size: 0.95rem;
             margin-bottom: 5px;
-            color: #5D4E42;
+            color: #5A4E62;
         }
 
         .insight-content p {
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #8B7890;
             line-height: 1.5;
         }
 
@@ -355,7 +355,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             margin-bottom: 25px;
             overflow-x: auto;
         }
@@ -363,7 +363,7 @@
         .expense-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #5A4E62;
         }
 
         .expense-table {
@@ -374,20 +374,20 @@
         .expense-table th {
             text-align: left;
             padding: 15px;
-            color: #8B7355;
+            color: #8B7890;
             font-weight: 600;
-            border-bottom: 2px solid #E8DDD0;
+            border-bottom: 2px solid #E0D8E8;
             font-size: 0.9rem;
         }
 
         .expense-table td {
             padding: 15px;
-            border-bottom: 1px solid #F5EDE4;
+            border-bottom: 1px solid #F0EAF5;
             font-size: 0.9rem;
         }
 
         .expense-table tr:hover {
-            background: #FFF8F2;
+            background: #FFF5F9;
         }
 
         .category-badge {
@@ -399,20 +399,21 @@
         }
 
         /* Warm winter theme - cozy cabin colors */
-        .category-badge.housing { background: #8B5A2B; color: #fff; }
-        .category-badge.utilities { background: #D4784A; color: #fff; }
-        .category-badge.insurance { background: #E89B6C; color: #fff; }
-        .category-badge.food { background: #5B8C5A; color: #fff; }
-        .category-badge.transport { background: #8B7355; color: #fff; }
-        .category-badge.giving { background: #C96B42; color: #fff; }
-        .category-badge.savings { background: #4A7C4A; color: #fff; }
-        .category-badge.pet { background: #D4784A; color: #fff; }
-        .category-badge.entertainment { background: #A06040; color: #fff; }
-        .category-badge.other { background: #9A8B7A; color: #fff; }
+        /* Gelato Days pastel theme */
+        .category-badge.housing { background: #D4829E; color: #fff; }
+        .category-badge.utilities { background: #88B4D0; color: #fff; }
+        .category-badge.insurance { background: #D4B468; color: #fff; }
+        .category-badge.food { background: #8BAA6C; color: #fff; }
+        .category-badge.transport { background: #8B8BA0; color: #fff; }
+        .category-badge.giving { background: #B8A0D4; color: #fff; }
+        .category-badge.savings { background: #6E9650; color: #fff; }
+        .category-badge.pet { background: #E8B888; color: #fff; }
+        .category-badge.entertainment { background: #A890B8; color: #fff; }
+        .category-badge.other { background: #9A8B9A; color: #fff; }
 
         .progress-bar {
             height: 8px;
-            background: #F5EDE4;
+            background: #F0EAF5;
             border-radius: 4px;
             overflow: hidden;
             margin-top: 5px;
@@ -421,7 +422,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #D4784A, #E89B6C);
+            background: linear-gradient(90deg, #B8A0D4, #DCCCEC);
         }
 
         /* Savings Goals */
@@ -429,14 +430,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             margin-bottom: 25px;
         }
 
         .savings-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5D4E42;
+            color: #5A4E62;
         }
 
         .goal-item {
@@ -444,20 +445,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
             border-radius: 15px;
             margin-bottom: 12px;
         }
 
         .goal-info h4 {
             font-size: 0.95rem;
-            color: #5D4E42;
+            color: #5A4E62;
             margin-bottom: 3px;
         }
 
         .goal-info p {
             font-size: 0.8rem;
-            color: #A08060;
+            color: #A08898;
         }
 
         .goal-amount {
@@ -467,12 +468,12 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #D4784A;
+            color: #B8A0D4;
         }
 
         /* Namong Progress Track */
         .namong-progress-container {
-            background: linear-gradient(135deg, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
@@ -482,7 +483,7 @@
 
         .namong-progress-title {
             font-size: 1rem;
-            color: #5D4E42;
+            color: #5A4E62;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -492,7 +493,7 @@
         .namong-track {
             position: relative;
             height: 80px;
-            background: linear-gradient(to right, #E8DDD0 0%, #D4C4B0 100%);
+            background: linear-gradient(to right, #E0D8E8 0%, #D0C4D8 100%);
             border-radius: 40px;
             overflow: visible;
             margin: 10px 0;
@@ -503,7 +504,7 @@
             left: 0;
             top: 0;
             height: 100%;
-            background: linear-gradient(to right, #5B8C5A, #7AA87A);
+            background: linear-gradient(to right, #8BAA6C, #A8CC8E);
             border-radius: 40px 0 0 40px;
             transition: width 1s ease-out;
         }
@@ -517,7 +518,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(139, 90, 43, 0.3);
+            box-shadow: 0 4px 15px rgba(140, 120, 160, 0.3);
             transition: left 1s ease-out;
             z-index: 10;
             animation: namongBounce 0.5s ease-in-out infinite;
@@ -549,13 +550,13 @@
             align-items: center;
             margin-top: 15px;
             font-size: 0.9rem;
-            color: #8B7355;
+            color: #8B7890;
         }
 
         .namong-progress-percent {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #5B8C5A;
+            color: #6E9E50;
         }
 
         .namong-progress-text {
@@ -564,11 +565,11 @@
 
         .namong-progress-text .current {
             font-weight: 700;
-            color: #D4784A;
+            color: #B8A0D4;
         }
 
         .namong-progress-text .total {
-            color: #8B7355;
+            color: #8B7890;
         }
 
         .snow-decoration {
@@ -603,7 +604,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(139, 90, 43, 0.25);
+            box-shadow: 0 8px 30px rgba(140, 120, 160, 0.25);
             transition: transform 0.3s;
         }
 
@@ -616,9 +617,9 @@
             width: 100%;
             margin: 25px 0;
             padding: 20px;
-            background: linear-gradient(135deg, #FDF8F3 0%, #F5EDE4 100%);
+            background: linear-gradient(135deg, #FDF5FA 0%, #F0EAF5 100%);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
         }
 
         .namong-gallery {
@@ -634,7 +635,7 @@
             border-radius: 20px;
             object-fit: cover;
             border: 5px solid #fff;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.2);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.2);
             transition: transform 0.3s;
         }
 
@@ -650,7 +651,7 @@
         }
 
         .footer-text {
-            color: #8B7355;
+            color: #8B7890;
             font-size: 0.9rem;
         }
 
@@ -692,7 +693,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(139, 90, 43, 0.1);
+            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
             text-align: center;
         }
 
@@ -707,7 +708,7 @@
 
         .game-title {
             font-size: 1.1rem;
-            color: #5D4E42;
+            color: #5A4E62;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -717,12 +718,12 @@
             display: flex;
             gap: 12px;
             font-size: 0.85rem;
-            color: #8B7355;
+            color: #8B7890;
             flex-wrap: wrap;
         }
 
         .game-stats span {
-            background: #FFF0E8;
+            background: #F0EAF5;
             padding: 5px 12px;
             border-radius: 15px;
         }
@@ -740,7 +741,7 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -754,7 +755,7 @@
         }
 
         .skill-btn:disabled {
-            background: #C4B5A5;
+            background: #C4BAC8;
             cursor: not-allowed;
         }
 
@@ -763,7 +764,7 @@
         }
 
         .phase-indicator {
-            background: linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%);
+            background: linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%);
             color: #fff;
             padding: 5px 15px;
             border-radius: 15px;
@@ -775,8 +776,8 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: #E8DDD0;
-            color: #5D4E42;
+            background: #E0D8E8;
+            color: #5A4E62;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 0.85rem;
@@ -785,7 +786,7 @@
         }
 
         .leaderboard-btn:hover {
-            background: #D4784A;
+            background: #B8A0D4;
             color: #fff;
         }
 
@@ -793,7 +794,7 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            background: linear-gradient(to bottom, #FFF8F2 0%, #FAEEE5 100%);
+            background: linear-gradient(to bottom, #FFF5F9 0%, #F5EBF5 100%);
         }
 
         .game-canvas {
@@ -806,7 +807,7 @@
         .game-instructions {
             margin-top: 12px;
             font-size: 0.85rem;
-            color: #A08060;
+            color: #A08898;
         }
 
         .game-over-overlay {
@@ -815,7 +816,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(93, 78, 66, 0.9);
+            background: rgba(80, 70, 90, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -862,7 +863,7 @@
             padding: 8px 20px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #D4784A 0%, #E89B6C 100%);
+            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -900,7 +901,7 @@
         }
 
         .leaderboard-content h3 {
-            color: #5D4E42;
+            color: #5A4E62;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -913,13 +914,13 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 15px;
-            background: #FFF8F2;
+            background: #FFF5F9;
             border-radius: 10px;
             margin-bottom: 8px;
         }
 
         .leaderboard-list li:first-child {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            background: linear-gradient(135deg, #F9E1A8 0%, #E8C878 100%);
             color: #fff;
         }
 
@@ -929,8 +930,8 @@
         }
 
         @keyframes crazyGlow {
-            0%, 100% { box-shadow: 0 0 20px #FF6B6B; }
-            50% { box-shadow: 0 0 40px #FF0000; }
+            0%, 100% { box-shadow: 0 0 20px #FFCBE1; }
+            50% { box-shadow: 0 0 40px #D4829E; }
         }
     </style>
 </head>
@@ -1275,7 +1276,7 @@
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
             { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
             { name: "Car Purchase", nameKo: "차", target: "$30,000", targetNum: 30000 },
-            { name: "Bonus Return", nameKo: "보너스 리턴", target: "$5,000", targetNum: 5000 }
+            { name: "Bonus Return", nameKo: "보너스 리턴 (반납)", target: "$5,000", targetNum: 5000 }
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
@@ -1342,16 +1343,16 @@
                     datasets: [{
                         label: 'Income',
                         data: incomeData,
-                        borderColor: '#5B9B7A',
-                        backgroundColor: 'rgba(91, 155, 122, 0.15)',
+                        borderColor: '#8BAA6C',
+                        backgroundColor: 'rgba(139, 170, 108, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
                     }, {
                         label: 'Expenses',
                         data: expenseData,
-                        borderColor: '#D47580',
-                        backgroundColor: 'rgba(212, 117, 128, 0.15)',
+                        borderColor: '#D4829E',
+                        backgroundColor: 'rgba(212, 130, 158, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
@@ -1361,11 +1362,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } }
+                        legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } }
                     },
                     scales: {
-                        y: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        x: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        y: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
+                        x: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
                     }
                 }
             });
@@ -1378,20 +1379,20 @@
             const values = [];
             // 선명하고 구분 잘 되는 색상 팔레트
             const categoryColors = {
-                'Housing': '#E74C3C',      // 빨강 - 가장 큰 지출!
-                'Tithing': '#9B59B6',      // 보라
-                'Utilities': '#3498DB',    // 파랑
-                'Insurance': '#E67E22',    // 주황
-                'Pet (Namong)': '#F1C40F', // 노랑 - 나몽!
-                'Grocery': '#27AE60',      // 초록
-                'Entertainment': '#1ABC9C', // 청록
-                'Dining': '#E91E63',       // 핑크
-                'Gas': '#607D8B',          // 청회색
-                'Membership': '#8E44AD',   // 진보라
-                'Shopping': '#00BCD4',     // 하늘색
-                'Travel': '#FF5722',       // 딥오렌지
-                'Giving': '#795548',       // 갈색
-                'Other': '#9E9E9E'         // 회색
+                'Housing': '#D4829E',      // 파스텔 핑크
+                'Tithing': '#B8A0D4',      // 라벤더
+                'Utilities': '#88B4D0',    // 파스텔 블루
+                'Insurance': '#E8B888',    // 파스텔 피치
+                'Pet (Namong)': '#D4B468', // 파스텔 옐로우
+                'Grocery': '#8BAA6C',      // 파스텔 그린
+                'Entertainment': '#88C8B8', // 파스텔 틸
+                'Dining': '#FFCBE1',       // 핑크
+                'Gas': '#8B9CAA',          // 블루그레이
+                'Membership': '#A890B8',   // 퍼플
+                'Shopping': '#88C8D8',     // 스카이블루
+                'Travel': '#E8A088',       // 살몬
+                'Giving': '#B8A098',       // 토프
+                'Other': '#B0A8B0'         // 그레이
             };
             const colors = [];
 
@@ -1431,7 +1432,7 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { color: '#5D4E42', padding: 8, font: { family: 'Nunito', size: 11 } }
+                            labels: { color: '#5A4E62', padding: 8, font: { family: 'Nunito', size: 11 } }
                         }
                     }
                 }
@@ -1449,19 +1450,19 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44], backgroundColor: '#E74C3C' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46], backgroundColor: '#3498DB' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00], backgroundColor: '#E67E22' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 3687.18], backgroundColor: '#9E9E9E' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44], backgroundColor: '#D4829E' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46], backgroundColor: '#88B4D0' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00], backgroundColor: '#E8B888' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 3687.18], backgroundColor: '#B0A8B0' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } } },
                     scales: {
-                        y: { stacked: true, ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        x: { stacked: true, ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        y: { stacked: true, ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
+                        x: { stacked: true, ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
                     }
                 }
             });
@@ -1479,21 +1480,21 @@
                     datasets: [{
                         label: 'Current',
                         data: savingsGoals.map(() => currentSavingsBalance),
-                        backgroundColor: '#7EC8A3'  // 현재 저축 (초록)
+                        backgroundColor: '#A8CC8E'  // 현재 저축 (파스텔 그린)
                     }, {
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#5B8C5A', '#D4784A', '#8B5A2B', '#C0392B']  // 상록수(영주권), 모닥불(비행기), 오두막(차), 보너스
+                        backgroundColor: ['#8BAA6C', '#88B4D0', '#D4B468', '#D4829E']  // 영주권(그린), 비행기(블루), 차(옐로우), 보너스(핑크)
                     }]
                 },
                 options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5D4E42', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } } },
                     scales: {
-                        x: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } },
-                        y: { ticks: { color: '#8B7355' }, grid: { color: 'rgba(139, 90, 43, 0.08)' } }
+                        x: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
+                        y: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
                     }
                 }
             });
@@ -1690,13 +1691,13 @@
             const progressPercent = Math.min((currentSavingsBalance / totalGoal) * 100, 100).toFixed(1);
 
             const html = `
-                <div class="goal-item" style="background: linear-gradient(135deg, #D4EDDA 0%, #B8D9C5 100%);">
+                <div class="goal-item" style="background: linear-gradient(135deg, #ECF5E0 0%, #D6E5BD 100%);">
                     <div class="goal-info">
                         <h4>Current Savings</h4>
                         <p>현재 저축 잔고 (계좌 합계)</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target" style="color: #5B8C5A;">$${Math.round(currentSavingsBalance).toLocaleString('en-US')}</div>
+                        <div class="target" style="color: #6E9E50;">$${Math.round(currentSavingsBalance).toLocaleString('en-US')}</div>
                     </div>
                 </div>
             ` + savingsGoals.map(goal => {
@@ -1741,7 +1742,7 @@
             // 100% 달성 시 특별 효과
             if (percent >= 100) {
                 document.getElementById('namongRunner').src = '01_pictures/화남.jpg';  // 기쁜(?) 표정
-                document.getElementById('namongProgressContainer').style.background = 'linear-gradient(135deg, #E8F5E8 0%, #D4EDDA 100%)';
+                document.getElementById('namongProgressContainer').style.background = 'linear-gradient(135deg, #ECF5E0 0%, #D6E5BD 100%)';
             }
         }
 
@@ -1801,16 +1802,16 @@
         // 페이즈 설정 (10단계, 공중 적 포함) - 따뜻한 겨울 테마 색상 (눈/모닥불/오두막)
         // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF8F2', bgColor2: '#FAEEE5', groundColor: '#E8DDD0' },
-            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF5ED', bgColor2: '#F5E8DC', groundColor: '#DED0C0' },
-            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFF0E8', bgColor2: '#F0E0D0', groundColor: '#D4C4B0' },
-            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFEEE0', bgColor2: '#E8D8C8', groundColor: '#C8B8A0' },
-            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFE8D8', bgColor2: '#E0D0C0', groundColor: '#B8A890' },
-            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFE0D0', bgColor2: '#D8C8B8', groundColor: '#A89880' },
-            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#FFD8C8', bgColor2: '#D0C0B0', groundColor: '#988870' },
-            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#FFD0C0', bgColor2: '#C8B8A8', groundColor: '#887860' },
-            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#FFC8B8', bgColor2: '#C0B0A0', groundColor: '#786850' },
-            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#FFC0B0', bgColor2: '#B8A898', groundColor: '#685840' }
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF5F9', bgColor2: '#F5EBF5', groundColor: '#E0D8E8' },
+            { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF0F5', bgColor2: '#F0E5F0', groundColor: '#D8D0E0' },
+            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFEAF0', bgColor2: '#E8DDE8', groundColor: '#D0C4D8' },
+            { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFE5EB', bgColor2: '#E0D5E0', groundColor: '#C8BCD0' },
+            { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFE0E8', bgColor2: '#D8CCD8', groundColor: '#C0B4C8' },
+            { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFDAE4', bgColor2: '#D0C4D0', groundColor: '#B8ACC0' },
+            { name: 'Phase 7: 경제위기', time: 95, speed: 7.5, emojis: ['📉', '💀', '🔥', '😱'], airEmojis: ['🦅', '💸', '⚡'], airEnemyChance: 0.25, density: 70, bgColor1: '#FFD5E0', bgColor2: '#C8BCC8', groundColor: '#B0A4B8' },
+            { name: 'Phase 8: 인플레이션', time: 120, speed: 8, emojis: ['📈', '💣', '🔥', '😈'], airEmojis: ['🦅', '💸', '⚡', '🌩️'], airEnemyChance: 0.3, density: 65, bgColor1: '#FFD0DC', bgColor2: '#C0B4C0', groundColor: '#A89CB0' },
+            { name: 'Phase 9: 파산직전', time: 150, speed: 9, emojis: ['💀', '☠️', '🔥', '😈', '💣'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️'], airEnemyChance: 0.35, density: 55, bgColor1: '#FFCBD8', bgColor2: '#B8ACB8', groundColor: '#A094A8' },
+            { name: 'Phase 10: 지옥모드', time: 180, speed: 10, emojis: ['💀', '☠️', '👹', '😈', '💣', '🔥'], airEmojis: ['🦅', '💸', '⚡', '🌩️', '☄️', '🛸'], airEnemyChance: 0.4, density: 45, bgColor1: '#FFC5D4', bgColor2: '#B0A4B0', groundColor: '#988CA0' }
         ];
 
         // 게임 상태
@@ -1932,14 +1933,14 @@
             const gameStats = document.querySelector('.game-stats');
             const phaseIndicator = document.getElementById('phaseIndicator');
             if (crazyMode) {
-                gameStats.style.background = 'linear-gradient(135deg, #D4784A, #C96B42)';
+                gameStats.style.background = 'linear-gradient(135deg, #D4829E, #C07090)';
                 gameStats.style.animation = 'crazyGlow 0.5s ease-in-out infinite';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #C96B42, #D4784A)';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #C07090, #D4829E)';
                 phaseIndicator.textContent = '🔥 미친냥 모드! 🔥';
             } else {
                 gameStats.style.background = '';
                 gameStats.style.animation = '';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%)';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%)';
                 phaseIndicator.textContent = phases[currentPhase].name;
             }
         }
@@ -2190,7 +2191,7 @@
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
-            ctx.strokeStyle = '#8B7355';
+            ctx.strokeStyle = '#8B7890';
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
             ctx.moveTo(0, groundY);
@@ -2396,7 +2397,7 @@
 
             document.getElementById('gameCoins').textContent = 0;
             document.getElementById('phaseIndicator').textContent = phases[0].name;
-            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #5B8C5A 0%, #7AA87A 100%)';
+            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%)';
             document.querySelector('.game-stats').style.background = '';
             document.querySelector('.game-stats').style.animation = '';
             document.getElementById('playerName').value = '';
