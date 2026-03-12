@@ -998,7 +998,8 @@
             <button class="month-btn" onclick="selectMonth('nov')">11월</button>
             <button class="month-btn" onclick="selectMonth('dec')">12월</button>
             <button class="month-btn" onclick="selectMonth('jan')">1월</button>
-            <button class="month-btn active" onclick="selectMonth('feb')">2월</button>
+            <button class="month-btn" onclick="selectMonth('feb')">2월</button>
+            <button class="month-btn active" onclick="selectMonth('mar')">3월</button>
         </div>
 
         <div class="summary-cards" id="summaryCards">
@@ -1203,25 +1204,54 @@
             },
             feb: {
                 income: {
-                    haniSalary: 3458.22,
-                    total: 3458.22
+                    chamSalary: 4366.62,
+                    haniSalary: 5995.86,
+                    total: 10362.48
                 },
                 expenses: {
                     housing: { rent: 2153.44, seonhanRent: 1200, sum: 3353.44 },
                     tithing: { tithing: 950, sum: 950 },
                     utilities: { gfiber: 30.61, gp: 57.49, att: 140.36, sum: 228.46 },
                     insurance: { geico: 132.80, namongInsurance: 40.20, sum: 173.00 },
-                    pet: { namong: 370.85, mangomongo: 205, supplies: 214.27, chewy: 78.39, amazon: 665.26, misc: 43.32, sum: 1577.09 },
-                    grocery: { publix: 87.59, misc1: 42.32, megamart: 123.70, misc2: 89.56, costco: 59.63, misc3: 214.55, sum: 617.35 },
-                    entertainment: { netflix: 17.99, boardgame: 61.15, chatahoochee: 15.00, sum: 94.14 },
-                    dining: { bbq: 98.86, shabushabu: 64.64, chatahoochee: 16.71, gilly: 12.42, sum: 192.63 },
-                    gas: { gas1: 27.52, gas2: 30.86, sum: 58.38 },
+                    pet: { mangomongo: 2805, supplies: 214.27, chewy: 78.39, amazon: 665.26, misc1: 43.32, misc2: 401.46, sum: 4207.70 },
+                    grocery: { misc1: 129.45, megamart: 123.70, misc2: 89.56, costco: 59.63, misc3: 214.55, misc4: 117.27, misc5: 26.22, misc6: 130.91, sum: 891.29 },
+                    entertainment: { netflix: 17.99, boardgame: 61.15, chatahoochee: 15.00, misc: 12.21, sum: 106.35 },
+                    dining: { cfa: 23.27, bbq: 98.86, shabushabu: 64.64, chatahoochee: 16.71, gilly: 12.42, kaldis: 12.51, panda: 18.51, cfa2: 65.30, dancingGoat: 7.26, sum: 319.48 },
+                    shopping: { amazon: 84.52, sum: 84.52 },
+                    gas: { gas1: 27.52, gas2: 30.86, gas3: 18.19, sum: 76.57 },
                     other: { kroger: 21.18, pita: 161.41, serviceFee: 15.00, sum: 197.59 }
                 },
-                totalExpenses: 7442.08,
-                savings: { daehyuni: 500, hani: 3700, total: 4200 },
+                totalExpenses: 10588.40,
+                savings: { daehyuni: 500, hani: 5700, total: 6200 },
                 travel: {
-                    destin: { hotel: 163.12, total: 163.12 }
+                    destin: {
+                        hotel: 163.12, gas: 24.79, misc1: 28.76, misc2: 31.82,
+                        crabTrap: 163.12, antique: 66.13, thai: 56.60,
+                        brunch: 46.49, carrotCoffee: 6.69, total: 587.52
+                    }
+                }
+            },
+            mar: {
+                income: {
+                    total: 0
+                },
+                expenses: {
+                    housing: { rent: 2140.29, seonhanRent: 1200, sum: 3340.29 },
+                    tithing: { tithing: 950, sum: 950 },
+                    utilities: { gp: 51.76, sum: 51.76 },
+                    insurance: { geico: 132.80, namongInsurance: 40.21, sum: 173.01 },
+                    pet: { chewy: 66.42, sum: 66.42 },
+                    grocery: { publix: 78.54, misc1: 33.74, misc2: 35.69, misc3: 30.86, walmart: 14.42, costco: 69.12, sum: 262.37 },
+                    entertainment: { netflix: 17.99, chatahoochee: 15.00, sum: 32.99 },
+                    dining: { mcdonalds: 16.18, bbq: 41.62, dancingGoats: 6.26, misc: 7.26, sweetHut: 21.10, sum: 92.42 },
+                    shopping: { amazon: 27.21, tjmaxx: 45.15, sum: 72.36 },
+                    gas: { gas1: 25.63, gas2: 40.27, sum: 65.90 },
+                    other: { cfa: 82.77, sum: 82.77 }
+                },
+                totalExpenses: 5018.52,
+                savings: { daehyuni: 0, hani: 0, total: 0 },
+                travel: {
+                    denver: { hotel: 646, flight: 355.99, car: 88.11, total: 1090.10 }
                 }
             },
             sep: {
@@ -1280,9 +1310,9 @@
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
-        const currentSavingsBalance = 406.10 + 575.53 + 2245.40 + 3800.01; // $7,027.04
+        const currentSavingsBalance = 2005.74 + 377.09 + 644.45 + 2200.04; // $5,227.32
 
-        let currentMonth = 'feb';
+        let currentMonth = 'mar';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
 
         function updateSummaryCards(monthData) {
@@ -1330,9 +1360,9 @@
 
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 3458.22];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 7442.08];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 0];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 5018.52];
 
             if (trendChart) trendChart.destroy();
 
@@ -1441,7 +1471,7 @@
 
         function updateExpenseBarChart() {
             const ctx = document.getElementById('expenseBarChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
 
             if (expenseBarChart) expenseBarChart.destroy();
 
@@ -1450,10 +1480,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44], backgroundColor: '#D4829E' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46], backgroundColor: '#88B4D0' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00], backgroundColor: '#E8B888' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 3687.18], backgroundColor: '#B0A8B0' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29], backgroundColor: '#D4829E' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 51.76], backgroundColor: '#88B4D0' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 173.01], backgroundColor: '#E8B888' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 1453.46], backgroundColor: '#B0A8B0' }
                     ]
                 },
                 options: {
@@ -1762,13 +1792,13 @@
             // 랜덤 사진 초기화
             initRandomPhotos();
 
-            updateSummaryCards(budgetData.feb);
+            updateSummaryCards(budgetData.mar);
             updateTrendChart();
-            updateCategoryChart(budgetData.feb);
+            updateCategoryChart(budgetData.mar);
             updateExpenseBarChart();
             updateSavingsChart();
-            updateInsights(budgetData.feb);
-            updateExpenseTable(budgetData.feb);
+            updateInsights(budgetData.mar);
+            updateExpenseTable(budgetData.mar);
             updateSavingsGoals();
             // 약간 딜레이 후 나몽이 달리기 애니메이션 시작
             setTimeout(updateNamongProgress, 500);
