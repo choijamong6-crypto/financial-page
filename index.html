@@ -1233,25 +1233,33 @@
             },
             mar: {
                 income: {
-                    total: 0
+                    haniSalary: 5493.83,
+                    total: 5493.83
                 },
                 expenses: {
                     housing: { rent: 2140.29, seonhanRent: 1200, sum: 3340.29 },
                     tithing: { tithing: 950, sum: 950 },
-                    utilities: { gp: 51.76, sum: 51.76 },
+                    utilities: { gfiber: 30.61, gp: 51.76, att: 185.62, sum: 267.99 },
                     insurance: { geico: 132.80, namongInsurance: 40.21, sum: 173.01 },
-                    pet: { chewy: 66.42, sum: 66.42 },
-                    grocery: { publix: 78.54, misc1: 33.74, misc2: 35.69, misc3: 30.86, walmart: 14.42, costco: 69.12, sum: 262.37 },
+                    pet: { chewy: 66.42, misc1: 121.72, amongRegistration: 22.95, amongVet: 144.90, misc2: 33.40, sum: 389.39 },
+                    grocery: { publix: 11.73, misc1: 78.54, misc2: 33.74, misc3: 35.69, misc4: 30.86, misc5: 49.39, walmart: 14.42, megamart: 103.62, traderJoes: 33.27, costco: 69.12, sum: 460.38 },
                     entertainment: { netflix: 17.99, chatahoochee: 15.00, sum: 32.99 },
-                    dining: { mcdonalds: 16.18, bbq: 41.62, dancingGoats: 6.26, misc: 7.26, sweetHut: 21.10, sum: 92.42 },
-                    shopping: { amazon: 27.21, tjmaxx: 45.15, sum: 72.36 },
-                    gas: { gas1: 25.63, gas2: 40.27, sum: 65.90 },
+                    dining: { mcdonalds: 16.18, bbq: 41.62, dancingGoats: 6.26, misc1: 7.26, sweetHut: 21.10, callYourMother: 17.83, cfa: 31.66, misc2: 21.00, misc3: 6.58, misc4: 11.27, panda: 9.26, dancingGoat: 13.12, chichasanchen: 23.85, techDining: 14.32, sum: 241.31 },
+                    shopping: { amazon: 27.21, tjmaxx: 45.15, bowls: 45.69, sum: 118.05 },
+                    gas: { gas1: 25.63, gas2: 40.27, gas3: 25.09, gas4: 29.92, sum: 120.91 },
                     other: { cfa: 82.77, sum: 82.77 }
                 },
-                totalExpenses: 5018.52,
-                savings: { daehyuni: 0, hani: 0, total: 0 },
+                totalExpenses: 6177.09,
+                savings: { daehyuni: 500, hani: 7700, total: 8200 },
                 travel: {
-                    denver: { hotel: 646, flight: 355.99, car: 88.11, total: 1090.10 }
+                    denver: {
+                        hotel: 1614.70, flight: 355.99, car: 297.12, lyft: 44.36,
+                        mintIndian: 58.26, brunch: 53.89, parking: 27.00, misc1: 12.00,
+                        misc2: 12.00, misc3: 12.00, walgreens: 11.24, lyft2: 26.97,
+                        menya: 57.94, texasRoadhouse: 59.05, hashtag: 62.43, pfChangs: 47.39,
+                        costcoGas: 43.38, littleIndia: 53.00, populus: 6.48, vibeCoffee: 12.37,
+                        sams: 22.32, otra: 7.80, uber: 103.58, misc4: 15.60, total: 3016.87
+                    }
                 }
             },
             sep: {
@@ -1305,12 +1313,12 @@
         const savingsGoals = [
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
             { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
-            { name: "Car Purchase", nameKo: "차", target: "$30,000", targetNum: 30000 },
+            { name: "Car Purchase", nameKo: "차", target: "$5,000", targetNum: 5000 },
             { name: "Bonus Return", nameKo: "보너스 리턴 (반납)", target: "$5,000", targetNum: 5000 }
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
-        const currentSavingsBalance = 2005.74 + 377.09 + 644.45 + 2200.04 + 1245.72; // $6,473.04
+        const currentSavingsBalance = 1753.98 + 648.11 + 2300.88 + 2000.06; // $6,703.03
 
         let currentMonth = 'mar';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
@@ -1361,8 +1369,8 @@
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
             const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 0];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 5018.52];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 5493.83];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6177.09];
 
             if (trendChart) trendChart.destroy();
 
@@ -1481,9 +1489,9 @@
                     labels: months,
                     datasets: [
                         { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29], backgroundColor: '#D4829E' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 51.76], backgroundColor: '#88B4D0' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99], backgroundColor: '#88B4D0' },
                         { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 173.01], backgroundColor: '#E8B888' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 1453.46], backgroundColor: '#B0A8B0' }
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2395.80], backgroundColor: '#B0A8B0' }
                     ]
                 },
                 options: {
@@ -1547,7 +1555,7 @@
                     insights.push({
                         icon: '🔥', type: 'good',
                         title: `흑자 ${surplusRate}% 달성!`,
-                        text: `월 흑자 $${balance.toFixed(0)}. 이 속도면 연간 $${(balance * 12).toLocaleString()} 추가 저축 가능. 차 구매 목표 $30,000 달성까지 ${Math.ceil(30000 / balance)}개월.`
+                        text: `월 흑자 $${balance.toFixed(0)}. 이 속도면 연간 $${(balance * 12).toLocaleString()} 추가 저축 가능. 차 구매 목표 $5,000 달성까지 ${Math.ceil(5000 / balance)}개월.`
                     });
                 } else {
                     insights.push({
@@ -1565,19 +1573,19 @@
             }
 
             // 2. 저축 현실 체크
-            const totalGoal = 48500; // Green Card + Flight + Car + Bonus
+            const totalGoal = 23500; // Green Card + Flight + Car + Bonus
             const monthsToGoal = savings > 0 ? Math.ceil(totalGoal / savings) : Infinity;
             if (savings >= 2000) {
                 insights.push({
                     icon: '💪', type: 'good',
                     title: '저축 잘하고 있어요!',
-                    text: `월 $${savings.toLocaleString()} 저축 (수입의 ${savingsRate}%). 목표 $48,500까지 ${monthsToGoal}개월. ${monthsToGoal <= 24 ? '2년 안에 가능!' : '갈 길이 멀어요...'}`
+                    text: `월 $${savings.toLocaleString()} 저축 (수입의 ${savingsRate}%). 목표 $23,500까지 ${monthsToGoal}개월. ${monthsToGoal <= 24 ? '2년 안에 가능!' : '갈 길이 멀어요...'}`
                 });
             } else if (savings > 0) {
                 insights.push({
                     icon: '😬', type: 'warning',
                     title: '저축이 너무 적어요',
-                    text: `월 $${savings.toLocaleString()}로는 목표 $48,500 달성에 ${monthsToGoal}개월 (${Math.ceil(monthsToGoal/12)}년) 걸려요. 최소 $2,000 이상 저축해야 현실적이에요.`
+                    text: `월 $${savings.toLocaleString()}로는 목표 $23,500 달성에 ${monthsToGoal}개월 (${Math.ceil(monthsToGoal/12)}년) 걸려요. 최소 $2,000 이상 저축해야 현실적이에요.`
                 });
             } else {
                 insights.push({
@@ -1753,7 +1761,7 @@
 
         // 나몽이 달리기 진행률 업데이트 (현재 저축 잔고 기준)
         function updateNamongProgress() {
-            const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);  // $48,500
+            const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);  // $23,500
 
             const percent = Math.min((currentSavingsBalance / totalGoal) * 100, 100);
             const displayPercent = percent.toFixed(1);
