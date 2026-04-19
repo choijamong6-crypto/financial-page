@@ -18,9 +18,9 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #FDF5FA 0%, #F0EAF5 50%, #FFF8FC 100%);
+            background: linear-gradient(135deg, #E8F7FA 0%, #D6EEFF 50%, #FFF8E7 100%);
             min-height: 100vh;
-            color: #5A4E62;
+            color: #2D5870;
         }
 
         .container {
@@ -50,7 +50,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(140, 120, 160, 0.25);
+            box-shadow: 0 8px 30px rgba(110, 180, 200, 0.25);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -62,7 +62,7 @@
         header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, #B8A0D4, #DCCCEC, #9E88B8);
+            background: linear-gradient(90deg, #5EC4D6, #B8E8E8, #2BA8C0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -70,7 +70,7 @@
         }
 
         header p {
-            color: #8B7890;
+            color: #6BA8B8;
             margin-top: 5px;
             font-size: 1.1rem;
         }
@@ -89,22 +89,22 @@
             border: none;
             border-radius: 25px;
             background: #fff;
-            color: #5A4E62;
+            color: #2D5870;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 4px 15px rgba(140, 120, 160, 0.12);
+            box-shadow: 0 4px 15px rgba(110, 180, 200, 0.12);
         }
 
         .month-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(140, 120, 160, 0.2);
+            box-shadow: 0 6px 20px rgba(110, 180, 200, 0.2);
         }
 
         .month-btn.active {
-            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
+            background: linear-gradient(135deg, #5EC4D6 0%, #B8E8E8 100%);
             color: #fff;
         }
 
@@ -114,7 +114,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -126,13 +126,13 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #FFCBE1, #D6E5BD, #BCD8EC);
+            background: linear-gradient(90deg, #FFB7B2, #B8E0D0, #95C8E0);
         }
 
         .info-section h2 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: #5A4E62;
+            color: #2D5870;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -149,7 +149,7 @@
             align-items: center;
             gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
+            background: linear-gradient(135deg, #FFF8E7 0%, #E0F2F7 100%);
             border-radius: 15px;
             transition: transform 0.2s;
         }
@@ -163,7 +163,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #DCCCEC;
+            border: 3px solid #B8E8E8;
         }
 
         .info-item .emoji {
@@ -172,13 +172,13 @@
 
         .info-text h4 {
             font-size: 1rem;
-            color: #5A4E62;
+            color: #2D5870;
             margin-bottom: 3px;
         }
 
         .info-text p {
             font-size: 0.85rem;
-            color: #8B7890;
+            color: #6BA8B8;
             line-height: 1.4;
         }
 
@@ -194,7 +194,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -209,10 +209,10 @@
             height: 4px;
         }
 
-        .card.income::after { background: #8BAA6C; }
-        .card.expense::after { background: #D4829E; }
-        .card.balance::after { background: #88B4D0; }
-        .card.savings::after { background: #D4B468; }
+        .card.income::after { background: #5EC4B0; }
+        .card.expense::after { background: #FF9AA2; }
+        .card.balance::after { background: #6FB1FC; }
+        .card.savings::after { background: #FFD56B; }
 
         .card:hover {
             transform: translateY(-5px);
@@ -235,13 +235,13 @@
             font-size: 24px;
         }
 
-        .card-icon.income { background: #ECF5E0; }
-        .card-icon.expense { background: #FFE8F0; }
-        .card-icon.balance { background: #E8F0F8; }
-        .card-icon.savings { background: #FDF5E8; }
+        .card-icon.income { background: #D6F5EE; }
+        .card-icon.expense { background: #FFD4D6; }
+        .card-icon.balance { background: #D6EEFF; }
+        .card-icon.savings { background: #FFF4D6; }
 
         .card h3 {
-            color: #8B7890;
+            color: #6BA8B8;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -252,13 +252,13 @@
             margin-top: 5px;
         }
 
-        .card .amount.positive { color: #6E9E50; }
-        .card .amount.negative { color: #D4829E; }
-        .card .amount.neutral { color: #B89840; }
+        .card .amount.positive { color: #2D9D8B; }
+        .card .amount.negative { color: #FF9AA2; }
+        .card .amount.neutral { color: #E89A2B; }
 
         .card .sub-text {
             font-size: 0.8rem;
-            color: #A08898;
+            color: #6BA8B8;
             margin-top: 5px;
         }
 
@@ -274,13 +274,13 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
         }
 
         .chart-card h2 {
             font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #5A4E62;
+            color: #2D5870;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -296,14 +296,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             margin-bottom: 25px;
         }
 
         .insights-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5A4E62;
+            color: #2D5870;
         }
 
         .insight-item {
@@ -311,7 +311,7 @@
             align-items: flex-start;
             gap: 15px;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
+            background: linear-gradient(135deg, #FFF8E7 0%, #E0F2F7 100%);
             border-radius: 15px;
             margin-bottom: 12px;
             transition: transform 0.2s;
@@ -332,21 +332,21 @@
             flex-shrink: 0;
         }
 
-        .insight-icon.good { background: #ECF5E0; }
-        .insight-icon.warning { background: #FFE0EC; }
-        .insight-icon.info { background: #E8F0F8; }
-        .insight-icon.tip { background: #F0EAF5; }
-        .insight-icon.cat { background: #FFE8F0; }
+        .insight-icon.good { background: #D6F5EE; }
+        .insight-icon.warning { background: #FFD4D6; }
+        .insight-icon.info { background: #D6EEFF; }
+        .insight-icon.tip { background: #D6EEFF; }
+        .insight-icon.cat { background: #FFD4D6; }
 
         .insight-content h4 {
             font-size: 0.95rem;
             margin-bottom: 5px;
-            color: #5A4E62;
+            color: #2D5870;
         }
 
         .insight-content p {
             font-size: 0.85rem;
-            color: #8B7890;
+            color: #6BA8B8;
             line-height: 1.5;
         }
 
@@ -355,7 +355,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             margin-bottom: 25px;
             overflow-x: auto;
         }
@@ -363,7 +363,7 @@
         .expense-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5A4E62;
+            color: #2D5870;
         }
 
         .expense-table {
@@ -374,20 +374,20 @@
         .expense-table th {
             text-align: left;
             padding: 15px;
-            color: #8B7890;
+            color: #6BA8B8;
             font-weight: 600;
-            border-bottom: 2px solid #E0D8E8;
+            border-bottom: 2px solid #C5DAE5;
             font-size: 0.9rem;
         }
 
         .expense-table td {
             padding: 15px;
-            border-bottom: 1px solid #F0EAF5;
+            border-bottom: 1px solid #D6EEFF;
             font-size: 0.9rem;
         }
 
         .expense-table tr:hover {
-            background: #FFF5F9;
+            background: #FFF8E7;
         }
 
         .category-badge {
@@ -400,20 +400,20 @@
 
         /* Warm winter theme - cozy cabin colors */
         /* Gelato Days pastel theme */
-        .category-badge.housing { background: #D4829E; color: #fff; }
-        .category-badge.utilities { background: #88B4D0; color: #fff; }
-        .category-badge.insurance { background: #D4B468; color: #fff; }
-        .category-badge.food { background: #8BAA6C; color: #fff; }
-        .category-badge.transport { background: #8B8BA0; color: #fff; }
-        .category-badge.giving { background: #B8A0D4; color: #fff; }
-        .category-badge.savings { background: #6E9650; color: #fff; }
-        .category-badge.pet { background: #E8B888; color: #fff; }
-        .category-badge.entertainment { background: #A890B8; color: #fff; }
-        .category-badge.other { background: #9A8B9A; color: #fff; }
+        .category-badge.housing { background: #FF9AA2; color: #fff; }
+        .category-badge.utilities { background: #6FB1FC; color: #fff; }
+        .category-badge.insurance { background: #FFD56B; color: #fff; }
+        .category-badge.food { background: #5EC4B0; color: #fff; }
+        .category-badge.transport { background: #95B8E8; color: #fff; }
+        .category-badge.giving { background: #5EC4D6; color: #fff; }
+        .category-badge.savings { background: #2D9D8B; color: #fff; }
+        .category-badge.pet { background: #FFB088; color: #fff; }
+        .category-badge.entertainment { background: #C8A2D6; color: #fff; }
+        .category-badge.other { background: #95C8E0; color: #fff; }
 
         .progress-bar {
             height: 8px;
-            background: #F0EAF5;
+            background: #D6EEFF;
             border-radius: 4px;
             overflow: hidden;
             margin-top: 5px;
@@ -422,7 +422,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 4px;
-            background: linear-gradient(90deg, #B8A0D4, #DCCCEC);
+            background: linear-gradient(90deg, #5EC4D6, #B8E8E8);
         }
 
         /* Savings Goals */
@@ -430,14 +430,14 @@
             background: #fff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             margin-bottom: 25px;
         }
 
         .savings-section h2 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #5A4E62;
+            color: #2D5870;
         }
 
         .goal-item {
@@ -445,20 +445,20 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px;
-            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
+            background: linear-gradient(135deg, #FFF8E7 0%, #E0F2F7 100%);
             border-radius: 15px;
             margin-bottom: 12px;
         }
 
         .goal-info h4 {
             font-size: 0.95rem;
-            color: #5A4E62;
+            color: #2D5870;
             margin-bottom: 3px;
         }
 
         .goal-info p {
             font-size: 0.8rem;
-            color: #A08898;
+            color: #6BA8B8;
         }
 
         .goal-amount {
@@ -468,12 +468,12 @@
         .goal-amount .target {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #B8A0D4;
+            color: #5EC4D6;
         }
 
         /* Namong Progress Track */
         .namong-progress-container {
-            background: linear-gradient(135deg, #FFF5F9 0%, #F5EBF5 100%);
+            background: linear-gradient(135deg, #FFF8E7 0%, #E0F2F7 100%);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
@@ -483,7 +483,7 @@
 
         .namong-progress-title {
             font-size: 1rem;
-            color: #5A4E62;
+            color: #2D5870;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -493,7 +493,7 @@
         .namong-track {
             position: relative;
             height: 80px;
-            background: linear-gradient(to right, #E0D8E8 0%, #D0C4D8 100%);
+            background: linear-gradient(to right, #C5DAE5 0%, #95C8E0 100%);
             border-radius: 40px;
             overflow: visible;
             margin: 10px 0;
@@ -504,7 +504,7 @@
             left: 0;
             top: 0;
             height: 100%;
-            background: linear-gradient(to right, #8BAA6C, #A8CC8E);
+            background: linear-gradient(to right, #5EC4B0, #95E0D5);
             border-radius: 40px 0 0 40px;
             transition: width 1s ease-out;
         }
@@ -518,7 +518,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(140, 120, 160, 0.3);
+            box-shadow: 0 4px 15px rgba(110, 180, 200, 0.3);
             transition: left 1s ease-out;
             z-index: 10;
             animation: namongBounce 0.5s ease-in-out infinite;
@@ -550,13 +550,13 @@
             align-items: center;
             margin-top: 15px;
             font-size: 0.9rem;
-            color: #8B7890;
+            color: #6BA8B8;
         }
 
         .namong-progress-percent {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #6E9E50;
+            color: #2D9D8B;
         }
 
         .namong-progress-text {
@@ -565,11 +565,11 @@
 
         .namong-progress-text .current {
             font-weight: 700;
-            color: #B8A0D4;
+            color: #5EC4D6;
         }
 
         .namong-progress-text .total {
-            color: #8B7890;
+            color: #6BA8B8;
         }
 
         .snow-decoration {
@@ -604,7 +604,7 @@
             border-radius: 16px;
             object-fit: cover;
             border: 4px solid #fff;
-            box-shadow: 0 8px 30px rgba(140, 120, 160, 0.25);
+            box-shadow: 0 8px 30px rgba(110, 180, 200, 0.25);
             transition: transform 0.3s;
         }
 
@@ -617,9 +617,9 @@
             width: 100%;
             margin: 25px 0;
             padding: 20px;
-            background: linear-gradient(135deg, #FDF5FA 0%, #F0EAF5 100%);
+            background: linear-gradient(135deg, #E8F7FA 0%, #D6EEFF 100%);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
         }
 
         .namong-gallery {
@@ -635,7 +635,7 @@
             border-radius: 20px;
             object-fit: cover;
             border: 5px solid #fff;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.2);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.2);
             transition: transform 0.3s;
         }
 
@@ -651,7 +651,7 @@
         }
 
         .footer-text {
-            color: #8B7890;
+            color: #6BA8B8;
             font-size: 0.9rem;
         }
 
@@ -693,7 +693,7 @@
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 40px rgba(140, 120, 160, 0.1);
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
             text-align: center;
         }
 
@@ -708,7 +708,7 @@
 
         .game-title {
             font-size: 1.1rem;
-            color: #5A4E62;
+            color: #2D5870;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -718,12 +718,12 @@
             display: flex;
             gap: 12px;
             font-size: 0.85rem;
-            color: #8B7890;
+            color: #6BA8B8;
             flex-wrap: wrap;
         }
 
         .game-stats span {
-            background: #F0EAF5;
+            background: #D6EEFF;
             padding: 5px 12px;
             border-radius: 15px;
         }
@@ -741,7 +741,7 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
+            background: linear-gradient(135deg, #5EC4D6 0%, #B8E8E8 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -755,7 +755,7 @@
         }
 
         .skill-btn:disabled {
-            background: #C4BAC8;
+            background: #95C8E0;
             cursor: not-allowed;
         }
 
@@ -764,7 +764,7 @@
         }
 
         .phase-indicator {
-            background: linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%);
+            background: linear-gradient(135deg, #5EC4B0 0%, #95E0D5 100%);
             color: #fff;
             padding: 5px 15px;
             border-radius: 15px;
@@ -776,8 +776,8 @@
             padding: 8px 16px;
             border: none;
             border-radius: 15px;
-            background: #E0D8E8;
-            color: #5A4E62;
+            background: #C5DAE5;
+            color: #2D5870;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
             font-size: 0.85rem;
@@ -786,7 +786,7 @@
         }
 
         .leaderboard-btn:hover {
-            background: #B8A0D4;
+            background: #5EC4D6;
             color: #fff;
         }
 
@@ -794,7 +794,7 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            background: linear-gradient(to bottom, #FFF5F9 0%, #F5EBF5 100%);
+            background: linear-gradient(to bottom, #FFF8E7 0%, #E0F2F7 100%);
         }
 
         .game-canvas {
@@ -807,7 +807,7 @@
         .game-instructions {
             margin-top: 12px;
             font-size: 0.85rem;
-            color: #A08898;
+            color: #6BA8B8;
         }
 
         .game-over-overlay {
@@ -816,7 +816,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(80, 70, 90, 0.9);
+            background: rgba(45, 88, 112, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -863,7 +863,7 @@
             padding: 8px 20px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #B8A0D4 0%, #DCCCEC 100%);
+            background: linear-gradient(135deg, #5EC4D6 0%, #B8E8E8 100%);
             color: #fff;
             font-family: 'Nunito', sans-serif;
             font-weight: 600;
@@ -901,7 +901,7 @@
         }
 
         .leaderboard-content h3 {
-            color: #5A4E62;
+            color: #2D5870;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -914,7 +914,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 15px;
-            background: #FFF5F9;
+            background: #FFF8E7;
             border-radius: 10px;
             margin-bottom: 8px;
         }
@@ -930,8 +930,8 @@
         }
 
         @keyframes crazyGlow {
-            0%, 100% { box-shadow: 0 0 20px #FFCBE1; }
-            50% { box-shadow: 0 0 40px #D4829E; }
+            0%, 100% { box-shadow: 0 0 20px #FFB7B2; }
+            50% { box-shadow: 0 0 40px #FF9AA2; }
         }
     </style>
 </head>
@@ -1415,16 +1415,16 @@
                     datasets: [{
                         label: 'Income',
                         data: incomeData,
-                        borderColor: '#8BAA6C',
-                        backgroundColor: 'rgba(139, 170, 108, 0.15)',
+                        borderColor: '#5EC4B0',
+                        backgroundColor: 'rgba(94, 196, 176, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
                     }, {
                         label: 'Expenses',
                         data: expenseData,
-                        borderColor: '#D4829E',
-                        backgroundColor: 'rgba(212, 130, 158, 0.15)',
+                        borderColor: '#FF9AA2',
+                        backgroundColor: 'rgba(255, 154, 162, 0.15)',
                         fill: true,
                         tension: 0.4,
                         borderWidth: 3
@@ -1434,11 +1434,11 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } }
+                        legend: { labels: { color: '#2D5870', font: { family: 'Nunito' } } }
                     },
                     scales: {
-                        y: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
-                        x: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
+                        y: { ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } },
+                        x: { ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } }
                     }
                 }
             });
@@ -1451,20 +1451,20 @@
             const values = [];
             // 선명하고 구분 잘 되는 색상 팔레트
             const categoryColors = {
-                'Housing': '#D4829E',      // 파스텔 핑크
-                'Tithing': '#B8A0D4',      // 라벤더
-                'Utilities': '#88B4D0',    // 파스텔 블루
-                'Insurance': '#E8B888',    // 파스텔 피치
-                'Pet (Namong)': '#D4B468', // 파스텔 옐로우
-                'Grocery': '#8BAA6C',      // 파스텔 그린
-                'Entertainment': '#88C8B8', // 파스텔 틸
-                'Dining': '#FFCBE1',       // 핑크
-                'Gas': '#8B9CAA',          // 블루그레이
-                'Membership': '#A890B8',   // 퍼플
-                'Shopping': '#88C8D8',     // 스카이블루
+                'Housing': '#FF9AA2',      // 파스텔 핑크
+                'Tithing': '#5EC4D6',      // 라벤더
+                'Utilities': '#6FB1FC',    // 파스텔 블루
+                'Insurance': '#FFB088',    // 파스텔 피치
+                'Pet (Namong)': '#FFD56B', // 파스텔 옐로우
+                'Grocery': '#5EC4B0',      // 파스텔 그린
+                'Entertainment': '#95E0D5', // 파스텔 틸
+                'Dining': '#FFB7B2',       // 핑크
+                'Gas': '#95B8E8',          // 블루그레이
+                'Membership': '#C8A2D6',   // 퍼플
+                'Shopping': '#6FCAE0',     // 스카이블루
                 'Travel': '#E8A088',       // 살몬
-                'Giving': '#B8A098',       // 토프
-                'Other': '#B0A8B0'         // 그레이
+                'Giving': '#E8C4A0',       // 토프
+                'Other': '#B8C8D0'         // 그레이
             };
             const colors = [];
 
@@ -1504,7 +1504,7 @@
                     plugins: {
                         legend: {
                             position: 'right',
-                            labels: { color: '#5A4E62', padding: 8, font: { family: 'Nunito', size: 11 } }
+                            labels: { color: '#2D5870', padding: 8, font: { family: 'Nunito', size: 11 } }
                         }
                     }
                 }
@@ -1522,21 +1522,31 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32], backgroundColor: '#D4829E' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61], backgroundColor: '#88B4D0' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91], backgroundColor: '#E8B888' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 3681.12], backgroundColor: '#B0A8B0' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32], backgroundColor: '#FF9AA2' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61], backgroundColor: '#6FB1FC' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91], backgroundColor: '#FFB088' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 3681.12], backgroundColor: '#B8C8D0' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#2D5870', font: { family: 'Nunito' } } } },
                     scales: {
-                        y: { stacked: true, ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
-                        x: { stacked: true, ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
+                        y: { stacked: true, ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } },
+                        x: { stacked: true, ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } }
                     }
                 }
+            });
+        }
+
+        // 위에서부터 차곡차곡 채워주는 waterfall 분배 🌱
+        function computeGoalAllocations() {
+            let remaining = currentSavingsBalance;
+            return savingsGoals.map(goal => {
+                const allocated = Math.min(Math.max(remaining, 0), goal.targetNum);
+                remaining -= allocated;
+                return { ...goal, allocated, pct: (allocated / goal.targetNum) * 100 };
             });
         }
 
@@ -1545,28 +1555,30 @@
 
             if (savingsChart) savingsChart.destroy();
 
+            const allocations = computeGoalAllocations();
+
             savingsChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: savingsGoals.map(g => g.name),
                     datasets: [{
-                        label: 'Current',
-                        data: savingsGoals.map(() => currentSavingsBalance),
-                        backgroundColor: '#A8CC8E'  // 현재 저축 (파스텔 그린)
+                        label: 'Allocated',
+                        data: allocations.map(a => a.allocated),
+                        backgroundColor: '#95E0D5'  // 모은 만큼 (파스텔 그린)
                     }, {
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#8BAA6C', '#88B4D0', '#D4B468', '#D4829E']  // 영주권(그린), 비행기(블루), 차(옐로우), 보너스(핑크)
+                        backgroundColor: ['#5EC4B0', '#6FB1FC', '#FFD56B', '#C8A2D6', '#FF9AA2']  // 영주권/비행기/차/이사/보너스
                     }]
                 },
                 options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#5A4E62', font: { family: 'Nunito' } } } },
+                    plugins: { legend: { labels: { color: '#2D5870', font: { family: 'Nunito' } } } },
                     scales: {
-                        x: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } },
-                        y: { ticks: { color: '#8B7890' }, grid: { color: 'rgba(140, 120, 160, 0.08)' } }
+                        x: { ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } },
+                        y: { ticks: { color: '#6BA8B8' }, grid: { color: 'rgba(110, 180, 200, 0.08)' } }
                     }
                 }
             });
@@ -1763,26 +1775,30 @@
             const progressPercent = Math.min((currentSavingsBalance / totalGoal) * 100, 100).toFixed(1);
 
             const html = `
-                <div class="goal-item" style="background: linear-gradient(135deg, #ECF5E0 0%, #D6E5BD 100%);">
+                <div class="goal-item" style="background: linear-gradient(135deg, #D6F5EE 0%, #B8E0D0 100%);">
                     <div class="goal-info">
                         <h4>Current Savings</h4>
                         <p>현재 저축 잔고 (계좌 합계)</p>
                     </div>
                     <div class="goal-amount">
-                        <div class="target" style="color: #6E9E50;">$${Math.round(currentSavingsBalance).toLocaleString('en-US')}</div>
+                        <div class="target" style="color: #2D9D8B;">$${Math.round(currentSavingsBalance).toLocaleString('en-US')}</div>
                     </div>
                 </div>
-            ` + savingsGoals.map(goal => {
-                const goalProgress = Math.min((currentSavingsBalance / goal.targetNum) * 100, 100).toFixed(1);
+            ` + computeGoalAllocations().map(goal => {
+                const pct = goal.pct.toFixed(1);
+                let status;
+                if (goal.pct >= 100) status = `🎉 완료! ${goal.target} 다 모았어요`;
+                else if (goal.pct > 0) status = `🌱 모으는 중 · $${Math.round(goal.allocated).toLocaleString('en-US')} / ${goal.target} (${pct}%)`;
+                else status = `💤 차례 기다리는 중 · 0% (위 목표부터 채우는 중!)`;
                 return `
                 <div class="goal-item">
                     <div class="goal-info">
                         <h4>${goal.name}</h4>
                         <p>${goal.nameKo}</p>
                         <div class="progress-bar" style="margin-top: 8px; width: 150px;">
-                            <div class="progress-fill" style="width: ${goalProgress}%;"></div>
+                            <div class="progress-fill" style="width: ${pct}%;"></div>
                         </div>
-                        <p style="font-size: 0.75rem; margin-top: 3px;">${goalProgress}% 달성</p>
+                        <p style="font-size: 0.75rem; margin-top: 3px;">${status}</p>
                     </div>
                     <div class="goal-amount">
                         <div class="target">${goal.target}</div>
@@ -1814,7 +1830,7 @@
             // 100% 달성 시 특별 효과
             if (percent >= 100) {
                 document.getElementById('namongRunner').src = '01_pictures/화남.jpg';  // 기쁜(?) 표정
-                document.getElementById('namongProgressContainer').style.background = 'linear-gradient(135deg, #ECF5E0 0%, #D6E5BD 100%)';
+                document.getElementById('namongProgressContainer').style.background = 'linear-gradient(135deg, #D6F5EE 0%, #B8E0D0 100%)';
             }
         }
 
@@ -1874,9 +1890,9 @@
         // 페이즈 설정 (10단계, 공중 적 포함) - 따뜻한 겨울 테마 색상 (눈/모닥불/오두막)
         // airEnemyChance: 공중 적 등장 확률 (0~1), density: 적 밀도 (낮을수록 자주 등장)
         const phases = [
-            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF5F9', bgColor2: '#F5EBF5', groundColor: '#E0D8E8' },
+            { name: 'Phase 1: 저축의 시작', time: 0, speed: 4.5, emojis: ['💸', '🛒'], airEmojis: [], airEnemyChance: 0, density: 100, bgColor1: '#FFF8E7', bgColor2: '#E0F2F7', groundColor: '#C5DAE5' },
             { name: 'Phase 2: 소비의 유혹', time: 12, speed: 5, emojis: ['💳', '🍔', '☕'], airEmojis: [], airEnemyChance: 0, density: 95, bgColor1: '#FFF0F5', bgColor2: '#F0E5F0', groundColor: '#D8D0E0' },
-            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFEAF0', bgColor2: '#E8DDE8', groundColor: '#D0C4D8' },
+            { name: 'Phase 3: 고정지출', time: 25, speed: 5.5, emojis: ['🏠', '💡', '⛽', '📱'], airEmojis: [], airEnemyChance: 0, density: 90, bgColor1: '#FFEAF0', bgColor2: '#E8DDE8', groundColor: '#95C8E0' },
             { name: 'Phase 4: 충동구매', time: 40, speed: 6, emojis: ['👗', '👠', '💄', '🎁'], airEmojis: [], airEnemyChance: 0, density: 85, bgColor1: '#FFE5EB', bgColor2: '#E0D5E0', groundColor: '#C8BCD0' },
             { name: 'Phase 5: 하늘의 유혹', time: 55, speed: 6.5, emojis: ['💳', '🛒', '🍕'], airEmojis: ['🦅', '💸'], airEnemyChance: 0.15, density: 80, bgColor1: '#FFE0E8', bgColor2: '#D8CCD8', groundColor: '#C0B4C8' },
             { name: 'Phase 6: 세금폭탄', time: 75, speed: 7, emojis: ['📋', '💰', '🏛️', '📊'], airEmojis: ['🦅', '💸', '📉'], airEnemyChance: 0.2, density: 75, bgColor1: '#FFDAE4', bgColor2: '#D0C4D0', groundColor: '#B8ACC0' },
@@ -2005,14 +2021,14 @@
             const gameStats = document.querySelector('.game-stats');
             const phaseIndicator = document.getElementById('phaseIndicator');
             if (crazyMode) {
-                gameStats.style.background = 'linear-gradient(135deg, #D4829E, #C07090)';
+                gameStats.style.background = 'linear-gradient(135deg, #FF9AA2, #C07090)';
                 gameStats.style.animation = 'crazyGlow 0.5s ease-in-out infinite';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #C07090, #D4829E)';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #C07090, #FF9AA2)';
                 phaseIndicator.textContent = '🔥 미친냥 모드! 🔥';
             } else {
                 gameStats.style.background = '';
                 gameStats.style.animation = '';
-                phaseIndicator.style.background = 'linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%)';
+                phaseIndicator.style.background = 'linear-gradient(135deg, #5EC4B0 0%, #95E0D5 100%)';
                 phaseIndicator.textContent = phases[currentPhase].name;
             }
         }
@@ -2263,7 +2279,7 @@
             ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
             // 바닥 패턴 (점선)
-            ctx.strokeStyle = '#8B7890';
+            ctx.strokeStyle = '#6BA8B8';
             ctx.setLineDash([10, 10]);
             ctx.beginPath();
             ctx.moveTo(0, groundY);
@@ -2469,7 +2485,7 @@
 
             document.getElementById('gameCoins').textContent = 0;
             document.getElementById('phaseIndicator').textContent = phases[0].name;
-            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #8BAA6C 0%, #A8CC8E 100%)';
+            document.getElementById('phaseIndicator').style.background = 'linear-gradient(135deg, #5EC4B0 0%, #95E0D5 100%)';
             document.querySelector('.game-stats').style.background = '';
             document.querySelector('.game-stats').style.animation = '';
             document.getElementById('playerName').value = '';
