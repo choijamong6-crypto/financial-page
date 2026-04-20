@@ -1344,11 +1344,11 @@
         };
 
         const savingsGoals = [
+            { name: "Bonus Return", nameKo: "보너스 리턴 (반납) — 먼저 갚기!", target: "$5,000", targetNum: 5000 },
             { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
             { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
             { name: "Car Purchase", nameKo: "차", target: "$5,000", targetNum: 5000 },
-            { name: "Moving", nameKo: "이사", target: "$3,000", targetNum: 3000 },
-            { name: "Bonus Return", nameKo: "보너스 리턴 (반납)", target: "$5,000", targetNum: 5000 }
+            { name: "Moving", nameKo: "이사", target: "$3,000", targetNum: 3000 }
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
@@ -1568,7 +1568,7 @@
                     }, {
                         label: 'Target',
                         data: savingsGoals.map(g => g.targetNum),
-                        backgroundColor: ['#5EC4B0', '#6FB1FC', '#FFD56B', '#C8A2D6', '#FF9AA2']  // 영주권/비행기/차/이사/보너스
+                        backgroundColor: ['#FF9AA2', '#5EC4B0', '#6FB1FC', '#FFD56B', '#C8A2D6']  // 보너스/영주권/비행기/차/이사
                     }]
                 },
                 options: {
