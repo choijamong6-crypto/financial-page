@@ -1000,7 +1000,9 @@
             <button class="month-btn" onclick="selectMonth('jan')">1월</button>
             <button class="month-btn" onclick="selectMonth('feb')">2월</button>
             <button class="month-btn" onclick="selectMonth('mar')">3월</button>
-            <button class="month-btn active" onclick="selectMonth('apr')">4월</button>
+            <button class="month-btn" onclick="selectMonth('apr')">4월</button>
+            <button class="month-btn" onclick="selectMonth('may')">5월</button>
+            <button class="month-btn active" onclick="selectMonth('jun')">6월</button>
         </div>
 
         <div class="summary-cards" id="summaryCards">
@@ -1151,7 +1153,24 @@
             '01_pictures/20260311_215638.jpg',
             '01_pictures/20260313_092708.jpg',
             '01_pictures/20260321_141800(0).jpg',
-            '01_pictures/20260321_142108(1).gif'
+            '01_pictures/20260321_142108(1).gif',
+            '01_pictures/20260404_072835.jpg',
+            '01_pictures/20260405_182934.jpg',
+            '01_pictures/20260405_182951.jpg',
+            '01_pictures/20260408_085945.jpg',
+            '01_pictures/20260412_173806.jpg',
+            '01_pictures/20260412_174653(0).jpg',
+            '01_pictures/20260412_180831.jpg',
+            '01_pictures/20260413_111700.jpg',
+            '01_pictures/20260413_144948.jpg',
+            '01_pictures/20260414_193630.jpg',
+            '01_pictures/20260416_011130.jpg',
+            '01_pictures/20260422_075232.jpg',
+            '01_pictures/20260422_080148.jpg',
+            '01_pictures/20260422_080241.jpg',
+            '01_pictures/20260422_081214.jpg',
+            '01_pictures/20260422_105144.jpg',
+            '01_pictures/20260425_095746.jpg'
         ];
 
         // 랜덤 사진 선택 함수 (중복 방지)
@@ -1276,23 +1295,50 @@
             },
             apr: {
                 income: {
-                    haniSalary: 2637.87,
-                    total: 2637.87
+                    haniSalary: 5189.06,
+                    gaTax: 507,
+                    fetch: 50,
+                    irs: 2445,
+                    total: 8191.06
                 },
                 expenses: {
                     housing: { rent: 2316.32, seonhanRent: 1200, sum: 3516.32 },
                     tithing: { tithing: 950, sum: 950 },
                     utilities: { gfiber: 30.61, sum: 30.61 },
                     insurance: { geico: 132.80, namongInsurance: 40.20, amongInsurance: 63.91, sum: 236.91 },
-                    pet: { amongVet: 284.50, chewy: 54.71, sum: 339.21 },
-                    grocery: { publix: 16.61, misc1: 9.58, misc2: 45.66, misc3: 36.32, megamart: 54.00, misc4: 98.35, costco: 252.21, traderJoes: 46.95, misc5: 53.52, savi: 5.76, sum: 618.96 },
+                    pet: { amongVet: 284.50, chewy: 54.71, misc: 88.49, petSmart: 4.23, sum: 431.93 },
+                    grocery: { publix: 16.61, misc1: 9.58, misc2: 45.66, misc3: 36.32, misc4: 11.11, misc5: 19.49, megamart: 54.00, misc6: 98.35, misc7: 134.00, misc8: 7.65, misc9: 115.12, misc10: 14.28, costco: 252.21, costco2: 134.99, traderJoes: 46.95, misc11: 53.52, savi: 5.76, sum: 1055.60 },
                     entertainment: { netflix: 17.99, chatanooga: 15.00, sum: 32.99 },
-                    dining: { techDining: 9.96, bbq: 45.47, dancingGoats1: 13.34, bubbleTea: 7.90, braves: 43.68, dancingGoats2: 14.16, wolfMt: 106.08, chichasanchen: 15.90, sum: 256.49 },
-                    shopping: { amazon: 8.58, misc1: 26.80, misc2: 92.32, misc3: 32.65, misc4: 119.77, tjmaxx: 48.95, sum: 329.07 },
-                    gas: { gas1: 27.30, gas2: 39.10, sum: 66.40 },
-                    other: { car: 1000, camdenHani: 40, camdenDaehyuni: 40, parkingGT: 3, parkingChat: 5, sum: 1088 }
+                    dining: { techDining: 9.96, bbq: 45.47, dancingGoats1: 13.34, bubbleTea: 7.90, braves: 43.68, dancingGoats2: 14.16, wolfMt: 106.08, chichasanchen: 15.90, glazeTea: 8.62, kaldis: 5.83, sum: 270.94 },
+                    shopping: { amazon: 8.58, misc1: 26.80, misc2: 92.32, misc3: 32.65, misc4: 119.77, misc5: 14.15, tjmaxx: 48.95, sum: 343.22 },
+                    gas: { gas1: 27.30, gas2: 39.10, gas3: 43.38, sum: 109.78 },
+                    other: { servingCfa: 93.65, car: 1000, camdenHani: 40, camdenDaehyuni: 40, parkingGT: 3, parkingChat: 5, parkingGT2: 6, sum: 1187.65 }
                 },
-                totalExpenses: 7464.96,
+                totalExpenses: 8165.95,
+                savings: { daehyuni: 0, hani: 0, total: 0 }
+            },
+            may: {
+                income: { total: 0 },
+                expenses: {
+                    housing: { seonhanRent: 600, sum: 600 },
+                    tithing: { tithing: 950, sum: 950 },
+                    insurance: { namongInsurance: 40.21, amongInsurance: 63.91, sum: 104.12 },
+                    entertainment: { netflix: 17.99, renFest: 75.47, sum: 93.46 }
+                },
+                totalExpenses: 1747.58,
+                savings: { daehyuni: 0, hani: 0, total: 0 },
+                travel: {
+                    destin: { airbnb: 698.98, total: 698.98 }
+                }
+            },
+            jun: {
+                income: { total: 0 },
+                expenses: {
+                    tithing: { tithing: 950, sum: 950 },
+                    insurance: { namongInsurance: 40.21, sum: 40.21 },
+                    entertainment: { netflix: 17.99, sum: 17.99 }
+                },
+                totalExpenses: 1008.20,
                 savings: { daehyuni: 0, hani: 0, total: 0 }
             },
             sep: {
@@ -1352,9 +1398,9 @@
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
-        const currentSavingsBalance = 0 + 950.68 + 1544.06 + 1500.06; // $3,994.80
+        const currentSavingsBalance = 0 + 961.87 + 1107.56 + 2500.08; // $4,569.51
 
-        let currentMonth = 'apr';
+        let currentMonth = 'jun';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
 
         function updateSummaryCards(monthData) {
@@ -1402,9 +1448,9 @@
 
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 2637.87];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 7464.96];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 8191.06, 0, 0];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8165.95, 1747.58, 1008.20];
 
             if (trendChart) trendChart.destroy();
 
@@ -1513,7 +1559,7 @@
 
         function updateExpenseBarChart() {
             const ctx = document.getElementById('expenseBarChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
 
             if (expenseBarChart) expenseBarChart.destroy();
 
@@ -1522,10 +1568,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32], backgroundColor: '#FF9AA2' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61], backgroundColor: '#6FB1FC' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91], backgroundColor: '#FFB088' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 3681.12], backgroundColor: '#B8C8D0' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 600, 0], backgroundColor: '#FF9AA2' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61, 0, 0], backgroundColor: '#6FB1FC' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 104.12, 40.21], backgroundColor: '#FFB088' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4382.11, 1043.46, 967.99], backgroundColor: '#B8C8D0' }
                     ]
                 },
                 options: {
@@ -1850,13 +1896,13 @@
             // 랜덤 사진 초기화
             initRandomPhotos();
 
-            updateSummaryCards(budgetData.apr);
+            updateSummaryCards(budgetData.jun);
             updateTrendChart();
-            updateCategoryChart(budgetData.apr);
+            updateCategoryChart(budgetData.jun);
             updateExpenseBarChart();
             updateSavingsChart();
-            updateInsights(budgetData.apr);
-            updateExpenseTable(budgetData.apr);
+            updateInsights(budgetData.jun);
+            updateExpenseTable(budgetData.jun);
             updateSavingsGoals();
             // 약간 딜레이 후 나몽이 달리기 애니메이션 시작
             setTimeout(updateNamongProgress, 500);
