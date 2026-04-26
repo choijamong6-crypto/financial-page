@@ -933,9 +933,132 @@
             0%, 100% { box-shadow: 0 0 20px #FFB7B2; }
             50% { box-shadow: 0 0 40px #FF9AA2; }
         }
+
+        /* ===== 비밀번호 게이트 ===== */
+        body { visibility: hidden; }
+        body.authed { visibility: visible; }
+        body.authed #auth-gate { display: none; }
+        #auth-gate {
+            visibility: visible;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #FFE5E0 0%, #D6F0F5 50%, #E8F4F0 100%);
+            font-family: 'Nunito', sans-serif;
+        }
+        #auth-gate .gate-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 12px 40px rgba(110, 180, 200, 0.25);
+            text-align: center;
+            max-width: 360px;
+            width: calc(100% - 40px);
+        }
+        #auth-gate .gate-emoji { font-size: 56px; margin-bottom: 12px; }
+        #auth-gate h2 { color: #2D5870; margin: 0 0 8px; font-size: 22px; }
+        #auth-gate p { color: #6BA8B8; margin: 0 0 24px; font-size: 14px; }
+        #auth-gate input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 22px;
+            text-align: center;
+            letter-spacing: 12px;
+            border: 2px solid #D6F0F5;
+            border-radius: 12px;
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
+            color: #2D5870;
+        }
+        #auth-gate input:focus { border-color: #95E0D5; }
+        #auth-gate button {
+            margin-top: 16px;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #95E0D5, #5EC4B0);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        #auth-gate button:hover { filter: brightness(1.05); }
+        #auth-gate .gate-error {
+            margin-top: 12px;
+            color: #FF6B6B;
+            font-size: 13px;
+            min-height: 18px;
+        }
     </style>
 </head>
 <body>
+    <div id="auth-gate">
+        <div class="gate-card">
+            <div class="gate-emoji">🐱</div>
+            <h2>나몽이네 가계부</h2>
+            <p>비밀번호 4자리를 입력해주세요</p>
+            <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="auth-input" autocomplete="off">
+            <button id="auth-btn">입장</button>
+            <div class="gate-error" id="auth-error"></div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const STORAGE_KEY = 'familyBudgetAuthed_v1';
+            const HASH = '6629ddae3736e894e89cb4a1300a9d2c5c0fad418f8ea06a341b81f2a98bb491';
+
+            async function sha256(text) {
+                const buf = new TextEncoder().encode(text);
+                const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+                return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            function unlock() {
+                document.body.classList.add('authed');
+            }
+
+            if (localStorage.getItem(STORAGE_KEY) === 'yes') {
+                unlock();
+                return;
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const input = document.getElementById('auth-input');
+                const btn = document.getElementById('auth-btn');
+                const err = document.getElementById('auth-error');
+                input.focus();
+
+                async function tryAuth() {
+                    const val = input.value.trim();
+                    if (!val) return;
+                    const hash = await sha256(val);
+                    if (hash === HASH) {
+                        localStorage.setItem(STORAGE_KEY, 'yes');
+                        unlock();
+                    } else {
+                        err.textContent = '비밀번호가 틀렸어요 😿';
+                        input.value = '';
+                        input.focus();
+                    }
+                }
+
+                btn.addEventListener('click', tryAuth);
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') tryAuth();
+                    else err.textContent = '';
+                });
+                input.addEventListener('input', () => {
+                    if (input.value.length === 4) tryAuth();
+                });
+            });
+        })();
+    </script>
     <div class="container">
         <header>
             <div class="header-content">
