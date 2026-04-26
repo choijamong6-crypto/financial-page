@@ -1081,8 +1081,13 @@
     </div>
     <script>
         (function() {
-            const STORAGE_KEY = 'familyBudgetAuthed_v1';
             const HASH = '6629ddae3736e894e89cb4a1300a9d2c5c0fad418f8ea06a341b81f2a98bb491';
+
+            // 이전 버전에서 저장된 인증 정보 정리 (영속 저장 안 함)
+            try {
+                localStorage.removeItem('familyBudgetAuthed_v1');
+                sessionStorage.removeItem('familyBudgetAuthed_v1');
+            } catch (e) {}
 
             async function sha256(text) {
                 const buf = new TextEncoder().encode(text);
@@ -1092,11 +1097,6 @@
 
             function unlock() {
                 document.body.classList.add('authed');
-            }
-
-            if (localStorage.getItem(STORAGE_KEY) === 'yes') {
-                unlock();
-                return;
             }
 
             function pickRandom(arr, n) {
@@ -1134,7 +1134,6 @@
                     if (val.length !== 4) return;
                     const hash = await sha256(val);
                     if (hash === HASH) {
-                        localStorage.setItem(STORAGE_KEY, 'yes');
                         unlock();
                     } else {
                         err.textContent = '비밀번호가 틀렸어요 😿';
