@@ -318,3 +318,69 @@ cp /tmp/financial-page/index.html "/Users/choidaehyun/Library/CloudStorage/Googl
 5. Step 4 검증 체크리스트 확인
 6. git commit & push
 7. Google Drive `index.html` 동기화
+
+---
+
+# 비밀번호 게이트 (Password Gate)
+
+사이트 진입 시 4자리 비밀번호 인증 필수. 코드 위치: `index.html` `<head>`의 `/* ===== 비밀번호 게이트 ===== */` CSS 블록 + `<body>` 시작 직후 `<div id="auth-gate">` HTML + 인라인 `<script>`.
+
+## 정책
+- **비밀번호**: `1023` (4자리 숫자)
+- **SHA-256 해시**: `6629ddae3736e894e89cb4a1300a9d2c5c0fad418f8ea06a341b81f2a98bb491`
+- **영속 저장 X**: 매 페이지 로드(새로고침/재방문)마다 입력 필요. localStorage 안 씀
+- **인증 상태**: `document.body.classList.add('authed')` — 메모리 only
+
+## 비밀번호 변경 시
+1. 새 해시 계산: `echo -n "NEW_PW" | shasum -a 256`
+2. `index.html`의 `const HASH = '...'` 한 줄만 교체
+
+## 게이트 디자인 (현재)
+- 사진 슬롯 5개 (메인 원형 1 + 데코 폴라로이드 4모서리)
+- 슬롯마다 layer 2개 겹쳐 cross-fade (`transition: opacity 2s`)
+- 3초마다 새 5장 랜덤 (`setInterval(refreshPhotos, 3000)`)
+- PIN 박스 4개, 자동 다음칸 포커스, 4번째 입력 시 자동 검증
+
+---
+
+# 사진 최적화 정책 (Photo Optimization)
+
+## 원칙
+- **Drive `01_pictures/`**: 사용자가 업로드하는 원본 (수 MB) — 백업으로 보존
+- **Repo `01_pictures/`**: 압축본 (수백 KB) — 사이트 로딩 속도 위해 필수
+
+## 새 사진 추가 시 절차
+Drive 원본 그대로 repo에 복사하면 페이지 로딩 매우 느림. 반드시 압축 후 commit.
+
+```bash
+cp "DRIVE/new.jpg" /tmp/financial-page/01_pictures/
+sips -Z 1200 -s formatOptions 85 /tmp/financial-page/01_pictures/new.jpg
+# 그리고 index.html의 allNamongPhotos 배열에 추가
+```
+
+## 일괄 압축 (Drive에서 새로 받은 사진들 한꺼번에)
+```bash
+cd /tmp/financial-page/01_pictures
+find . -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" \) -print0 | while IFS= read -r -d '' f; do
+  sips -Z 1200 -s formatOptions 85 "$f" >/dev/null 2>&1
+done
+```
+
+## 주의
+- **GIF는 건드리지 말 것** (애니메이션 보존)
+- 이미 압축된 사진을 또 돌려도 거의 안 줄어듦 (idempotent)
+- 기준 효과: 132MB → 16MB (88% 감소)
+
+---
+
+# 디렉토리 복구 절차
+
+`/tmp/financial-page/.git`이 손상되었거나 디렉토리가 비어있을 때 (실제 발생한 적 있음):
+
+```bash
+mv /tmp/financial-page /tmp/financial-page.broken-$(date +%s)
+export GH_CONFIG_DIR=~/gh-config
+git clone https://github.com/choijamong6-crypto/financial-page.git /tmp/financial-page
+```
+
+`rm -rf`는 사용자 승인 거절될 수 있으니 `mv`로 백업하는 게 안전.
