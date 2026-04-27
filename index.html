@@ -972,6 +972,7 @@
             border: 5px solid white;
             box-shadow: 0 8px 24px rgba(110, 180, 200, 0.3);
             background: #F0F0F0;
+            transition: opacity 0.35s ease;
         }
         #auth-gate .gate-deco {
             position: absolute;
@@ -983,6 +984,7 @@
             border: 5px solid white;
             pointer-events: none;
             background: #F0F0F0;
+            transition: opacity 0.35s ease;
         }
         #auth-gate .gate-deco.deco-1 {
             top: -32px;
@@ -1095,7 +1097,9 @@
                 return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
             }
 
+            let photoTimer = null;
             function unlock() {
+                if (photoTimer) { clearInterval(photoTimer); photoTimer = null; }
                 document.body.classList.add('authed');
             }
 
@@ -1109,16 +1113,46 @@
             }
 
             window.addEventListener('DOMContentLoaded', () => {
-                // 사진 3장 랜덤 선택 (중복 없이)
                 const photos = (typeof allNamongPhotos !== 'undefined' && Array.isArray(allNamongPhotos))
                     ? allNamongPhotos : [];
-                if (photos.length > 0) {
-                    const picks = pickRandom(photos, Math.min(3, photos.length));
-                    document.getElementById('auth-photo').src = picks[0];
-                    if (picks[1]) document.getElementById('auth-deco1').src = picks[1];
-                    else document.getElementById('auth-deco1').style.display = 'none';
-                    if (picks[2]) document.getElementById('auth-deco2').src = picks[2];
-                    else document.getElementById('auth-deco2').style.display = 'none';
+                const photoEl = document.getElementById('auth-photo');
+                const deco1El = document.getElementById('auth-deco1');
+                const deco2El = document.getElementById('auth-deco2');
+                let lastPicks = [];
+
+                function swap(el, src) {
+                    if (!el || !src || el.src.endsWith(src.split('/').pop())) return;
+                    const tmp = new Image();
+                    tmp.onload = () => {
+                        el.style.opacity = '0';
+                        setTimeout(() => { el.src = src; el.style.opacity = '1'; }, 180);
+                    };
+                    tmp.src = src;
+                }
+
+                function refreshPhotos(initial) {
+                    if (photos.length === 0) return;
+                    // 직전 3장과 겹치지 않게 시도
+                    let picks;
+                    for (let i = 0; i < 5; i++) {
+                        picks = pickRandom(photos, Math.min(3, photos.length));
+                        if (!lastPicks.length || picks.some(p => !lastPicks.includes(p))) break;
+                    }
+                    lastPicks = picks;
+                    if (initial) {
+                        photoEl.src = picks[0];
+                        if (picks[1]) deco1El.src = picks[1]; else deco1El.style.display = 'none';
+                        if (picks[2]) deco2El.src = picks[2]; else deco2El.style.display = 'none';
+                    } else {
+                        swap(photoEl, picks[0]);
+                        if (picks[1]) swap(deco1El, picks[1]);
+                        if (picks[2]) swap(deco2El, picks[2]);
+                    }
+                }
+
+                refreshPhotos(true);
+                if (photos.length > 1) {
+                    photoTimer = setInterval(() => refreshPhotos(false), 1000);
                 }
 
                 const pins = Array.from(document.querySelectorAll('.gate-pin'));
