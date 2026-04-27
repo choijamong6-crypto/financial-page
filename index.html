@@ -962,39 +962,57 @@
             width: 100%;
             box-sizing: border-box;
         }
-        #auth-gate .gate-photo {
-            width: 130px;
-            height: 130px;
+        #auth-gate .gate-photo-slot {
+            width: 195px;
+            height: 195px;
             border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 16px;
-            display: block;
+            margin: 0 auto 20px;
+            position: relative;
             border: 5px solid white;
             box-shadow: 0 8px 24px rgba(110, 180, 200, 0.3);
             background: #F0F0F0;
-            transition: opacity 0.35s ease;
+            overflow: hidden;
         }
-        #auth-gate .gate-deco {
+        #auth-gate .gate-deco-slot {
             position: absolute;
-            width: 88px;
-            height: 88px;
-            border-radius: 14px;
-            object-fit: cover;
+            width: 132px;
+            height: 132px;
+            border-radius: 18px;
             box-shadow: 0 6px 20px rgba(110, 180, 200, 0.25);
-            border: 5px solid white;
+            border: 6px solid white;
             pointer-events: none;
             background: #F0F0F0;
-            transition: opacity 0.35s ease;
+            overflow: hidden;
         }
-        #auth-gate .gate-deco.deco-1 {
-            top: -32px;
-            left: -28px;
+        #auth-gate .slot-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        #auth-gate .slot-layer.active { opacity: 1; }
+        #auth-gate .gate-deco-slot.deco-1 {
+            top: -52px;
+            left: -48px;
             transform: rotate(-14deg);
         }
-        #auth-gate .gate-deco.deco-2 {
-            top: -24px;
-            right: -28px;
+        #auth-gate .gate-deco-slot.deco-2 {
+            top: -42px;
+            right: -52px;
             transform: rotate(12deg);
+        }
+        #auth-gate .gate-deco-slot.deco-3 {
+            bottom: -48px;
+            left: -42px;
+            transform: rotate(-10deg);
+        }
+        #auth-gate .gate-deco-slot.deco-4 {
+            bottom: -52px;
+            right: -48px;
+            transform: rotate(14deg);
         }
         #auth-gate h2 { color: #2D5870; margin: 0 0 8px; font-size: 24px; font-weight: 800; }
         #auth-gate .gate-sub { color: #6BA8B8; margin: 0 0 24px; font-size: 14px; }
@@ -1058,18 +1076,33 @@
         @media (max-width: 480px) {
             #auth-gate .gate-pin { width: 52px; height: 72px; font-size: 40px; }
             #auth-gate .gate-pin-row { gap: 8px; }
-            #auth-gate .gate-deco { width: 72px; height: 72px; }
-            #auth-gate .gate-deco.deco-1 { top: -24px; left: -16px; }
-            #auth-gate .gate-deco.deco-2 { top: -18px; right: -16px; }
+            #auth-gate .gate-photo-slot { width: 156px; height: 156px; }
+            #auth-gate .gate-deco-slot { width: 100px; height: 100px; }
+            #auth-gate .gate-deco-slot.deco-1 { top: -36px; left: -24px; }
+            #auth-gate .gate-deco-slot.deco-2 { top: -28px; right: -28px; }
+            #auth-gate .gate-deco-slot.deco-3 { bottom: -32px; left: -22px; }
+            #auth-gate .gate-deco-slot.deco-4 { bottom: -36px; right: -26px; }
         }
     </style>
 </head>
 <body>
     <div id="auth-gate">
         <div class="gate-card">
-            <img class="gate-deco deco-1" id="auth-deco1" alt="">
-            <img class="gate-deco deco-2" id="auth-deco2" alt="">
-            <img class="gate-photo" id="auth-photo" alt="">
+            <div class="gate-deco-slot deco-1" data-slot>
+                <img class="slot-layer" alt=""><img class="slot-layer" alt="">
+            </div>
+            <div class="gate-deco-slot deco-2" data-slot>
+                <img class="slot-layer" alt=""><img class="slot-layer" alt="">
+            </div>
+            <div class="gate-deco-slot deco-3" data-slot>
+                <img class="slot-layer" alt=""><img class="slot-layer" alt="">
+            </div>
+            <div class="gate-deco-slot deco-4" data-slot>
+                <img class="slot-layer" alt=""><img class="slot-layer" alt="">
+            </div>
+            <div class="gate-photo-slot" data-slot>
+                <img class="slot-layer" alt=""><img class="slot-layer" alt="">
+            </div>
             <h2>나몽이네 가계부</h2>
             <p class="gate-sub">비밀번호 4자리를 입력해주세요</p>
             <div class="gate-pin-row">
@@ -1115,44 +1148,55 @@
             window.addEventListener('DOMContentLoaded', () => {
                 const photos = (typeof allNamongPhotos !== 'undefined' && Array.isArray(allNamongPhotos))
                     ? allNamongPhotos : [];
-                const photoEl = document.getElementById('auth-photo');
-                const deco1El = document.getElementById('auth-deco1');
-                const deco2El = document.getElementById('auth-deco2');
+
+                function makeSlot(slotEl) {
+                    const layers = Array.from(slotEl.querySelectorAll('.slot-layer'));
+                    let activeIdx = -1;
+                    return {
+                        swap(src) {
+                            if (!src) return;
+                            const nextIdx = activeIdx === 0 ? 1 : 0;
+                            const next = layers[nextIdx];
+                            const tmp = new Image();
+                            tmp.onload = () => {
+                                // 비활성 layer가 fade 진행 중일 수 있어 깜빡임 방지로 즉시 0으로 reset
+                                next.style.transition = 'none';
+                                next.classList.remove('active');
+                                next.style.opacity = '0';
+                                next.src = src;
+                                void next.offsetWidth;
+                                next.style.transition = '';
+                                next.style.opacity = '';
+                                requestAnimationFrame(() => {
+                                    next.classList.add('active');
+                                    if (activeIdx >= 0) layers[activeIdx].classList.remove('active');
+                                    activeIdx = nextIdx;
+                                });
+                            };
+                            tmp.onerror = () => {};
+                            tmp.src = src;
+                        }
+                    };
+                }
+
+                const slots = Array.from(document.querySelectorAll('#auth-gate [data-slot]')).map(makeSlot);
                 let lastPicks = [];
 
-                function swap(el, src) {
-                    if (!el || !src || el.src.endsWith(src.split('/').pop())) return;
-                    const tmp = new Image();
-                    tmp.onload = () => {
-                        el.style.opacity = '0';
-                        setTimeout(() => { el.src = src; el.style.opacity = '1'; }, 180);
-                    };
-                    tmp.src = src;
-                }
-
-                function refreshPhotos(initial) {
-                    if (photos.length === 0) return;
-                    // 직전 3장과 겹치지 않게 시도
+                function refreshPhotos() {
+                    if (photos.length === 0 || slots.length === 0) return;
+                    const need = Math.min(slots.length, photos.length);
                     let picks;
-                    for (let i = 0; i < 5; i++) {
-                        picks = pickRandom(photos, Math.min(3, photos.length));
-                        if (!lastPicks.length || picks.some(p => !lastPicks.includes(p))) break;
+                    for (let i = 0; i < 6; i++) {
+                        picks = pickRandom(photos, need);
+                        if (!lastPicks.length || picks.every(p => !lastPicks.includes(p))) break;
                     }
                     lastPicks = picks;
-                    if (initial) {
-                        photoEl.src = picks[0];
-                        if (picks[1]) deco1El.src = picks[1]; else deco1El.style.display = 'none';
-                        if (picks[2]) deco2El.src = picks[2]; else deco2El.style.display = 'none';
-                    } else {
-                        swap(photoEl, picks[0]);
-                        if (picks[1]) swap(deco1El, picks[1]);
-                        if (picks[2]) swap(deco2El, picks[2]);
-                    }
+                    slots.forEach((slot, i) => slot.swap(picks[i]));
                 }
 
-                refreshPhotos(true);
+                refreshPhotos();
                 if (photos.length > 1) {
-                    photoTimer = setInterval(() => refreshPhotos(false), 1000);
+                    photoTimer = setInterval(refreshPhotos, 1000);
                 }
 
                 const pins = Array.from(document.querySelectorAll('.gate-pin'));
