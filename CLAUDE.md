@@ -178,12 +178,11 @@ const savingsGoals = [
 ### 3-3. `currentSavingsBalance` (~line 1282)
 
 ```javascript
-const currentSavingsBalance = 406.10 + 575.53 + 2245.40 + 3800.01; // $7,027.04
+const currentSavingsBalance = 4500.08; // $4,500.08
 ```
-- **가장 최근 달**의 4개 통장 잔고 합산:
-  - 참새통장 + 냥이통장 + 공동통장 + Savings
-- 스프레드시트에서 해당 월의 수입 라벨 열에서 참새통장/냥이통장/공동통장/Savings 행의 금액을 읽어올 것
-- 주석의 합계도 함께 업데이트
+- **Savings 통장 잔고만** 사용 (참새통장/냥이통장/공동통장은 각자 비상금이라 합산 X)
+- 스프레드시트에서 가장 최근 달의 수입 라벨 열에서 `Savings` 행의 금액을 읽어올 것
+- 주석도 함께 업데이트
 
 ### 3-4. `updateTrendChart()` 함수 (~line 1330)
 
@@ -264,7 +263,7 @@ const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);  // $48
 - [ ] **트렌드 차트 일치**: `incomeData` 배열의 각 값 = 해당 월 `budgetData.{month}.income.total`
 - [ ] **트렌드 차트 일치**: `expenseData` 배열의 각 값 = 해당 월 `budgetData.{month}.totalExpenses`
 - [ ] **바 차트 Other 계산**: Other = totalExpenses - Housing - Utilities - Insurance (각 월별로)
-- [ ] **저축 잔고**: `currentSavingsBalance` = 최신 월의 (참새통장 + 냥이통장 + 공동통장 + Savings)
+- [ ] **저축 잔고**: `currentSavingsBalance` = 최신 월의 Savings 통장 잔고만 (다른 통장 합산 X)
 - [ ] **저축 목표 합계**: savingsGoals의 targetNum 합 = `updateInsights()`의 `totalGoal` 하드코딩 값
 - [ ] **기본 월 참조**: `init()` 내 모든 `budgetData.XXX`와 `currentMonth` 변수가 최신 달을 가리킴
 - [ ] **월 버튼**: 최신 달 버튼에 `active` 클래스가 있음

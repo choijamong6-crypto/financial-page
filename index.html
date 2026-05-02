@@ -1740,8 +1740,8 @@
             { name: "Moving", nameKo: "이사", target: "$3,000", targetNum: 3000 }
         ];
 
-        // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
-        const currentSavingsBalance = 777.57 + 461.87 + 1133.01 + 4500.08; // $6,872.53
+        // 현재 저축 잔고 (Savings 통장만 — 각 통장은 비상금이라 합산 X)
+        const currentSavingsBalance = 4500.08; // $4,500.08
 
         let currentMonth = 'jun';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
