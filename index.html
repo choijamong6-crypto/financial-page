@@ -1635,11 +1635,13 @@
             },
             apr: {
                 income: {
+                    chamSalary: 4208.73,
                     haniSalary: 5189.06,
                     gaTax: 507,
                     fetch: 50,
                     irs: 2445,
-                    total: 8191.06
+                    reimberse: 1303.20,
+                    total: 13702.99
                 },
                 expenses: {
                     housing: { rent: 2316.32, seonhanRent: 1200, sum: 3516.32 },
@@ -1647,25 +1649,26 @@
                     utilities: { gfiber: 30.61, sum: 30.61 },
                     insurance: { geico: 132.80, namongInsurance: 40.20, amongInsurance: 63.91, sum: 236.91 },
                     pet: { amongVet: 284.50, chewy: 54.71, misc: 88.49, petSmart: 4.23, sum: 431.93 },
-                    grocery: { publix: 16.61, misc1: 9.58, misc2: 45.66, misc3: 36.32, misc4: 11.11, misc5: 19.49, megamart: 54.00, misc6: 98.35, misc7: 134.00, misc8: 7.65, misc9: 115.12, misc10: 14.28, costco: 252.21, costco2: 134.99, traderJoes: 46.95, misc11: 53.52, savi: 5.76, sum: 1055.60 },
+                    grocery: { publix: 138.77, misc: 6.91, megamart: 423.40, costco: 252.21, costco2: 134.99, traderJoes: 46.95, misc2: 53.52, savi: 5.76, sum: 1062.51 },
                     entertainment: { netflix: 17.99, chatanooga: 15.00, sum: 32.99 },
-                    dining: { techDining: 9.96, bbq: 45.47, dancingGoats1: 13.34, bubbleTea: 7.90, braves: 43.68, dancingGoats2: 14.16, wolfMt: 106.08, chichasanchen: 15.90, glazeTea: 8.62, kaldis: 5.83, sum: 270.94 },
-                    shopping: { amazon: 8.58, misc1: 26.80, misc2: 92.32, misc3: 32.65, misc4: 119.77, misc5: 14.15, tjmaxx: 48.95, sum: 343.22 },
+                    dining: { techDining: 9.96, bbq: 89.56, dancingGoats1: 13.34, bubbleTea: 7.90, braves: 43.68, dancingGoats2: 14.16, wolfMt: 106.08, chichasanchen: 15.90, glazeTea: 8.62, kaldis: 5.83, gt: 15.00, brunoMars: 12.00, sum: 342.03 },
+                    shopping: { amazon: 428.06, misc: 28.26, tjmaxx: 48.95, sum: 505.27 },
                     gas: { gas1: 27.30, gas2: 39.10, gas3: 43.38, sum: 109.78 },
                     other: { servingCfa: 93.65, car: 1000, camdenHani: 40, camdenDaehyuni: 40, parkingGT: 3, parkingChat: 5, parkingGT2: 6, sum: 1187.65 }
                 },
-                totalExpenses: 8165.95,
-                savings: { daehyuni: 0, hani: 0, total: 0 }
+                totalExpenses: 8406.00,
+                savings: { daehyuni: 2500, hani: 5700, total: 8200 }
             },
             may: {
                 income: { total: 0 },
                 expenses: {
-                    housing: { seonhanRent: 600, sum: 600 },
+                    housing: { rent: 2101.69, seonhanRent: 600, sum: 2701.69 },
                     tithing: { tithing: 950, sum: 950 },
                     insurance: { namongInsurance: 40.21, amongInsurance: 63.91, sum: 104.12 },
-                    entertainment: { netflix: 17.99, renFest: 75.47, sum: 93.46 }
+                    entertainment: { netflix: 17.99, renFest: 75.47, sum: 93.46 },
+                    dining: { dancingGoat: 7.26, teaLeaf: 7.64, starbucks: 5.72, sum: 20.62 }
                 },
-                totalExpenses: 1747.58,
+                totalExpenses: 3869.89,
                 savings: { daehyuni: 0, hani: 0, total: 0 },
                 travel: {
                     destin: { airbnb: 698.98, total: 698.98 }
@@ -1738,7 +1741,7 @@
         ];
 
         // 현재 저축 잔고 (스프레드시트 기준: 참새통장 + 냥이통장 + 공동통장 + Savings)
-        const currentSavingsBalance = 0 + 961.87 + 1107.56 + 2500.08; // $4,569.51
+        const currentSavingsBalance = 777.57 + 461.87 + 1133.01 + 4500.08; // $6,872.53
 
         let currentMonth = 'jun';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
@@ -1789,8 +1792,8 @@
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
             const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 8191.06, 0, 0];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8165.95, 1747.58, 1008.20];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 13702.99, 0, 0];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8406.00, 3869.89, 1008.20];
 
             if (trendChart) trendChart.destroy();
 
@@ -1908,10 +1911,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 600, 0], backgroundColor: '#FF9AA2' },
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 2701.69, 0], backgroundColor: '#FF9AA2' },
                         { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61, 0, 0], backgroundColor: '#6FB1FC' },
                         { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 104.12, 40.21], backgroundColor: '#FFB088' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4382.11, 1043.46, 967.99], backgroundColor: '#B8C8D0' }
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4622.16, 1064.08, 967.99], backgroundColor: '#B8C8D0' }
                     ]
                 },
                 options: {
