@@ -2222,13 +2222,47 @@
                 }
                 if (miscSum > 0) kept.push({ key: 'misc', value: miscSum });
 
+                // Merge entries that map to the same display label
+                // (e.g., gas1/gas2/.. → "Gas", cfa/cfa2 → "CFA",
+                // dancingGoats/dancingGoats1/dancingGoats2 → "Dancing Goats").
+                const byLabel = new Map();
+                for (const p of kept) {
+                    const lbl = SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key);
+                    if (byLabel.has(lbl)) byLabel.get(lbl).value += p.value;
+                    else byLabel.set(lbl, { key: p.key, value: p.value, _displayLabel: lbl });
+                }
+                kept = Array.from(byLabel.values());
+
                 kept.sort((a, b) => b.value - a.value);
+
+                // Bundle items < 5% of this category's total into one "Walmart,
+                // Publix, Megamart" style node — keeps small expenses visible
+                // without giving each its own row.
+                const SMALL_PCT_OF_CAT = 0.05;
+                const big = [];
+                const tiny = [];
+                for (const p of kept) {
+                    if (p.value / c.value < SMALL_PCT_OF_CAT) tiny.push(p);
+                    else big.push(p);
+                }
+                if (tiny.length >= 2) {
+                    const names = tiny.map(p => p._displayLabel);
+                    let combinedLabel;
+                    if (names.length <= 4) {
+                        combinedLabel = names.join(', ');
+                    } else {
+                        combinedLabel = names.slice(0, 3).join(', ') + ` 외 ${names.length - 3}개`;
+                    }
+                    const sum = tiny.reduce((s, p) => s + p.value, 0);
+                    big.push({ key: '_tinyBundle', value: sum, _displayLabel: combinedLabel });
+                    kept = big;
+                } // else: leave as-is (single item doesn't need bundling)
 
                 for (const p of kept) {
                     subs.push({
                         key: 'sub:' + c.dataKey + ':' + p.key,
                         catKey: c.key,
-                        label: SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key),
+                        label: p._displayLabel || SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key),
                         value: p.value,
                         color: c.color
                     });
