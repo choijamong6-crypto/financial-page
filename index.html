@@ -2235,49 +2235,34 @@
 
                 kept.sort((a, b) => b.value - a.value);
 
-                // Step A: any item < 0.5% of total flow gets folded into 기타
-                // (so the diagram doesn't carry pennies as named rows).
-                const TINY_TOTAL_THRESHOLD = totalFlow * 0.005;
-                let extraMiscSum = 0;
-                const aboveFloor = [];
-                for (const p of kept) {
-                    if (p.value < TINY_TOTAL_THRESHOLD) extraMiscSum += p.value;
-                    else aboveFloor.push(p);
-                }
-                if (extraMiscSum > 0) {
-                    const existingMisc = aboveFloor.find(p => p._displayLabel === '기타');
-                    if (existingMisc) {
-                        existingMisc.value += extraMiscSum;
-                    } else {
-                        aboveFloor.push({ key: 'misc', value: extraMiscSum, _displayLabel: '기타' });
-                    }
-                }
-                kept = aboveFloor;
-                kept.sort((a, b) => b.value - a.value);
-
-                // Step B: items still < 5% of this category's total get a
-                // "Walmart, Publix, Megamart" style combined node. 기타 is
-                // never folded here — it stays as its own row.
-                const SMALL_PCT_OF_CAT = 0.05;
+                // Bundle items below an absolute $100 floor under the biggest
+                // bundled item's name. e.g., [Costco $69, Trader Joe's $33,
+                // Walmart $14, Publix $12] → "Costco 등 4건 $128".
+                // If the biggest bundled item is 기타 (anonymous misc roll-up),
+                // fall back to the next biggest name so the bundle isn't
+                // labelled "기타 등 N건".
+                const FLOOR = 100;
                 const big = [];
-                const tiny = [];
+                const small = [];
                 for (const p of kept) {
-                    if (p._displayLabel === '기타') { big.push(p); continue; }
-                    if (p.value / c.value < SMALL_PCT_OF_CAT) tiny.push(p);
+                    if (p.value < FLOOR) small.push(p);
                     else big.push(p);
                 }
-                if (tiny.length >= 2) {
-                    const names = tiny.map(p => p._displayLabel);
-                    let combinedLabel;
-                    if (names.length <= 4) {
-                        combinedLabel = names.join(', ');
-                    } else {
-                        combinedLabel = names.slice(0, 3).join(', ') + ` 외 ${names.length - 3}개`;
+                if (small.length >= 2) {
+                    small.sort((a, b) => b.value - a.value);
+                    let biggestName = small[0]._displayLabel;
+                    if (biggestName === '기타' && small.length > 1) {
+                        biggestName = small[1]._displayLabel;
                     }
-                    const sum = tiny.reduce((s, p) => s + p.value, 0);
-                    big.push({ key: '_tinyBundle', value: sum, _displayLabel: combinedLabel });
+                    const sum = small.reduce((s, p) => s + p.value, 0);
+                    big.push({
+                        key: '_smallBundle',
+                        value: sum,
+                        _displayLabel: `${biggestName} 등 ${small.length}건`
+                    });
                     kept = big;
-                } // else: leave as-is (single item doesn't need bundling)
+                    kept.sort((a, b) => b.value - a.value);
+                } // else: 1 item alone — leave as-is
 
                 for (const p of kept) {
                     subs.push({
