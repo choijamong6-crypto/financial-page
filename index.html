@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Budget Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -289,6 +291,90 @@
         .chart-container {
             position: relative;
             height: 280px;
+        }
+
+        /* Cash Flow (Sankey) */
+        .sankey-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 28px 20px;
+            box-shadow: 0 10px 40px rgba(110, 180, 200, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .sankey-header {
+            margin-bottom: 18px;
+        }
+
+        .sankey-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            color: #6BA8B8;
+            font-weight: 700;
+        }
+
+        .sankey-date {
+            font-size: 1.35rem;
+            color: #2D5870;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .sankey-svg-wrap {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #sankeyChart {
+            display: block;
+            width: 100%;
+            min-width: 720px;
+            height: 560px;
+        }
+
+        #sankeyChart .sankey-link {
+            fill: none;
+            transition: stroke-opacity 0.2s ease;
+        }
+
+        #sankeyChart .sankey-link:hover {
+            stroke-opacity: 0.65 !important;
+        }
+
+        #sankeyChart .sankey-node rect {
+            stroke: rgba(45, 88, 112, 0.08);
+            stroke-width: 1;
+        }
+
+        #sankeyChart .sankey-label {
+            font-family: 'Nunito', sans-serif;
+            fill: #2D5870;
+            pointer-events: none;
+        }
+
+        #sankeyChart .sankey-label .name {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        #sankeyChart .sankey-label .amount {
+            font-size: 11px;
+            font-weight: 600;
+            opacity: 0.65;
+        }
+
+        @media (max-width: 768px) {
+            .sankey-card {
+                padding: 20px 16px 16px;
+            }
+            .sankey-date {
+                font-size: 1.1rem;
+            }
+            #sankeyChart {
+                height: 620px;
+            }
         }
 
         /* Insights */
@@ -1349,6 +1435,16 @@
             <!-- Filled by JavaScript -->
         </div>
 
+        <div class="sankey-card">
+            <div class="sankey-header">
+                <div class="sankey-eyebrow">CASH FLOW</div>
+                <div class="sankey-date" id="sankeyDate"></div>
+            </div>
+            <div class="sankey-svg-wrap">
+                <svg id="sankeyChart"></svg>
+            </div>
+        </div>
+
         <div class="charts-grid">
             <div class="chart-card">
                 <h2>Income vs Expenses</h2>
@@ -1900,6 +1996,393 @@
             });
         }
 
+        // ==================== Cash Flow (Sankey) ====================
+        const SANKEY_MONTH_INFO = {
+            sep: { name: 'Sep', year: 2025, days: 30 },
+            oct: { name: 'Oct', year: 2025, days: 31 },
+            nov: { name: 'Nov', year: 2025, days: 30 },
+            dec: { name: 'Dec', year: 2025, days: 31 },
+            jan: { name: 'Jan', year: 2026, days: 31 },
+            feb: { name: 'Feb', year: 2026, days: 28 },
+            mar: { name: 'Mar', year: 2026, days: 31 },
+            apr: { name: 'Apr', year: 2026, days: 30 },
+            may: { name: 'May', year: 2026, days: 31 },
+            jun: { name: 'Jun', year: 2026, days: 30 }
+        };
+
+        const SANKEY_INCOME_LABELS = {
+            chamSalary: '🐦 참새 월급',
+            haniSalary: '🐱 하니 월급',
+            salary: '💼 월급',
+            haniDadMoney: '👨 하니 아빠',
+            halfUtilities: '💡 공과금 환급',
+            halfSavings: '💰 Savings 환급',
+            njs: '🏢 NJS',
+            gaTax: '📋 주세금 환급',
+            irs: '📄 IRS 환급',
+            fetch: '🐕 Fetch',
+            reimberse: '💵 Reimburse',
+            plants: '🌱 식물',
+            crochet: '🧶 코바늘',
+            fromSavings: '🏦 통장에서'
+        };
+
+        const SANKEY_CATEGORY_LABELS = {
+            housing: '🏠 Housing',
+            tithing: '⛪ 십일조',
+            utilities: '💡 Utilities',
+            insurance: '🛡️ Insurance',
+            pet: '🐾 Pet',
+            grocery: '🛒 Grocery',
+            entertainment: '🎬 Entertainment',
+            dining: '🍽️ Dining',
+            shopping: '🛍️ Shopping',
+            gas: '⛽ Gas',
+            membership: '🎟️ Membership',
+            giving: '🎁 Giving',
+            other: '📌 Other',
+            travel: '✈️ Travel',
+            savings: '💰 Savings',
+            remaining: '✨ 남은 돈'
+        };
+
+        const SANKEY_CATEGORY_COLORS = {
+            housing: '#FF9AA2',
+            tithing: '#C8A2D6',
+            utilities: '#6FB1FC',
+            insurance: '#FFB088',
+            pet: '#FFD56B',
+            grocery: '#5EC4B0',
+            entertainment: '#95E0D5',
+            dining: '#FFB7B2',
+            shopping: '#6FCAE0',
+            gas: '#95B8E8',
+            membership: '#B8A8D0',
+            giving: '#E8C4A0',
+            other: '#B8C8D0',
+            travel: '#E8A088',
+            savings: '#7AD0B8',
+            remaining: '#B8D5E0'
+        };
+
+        const SANKEY_SUB_LABELS = {
+            // Housing
+            rent: 'Rent', seonhanRent: '선한 Rent',
+            // Tithing
+            tithing: '십일조',
+            // Utilities
+            gfiber: 'Google Fiber', gp: 'Georgia Power', georgiaPower: 'Georgia Power',
+            att: 'AT&T', chatgpt: 'ChatGPT',
+            // Insurance
+            geico: 'Geico', namongInsurance: '나몽 보험', amongInsurance: '아몽 보험',
+            healthInsurance: '건강보험',
+            // Pet
+            namong: '나몽', mangomongo: '망고몽고', supplies: '용품', chewy: 'Chewy',
+            grooming: '미용', petSmart: 'PetSmart',
+            amongRegistration: '아몽 등록', amongVet: '아몽 동물병원',
+            // Grocery / Shopping common
+            publix: 'Publix', megamart: 'Megamart', costco: 'Costco', costco2: 'Costco',
+            traderJoes: 'Trader Joe\'s', walmart: 'Walmart', kroger: 'Kroger',
+            amazon: 'Amazon', tjmaxx: 'TJ Maxx', savi: 'Savi', sams: 'Sam\'s',
+            grocery: 'Grocery',
+            // Entertainment
+            netflix: 'Netflix', harryPotter: 'Harry Potter', pottery: '도자기',
+            coffee: '커피', mixer: 'Mixer', boardgame: '보드게임',
+            chatahoochee: 'Chattahoochee', chatanooga: 'Chattanooga',
+            braves: 'Braves', renFest: 'Ren Fest',
+            // Dining
+            cfa: 'CFA', cfa2: 'CFA', chickfila: 'Chick-fil-A', bbq: 'BBQ',
+            shabushabu: '샤브샤브', gilly: 'Gilly', kaldis: 'Kaldi\'s',
+            panda: 'Panda', dancingGoat: 'Dancing Goats', dancingGoats: 'Dancing Goats',
+            dancingGoats1: 'Dancing Goats', dancingGoats2: 'Dancing Goats',
+            mcdonalds: 'McDonald\'s', sweetHut: 'Sweet Hut',
+            callYourMother: 'Call Your Mother', chichasanchen: 'Chichas',
+            techDining: 'Tech Dining', bubbleTea: 'Bubble Tea',
+            wolfMt: 'Wolf Mountain', glazeTea: 'Glaze Tea',
+            gt: 'GT', brunoMars: 'Bruno Mars', teaLeaf: 'Tea Leaf',
+            starbucks: 'Starbucks', pita: 'Pita',
+            // Gas
+            gas1: 'Gas', gas2: 'Gas', gas3: 'Gas', gas4: 'Gas', gas5: 'Gas',
+            // Shopping
+            bowls: 'Bowls',
+            // Other
+            servingCfa: '서빙 CFA', car: '차량', camdenHani: 'Camden 하니',
+            camdenDaehyuni: 'Camden 대혀니', parkingGT: 'GT 주차',
+            parkingChat: 'Chattahoochee 주차', parkingGT2: 'GT 주차',
+            serviceFee: 'Service Fee', emission: '배기 검사', creditCard: '카드',
+            motherMoney: '부모님 송금', twoMothers: '양가 어머니', haniDadMoney: '아빠 송금',
+            // Membership
+            // Travel destinations
+            portland: 'Portland', destin: 'Destin', denver: 'Denver',
+            airbnb: 'Airbnb', flight: 'Flight', hotel: 'Hotel',
+            haniTotal: '하니', chamsaeTotal: '참새', tripTotal: '여행',
+            trip: '여행',
+            // Savings
+            daehyuni: '🐦 대혀니', hani: '🐱 하니',
+            // Generic
+            misc: '기타', _other: '기타'
+        };
+
+        function sankeyTitleCase(s) {
+            return s.replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, c => c.toUpperCase())
+                    .replace(/\d+/g, '')
+                    .trim() || s;
+        }
+
+        function sankeyFormatMoney(v) {
+            return '$' + Math.round(v).toLocaleString('en-US');
+        }
+
+        function getSankeyData(monthData) {
+            const sources = [];
+            if (monthData.income) {
+                for (const [k, v] of Object.entries(monthData.income)) {
+                    if (k === 'total') continue;
+                    if (typeof v !== 'number' || v <= 0) continue;
+                    sources.push({ key: 's:' + k, label: SANKEY_INCOME_LABELS[k] || sankeyTitleCase(k), value: v });
+                }
+            }
+
+            const cats = [];
+            const catOrder = ['housing', 'tithing', 'utilities', 'insurance', 'pet',
+                              'grocery', 'entertainment', 'dining', 'shopping', 'gas',
+                              'membership', 'giving', 'other'];
+            for (const c of catOrder) {
+                const sum = monthData.expenses?.[c]?.sum;
+                if (sum && sum > 0) {
+                    cats.push({
+                        key: 'c:' + c, dataKey: c,
+                        label: SANKEY_CATEGORY_LABELS[c],
+                        value: sum, color: SANKEY_CATEGORY_COLORS[c]
+                    });
+                }
+            }
+            if (monthData.travel) {
+                let tt = 0;
+                for (const dest of Object.keys(monthData.travel)) {
+                    tt += (monthData.travel[dest].total || 0);
+                }
+                if (tt > 0) cats.push({
+                    key: 'c:travel', dataKey: 'travel',
+                    label: SANKEY_CATEGORY_LABELS.travel,
+                    value: tt, color: SANKEY_CATEGORY_COLORS.travel
+                });
+            }
+            if (monthData.savings?.total > 0) {
+                cats.push({
+                    key: 'c:savings', dataKey: 'savings',
+                    label: SANKEY_CATEGORY_LABELS.savings,
+                    value: monthData.savings.total, color: SANKEY_CATEGORY_COLORS.savings
+                });
+            }
+
+            // Balance the diagram: outflow vs inflow
+            const totalIn = sources.reduce((s, x) => s + x.value, 0);
+            const totalOut = cats.reduce((s, x) => s + x.value, 0);
+            if (totalOut > totalIn + 0.01) {
+                sources.push({ key: 's:fromSavings', label: SANKEY_INCOME_LABELS.fromSavings, value: totalOut - totalIn });
+            } else if (totalIn > totalOut + 0.01) {
+                cats.push({
+                    key: 'c:remaining', dataKey: 'remaining',
+                    label: SANKEY_CATEGORY_LABELS.remaining,
+                    value: totalIn - totalOut, color: SANKEY_CATEGORY_COLORS.remaining
+                });
+            }
+
+            // Subcategories
+            const subs = [];
+            for (const c of cats) {
+                if (c.dataKey === 'remaining') continue;
+
+                let pairs = [];
+                if (c.dataKey === 'savings') {
+                    for (const k of ['daehyuni', 'hani']) {
+                        if (monthData.savings[k] > 0) pairs.push({ key: k, value: monthData.savings[k] });
+                    }
+                } else if (c.dataKey === 'travel') {
+                    for (const dest of Object.keys(monthData.travel)) {
+                        const t = monthData.travel[dest].total;
+                        if (t > 0) pairs.push({ key: dest, value: t });
+                    }
+                } else {
+                    const subData = monthData.expenses[c.dataKey];
+                    for (const [k, v] of Object.entries(subData)) {
+                        if (k === 'sum') continue;
+                        if (typeof v === 'number' && v > 0) pairs.push({ key: k, value: v });
+                    }
+                }
+
+                // Group misc1/misc2/.. → misc
+                let miscSum = 0;
+                let kept = [];
+                for (const p of pairs) {
+                    if (/^misc\d*$/i.test(p.key)) miscSum += p.value;
+                    else kept.push(p);
+                }
+                if (miscSum > 0) kept.push({ key: 'misc', value: miscSum });
+
+                kept.sort((a, b) => b.value - a.value);
+
+                // Cap at 4; bundle smallest into "기타"
+                if (kept.length > 4) {
+                    const top = kept.slice(0, 3);
+                    const restSum = kept.slice(3).reduce((s, x) => s + x.value, 0);
+                    kept = top.concat([{ key: '_other', value: restSum }]);
+                }
+
+                for (const p of kept) {
+                    subs.push({
+                        key: 'sub:' + c.dataKey + ':' + p.key,
+                        catKey: c.key,
+                        label: SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key),
+                        value: p.value,
+                        color: c.color
+                    });
+                }
+            }
+
+            // Build nodes/links
+            const nodes = [];
+            const idx = {};
+            function add(id, name, color, type) {
+                if (id in idx) return idx[id];
+                idx[id] = nodes.length;
+                nodes.push({ id, name, color, type });
+                return idx[id];
+            }
+            const links = [];
+            const hubVal = Math.max(totalIn, totalOut);
+            const hubIdx = add('hub', '💵 Income', '#5EC4D6', 'hub');
+
+            for (const s of sources) {
+                const i = add(s.key, s.label, '#A8E0E8', 'source');
+                links.push({ source: i, target: hubIdx, value: s.value, color: '#A8E0E8' });
+            }
+            for (const c of cats) {
+                const i = add(c.key, c.label, c.color, 'category');
+                links.push({ source: hubIdx, target: i, value: c.value, color: c.color });
+            }
+            for (const s of subs) {
+                const i = add(s.key, s.label, s.color, 'subcategory');
+                const ci = idx[s.catKey];
+                links.push({ source: ci, target: i, value: s.value, color: s.color });
+            }
+
+            return { nodes, links, hubValue: hubVal };
+        }
+
+        function updateSankey(month, monthData) {
+            const dateEl = document.getElementById('sankeyDate');
+            if (dateEl && SANKEY_MONTH_INFO[month]) {
+                const m = SANKEY_MONTH_INFO[month];
+                dateEl.textContent = `${m.name} 1, ${m.year} – ${m.name} ${m.days}, ${m.year}`;
+            }
+
+            const svgEl = document.getElementById('sankeyChart');
+            if (!svgEl || !window.d3 || !d3.sankey) return;
+
+            const data = getSankeyData(monthData);
+
+            const svg = d3.select(svgEl);
+            svg.selectAll('*').remove();
+
+            if (data.nodes.length <= 1) {
+                svg.append('text')
+                    .attr('x', '50%')
+                    .attr('y', '50%')
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#7AA0B0')
+                    .style('font-family', 'Nunito, sans-serif')
+                    .style('font-size', '14px')
+                    .text('데이터가 없는 달이에요 🐱');
+                return;
+            }
+
+            const rect = svgEl.getBoundingClientRect();
+            const width = Math.max(rect.width, 720);
+            // Adaptive height: dense leaf columns need more vertical room
+            const leafCount = data.nodes.filter(n => n.type === 'subcategory').length;
+            const catCount = data.nodes.filter(n => n.type === 'category').length;
+            const sourceCount = data.nodes.filter(n => n.type === 'source').length;
+            const maxCol = Math.max(leafCount, catCount, sourceCount);
+            const calcHeight = Math.max(420, maxCol * 32 + 60);
+            const height = Math.min(900, calcHeight);
+            svgEl.style.height = height + 'px';
+            svg.attr('viewBox', `0 0 ${width} ${height}`)
+               .attr('preserveAspectRatio', 'xMinYMid meet');
+
+            const totalForPercent = data.hubValue || 1;
+
+            const sankeyGen = d3.sankey()
+                .nodeWidth(14)
+                .nodePadding(12)
+                .nodeAlign(d3.sankeyLeft)
+                .extent([[12, 14], [width - 12, height - 14]]);
+
+            const graph = sankeyGen({
+                nodes: data.nodes.map(d => Object.assign({}, d)),
+                links: data.links.map(d => Object.assign({}, d))
+            });
+
+            // Links
+            svg.append('g')
+                .attr('fill', 'none')
+                .selectAll('path')
+                .data(graph.links)
+                .join('path')
+                .attr('class', 'sankey-link')
+                .attr('d', d3.sankeyLinkHorizontal())
+                .attr('stroke', d => d.color)
+                .attr('stroke-opacity', 0.4)
+                .attr('stroke-width', d => Math.max(1, d.width))
+                .append('title')
+                .text(d => `${d.source.name} → ${d.target.name}\n${sankeyFormatMoney(d.value)}`);
+
+            // Nodes
+            const node = svg.append('g')
+                .selectAll('g')
+                .data(graph.nodes)
+                .join('g')
+                .attr('class', 'sankey-node');
+
+            node.append('rect')
+                .attr('x', d => d.x0)
+                .attr('y', d => d.y0)
+                .attr('height', d => Math.max(1, d.y1 - d.y0))
+                .attr('width', d => d.x1 - d.x0)
+                .attr('fill', d => d.color)
+                .attr('rx', 2)
+                .append('title')
+                .text(d => `${d.name}\n${sankeyFormatMoney(d.value)}`);
+
+            // Labels (2-line: name on top, amount + % on bottom)
+            const label = svg.append('g')
+                .attr('class', 'sankey-label')
+                .selectAll('text')
+                .data(graph.nodes)
+                .join('text')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('y', d => (d.y1 + d.y0) / 2)
+                .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end');
+
+            label.append('tspan')
+                .attr('class', 'name')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('dy', '-0.25em')
+                .text(d => d.name);
+
+            label.append('tspan')
+                .attr('class', 'amount')
+                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                .attr('dy', '1.2em')
+                .text(d => {
+                    const pct = (d.value / totalForPercent * 100);
+                    if (d.id === 'hub') return sankeyFormatMoney(d.value);
+                    return `${sankeyFormatMoney(d.value)} (${pct.toFixed(1)}%)`;
+                });
+        }
+
         function updateExpenseBarChart() {
             const ctx = document.getElementById('expenseBarChart').getContext('2d');
             const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
@@ -2231,6 +2714,7 @@
             const monthData = budgetData[month];
             updateSummaryCards(monthData);
             updateCategoryChart(monthData);
+            updateSankey(month, monthData);
             updateInsights(monthData);
             updateExpenseTable(monthData);
         }
@@ -2242,6 +2726,7 @@
             updateSummaryCards(budgetData.jun);
             updateTrendChart();
             updateCategoryChart(budgetData.jun);
+            updateSankey('jun', budgetData.jun);
             updateExpenseBarChart();
             updateSavingsChart();
             updateInsights(budgetData.jun);
@@ -2252,6 +2737,15 @@
         }
 
         init();
+
+        // Re-render Sankey on window resize (debounced)
+        let _sankeyResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(_sankeyResizeTimer);
+            _sankeyResizeTimer = setTimeout(() => {
+                if (budgetData[currentMonth]) updateSankey(currentMonth, budgetData[currentMonth]);
+            }, 200);
+        });
 
         // ============================================
         // 나몽의 저축 점프 게임 v2.0
