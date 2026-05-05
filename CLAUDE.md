@@ -320,6 +320,120 @@ cp /tmp/financial-page/index.html "/Users/choidaehyun/Library/CloudStorage/Googl
 
 ---
 
+# Cash Flow Sankey 다이어그램
+
+> 월별 자금 흐름을 시각화하는 섹션. 수입 소스 → Income 허브 → 지출 카테고리 → 서브카테고리 형태의 4단 흐름.
+
+## 위치 / 의존성
+- HTML 카드: `<div class="sankey-card">` — 월 선택 버튼과 summary cards 사이
+- SVG 컨테이너: `<svg id="sankeyChart">`, 날짜 라벨: `<div id="sankeyDate">`
+- CDN 의존성 (`<head>`):
+  ```html
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3"></script>
+  ```
+- 핵심 JS 함수:
+  - `getSankeyData(monthData)` — budgetData를 sankey 노드/링크로 변환
+  - `updateSankey(month, monthData)` — d3-sankey 레이아웃 + SVG 렌더링
+  - 호출 위치: `init()` 및 `selectMonth()` 양쪽에서 호출
+
+## 데이터 흐름 구조
+
+```
+수입 소스 (참새 월급, 하니 월급, NJS 등)
+   ↓
+Income 허브 ($총수입)
+   ↓
+카테고리 (Housing, Tithing, Utilities, Pet, ..., Travel, Savings, 남은 돈)
+   ↓
+서브카테고리 (Rent, 선한 Rent, Geico, Costco 등)
+```
+
+### 균형 보정
+- 수입 < 지출(+저축+여행)이면 좌측에 `🏦 통장에서` 노드 자동 추가 (값 = deficit)
+- 수입 > 지출(+...)이면 우측에 `✨ 남은 돈` 카테고리 자동 추가 (값 = surplus)
+- 다이어그램이 항상 균형되도록 보장 (d3-sankey가 imbalance를 시각적으로 깨뜨리는 걸 방지)
+
+### Travel / Savings 처리
+- `travel`: 여러 destination(`{ portland, destin, denver }` 등)을 합산한 카테고리. 서브카는 destination 별 total
+- `savings`: `{ daehyuni, hani }` 둘이 서브카 (양쪽 다 양수일 때만)
+
+## 서브카테고리 묶음 규칙 (중요!)
+
+서브카가 너무 많아 라벨이 겹치는 걸 방지하기 위해 다음 단계로 묶음:
+
+### 1단계: misc 합산
+키 패턴 `^misc\d*$` (misc1, misc2, misc 등) 항목들을 모두 한 항목으로 합산. 라벨은 `기타`. 키는 `misc`.
+
+### 2단계: 동일 라벨 합산
+`SANKEY_SUB_LABELS` 매핑에서 같은 표시 라벨로 매핑되는 키들을 합산:
+- `gas1, gas2, gas3, gas4, gas5` → 모두 `Gas`로 매핑됨 → **하나로 합산**
+- `cfa, cfa2` → `CFA`로 합산
+- `dancingGoats, dancingGoats1, dancingGoats2` → `Dancing Goats`로 합산
+- `costco, costco2` → `Costco`로 합산
+
+### 3단계: $100 미만 항목 묶기
+값이 **$100 미만**인 항목들이 **2개 이상**이면 한 노드로 합쳐서 라벨링:
+- 라벨 형식: `{묶인 항목 중 가장 큰 것의 이름} 등 {N}건`
+- 예: `Costco 등 4건 $129` (publix + walmart + traderJoes + costco)
+- 예: `BBQ 등 10건 $247` (Dining 전체)
+- **예외**: 가장 큰 항목의 라벨이 `기타`(misc 합산)이면 두 번째로 큰 항목의 이름 사용
+  - 이유: "기타 등 N건"은 부자연스러움
+  - 예: Dining에서 misc 합 $51이 BBQ $42보다 크지만 라벨은 `BBQ 등 10건`
+- 작은 항목 1개만 있으면 묶지 않고 그대로 표시
+
+### 라벨 우선순위
+서브카 라벨 결정 순서:
+1. `_displayLabel` (코드에서 동적으로 계산된 라벨; 묶음/dedupe 결과)
+2. `SANKEY_SUB_LABELS[key]` (정적 매핑)
+3. `sankeyTitleCase(key)` (camelCase → Title Case fallback)
+
+## 라벨 매핑 테이블 추가 시
+새로운 서브카 키가 추가되면 `SANKEY_SUB_LABELS` 객체에 매핑 추가:
+```js
+const SANKEY_SUB_LABELS = {
+    rent: 'Rent', seonhanRent: '선한 Rent',
+    geico: 'Geico', namongInsurance: '나몽 보험',
+    // ... 새 키: '표시 라벨'
+};
+```
+
+같은 표시 라벨로 매핑하면 자동 dedupe됨 (gas1~5처럼).
+
+수입 소스 라벨도 별도 매핑: `SANKEY_INCOME_LABELS` (chamSalary, haniSalary, irs, fetch 등).
+
+카테고리 라벨/색상: `SANKEY_CATEGORY_LABELS`, `SANKEY_CATEGORY_COLORS`.
+
+## 레이아웃 파라미터
+
+```js
+const NODE_PADDING = 28;        // 노드 사이 수직 간격 (2줄 라벨 ~28px와 일치)
+const PER_NODE = 36;            // 노드 1개당 최소 수직 공간
+const calcHeight = maxCol * PER_NODE + 60;  // maxCol = sources/cats/subs 중 최대 노드 수
+```
+
+- `nodeAlign(d3.sankeyLeft)` — 모든 카테고리가 동일 컬럼에 정렬되도록 (sankeyJustify 사용 시 sub 없는 카테고리가 우측 끝으로 밀림)
+- 높이는 leaf 수에 따라 자동 가변 (Mar의 경우 ~1900px). 카드가 길어지면 페이지 스크롤로 확인
+- 라벨은 모든 노드에 표시 (작은 노드도 가시성 보장). 노드 패딩이 라벨 높이만큼 확보되어 겹치지 않음
+
+## 월별 날짜 라벨
+`SANKEY_MONTH_INFO` 객체에 월 → `{ name, year, days }` 매핑. 새 달 추가 시 갱신:
+```js
+sep: { name: 'Sep', year: 2025, days: 30 },
+jun: { name: 'Jun', year: 2026, days: 30 },
+```
+
+## selectMonth 연동
+`selectMonth(month)` 내부에서 `updateSankey(month, monthData)` 호출. 새 달 추가 시 별도 수정 불필요 — 자동 동작.
+
+## 디버깅 팁
+- 라벨이 안 보이면: `SANKEY_SUB_LABELS`에 키 매핑 누락 → fallback `sankeyTitleCase`
+- 다이어그램이 짧으면: leaf 수가 적은 달 (예: 6월). 정상 동작
+- 노드가 안 그려지면: `data.nodes.length <= 1` 체크 — 빈 달은 "데이터가 없는 달이에요 🐱" 메시지 표시
+- 윈도우 리사이즈 시: 디바운스 200ms 후 자동 리렌더 (`window.addEventListener('resize', ...)`)
+
+---
+
 # 비밀번호 게이트 (Password Gate)
 
 사이트 진입 시 4자리 비밀번호 인증 필수. 코드 위치: `index.html` `<head>`의 `/* ===== 비밀번호 게이트 ===== */` CSS 블록 + `<body>` 시작 직후 `<div id="auth-gate">` HTML + 인라인 `<script>`.
