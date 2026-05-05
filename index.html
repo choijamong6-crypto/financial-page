@@ -331,7 +331,7 @@
             display: block;
             width: 100%;
             min-width: 720px;
-            height: 560px;
+            /* height is set inline by JS based on node count */
         }
 
         #sankeyChart .sankey-link {
@@ -371,9 +371,6 @@
             }
             .sankey-date {
                 font-size: 1.1rem;
-            }
-            #sankeyChart {
-                height: 620px;
             }
         }
 
@@ -2190,42 +2187,14 @@
                 });
             }
 
-            // Bundle small categories so labels don't overlap.
-            // Trigger when there are too many categories AND smallest are < 2.5% of flow.
             const totalFlow = Math.max(totalIn, totalOut, 1);
-            const SMALL_PCT = 0.025;
-            if (cats.length > 7) {
-                const big = [];
-                const small = [];
-                for (const c of cats) {
-                    // Protect semantic categories — never bundle them
-                    const protectedKey = c.dataKey === 'savings' || c.dataKey === 'travel'
-                        || c.dataKey === 'remaining' || c.dataKey === 'tithing';
-                    if (protectedKey || c.value / totalFlow >= SMALL_PCT) {
-                        big.push(c);
-                    } else {
-                        small.push(c);
-                    }
-                }
-                if (small.length >= 2) {
-                    const bundleSum = small.reduce((s, c) => s + c.value, 0);
-                    big.push({
-                        key: 'c:bundleOther', dataKey: 'bundleOther',
-                        label: '📦 기타 지출',
-                        value: bundleSum, color: '#A8B8C0',
-                        _bundledCats: small
-                    });
-                    cats = big;
-                }
-            }
 
-            // Subcategories
+            // Subcategories — show every item, only collapse anonymous misc1/misc2/...
             const subs = [];
             for (const c of cats) {
                 if (c.dataKey === 'remaining') continue;
 
                 let pairs = [];
-                let presetLabels = null; // for bundleOther: use category labels directly
                 if (c.dataKey === 'savings') {
                     for (const k of ['daehyuni', 'hani']) {
                         if (monthData.savings[k] > 0) pairs.push({ key: k, value: monthData.savings[k] });
@@ -2235,12 +2204,6 @@
                         const t = monthData.travel[dest].total;
                         if (t > 0) pairs.push({ key: dest, value: t });
                     }
-                } else if (c.dataKey === 'bundleOther') {
-                    presetLabels = {};
-                    for (const bc of c._bundledCats) {
-                        pairs.push({ key: bc.dataKey, value: bc.value });
-                        presetLabels[bc.dataKey] = bc.label;
-                    }
                 } else {
                     const subData = monthData.expenses[c.dataKey];
                     for (const [k, v] of Object.entries(subData)) {
@@ -2249,7 +2212,8 @@
                     }
                 }
 
-                // Group misc1/misc2/.. → misc
+                // Collapse anonymous misc1/misc2/.. into a single 기타 (those have no
+                // semantic meaning; they're just unlabeled rows in the spreadsheet).
                 let miscSum = 0;
                 let kept = [];
                 for (const p of pairs) {
@@ -2260,23 +2224,11 @@
 
                 kept.sort((a, b) => b.value - a.value);
 
-                // Cap at 3 (top 2 + 기타) for normal categories.
-                // bundleOther can show up to 5 since it's the aggregation node.
-                const maxKept = c.dataKey === 'bundleOther' ? 5 : 3;
-                if (kept.length > maxKept) {
-                    const top = kept.slice(0, maxKept - 1);
-                    const restSum = kept.slice(maxKept - 1).reduce((s, x) => s + x.value, 0);
-                    kept = top.concat([{ key: '_other', value: restSum }]);
-                }
-
                 for (const p of kept) {
-                    const label = presetLabels?.[p.key]
-                        ?? SANKEY_SUB_LABELS[p.key]
-                        ?? sankeyTitleCase(p.key);
                     subs.push({
                         key: 'sub:' + c.dataKey + ':' + p.key,
                         catKey: c.key,
-                        label,
+                        label: SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key),
                         value: p.value,
                         color: c.color
                     });
@@ -2342,13 +2294,17 @@
 
             const rect = svgEl.getBoundingClientRect();
             const width = Math.max(rect.width, 720);
-            // Adaptive height: dense leaf columns need more vertical room
+            // Adaptive height: each label is ~28px tall (2-line). Reserve at
+            // least that much per node in the densest column so labels can't
+            // collide. nodePadding then matches so tiny rects are spread out.
             const leafCount = data.nodes.filter(n => n.type === 'subcategory').length;
             const catCount = data.nodes.filter(n => n.type === 'category').length;
             const sourceCount = data.nodes.filter(n => n.type === 'source').length;
-            const maxCol = Math.max(leafCount, catCount, sourceCount);
-            const calcHeight = Math.max(420, maxCol * 32 + 60);
-            const height = Math.min(900, calcHeight);
+            const maxCol = Math.max(leafCount, catCount, sourceCount, 1);
+            const NODE_PADDING = 28;
+            const PER_NODE = 36; // padding (28) + minimum visible rect (~8)
+            const calcHeight = maxCol * PER_NODE + 60;
+            const height = Math.max(460, calcHeight);
             svgEl.style.height = height + 'px';
             svg.attr('viewBox', `0 0 ${width} ${height}`)
                .attr('preserveAspectRatio', 'xMinYMid meet');
@@ -2357,7 +2313,7 @@
 
             const sankeyGen = d3.sankey()
                 .nodeWidth(14)
-                .nodePadding(18)
+                .nodePadding(NODE_PADDING)
                 .nodeAlign(d3.sankeyLeft)
                 .extent([[12, 14], [width - 12, height - 14]]);
 
@@ -2397,18 +2353,11 @@
                 .append('title')
                 .text(d => `${d.name}\n${sankeyFormatMoney(d.value)}`);
 
-            // Labels — hide entirely for nodes too thin to show one line.
-            // Always show source labels (every input matters; usually only 1-3).
-            const TWO_LINE_MIN = 24;
-            const ONE_LINE_MIN = 10;
-            const visibleNodes = graph.nodes.filter(d =>
-                d.type === 'source' || d.type === 'hub' || (d.y1 - d.y0) >= ONE_LINE_MIN
-            );
-
+            // Labels — show every node, two-line "name / amount (pct)"
             const label = svg.append('g')
                 .attr('class', 'sankey-label')
                 .selectAll('text')
-                .data(visibleNodes)
+                .data(graph.nodes)
                 .join('text')
                 .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
                 .attr('y', d => (d.y1 + d.y0) / 2)
@@ -2416,22 +2365,13 @@
 
             label.each(function(d) {
                 const sel = d3.select(this);
-                const tall = (d.y1 - d.y0) >= TWO_LINE_MIN;
                 const x = d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6;
                 const pct = (d.value / totalForPercent * 100);
                 const amount = d.id === 'hub'
                     ? sankeyFormatMoney(d.value)
                     : `${sankeyFormatMoney(d.value)} (${pct.toFixed(1)}%)`;
-
-                if (tall) {
-                    sel.append('tspan').attr('class', 'name').attr('x', x).attr('dy', '-0.25em').text(d.name);
-                    sel.append('tspan').attr('class', 'amount').attr('x', x).attr('dy', '1.2em').text(amount);
-                } else {
-                    // Compact single-line: name + amount, no percent
-                    sel.attr('dy', '0.35em');
-                    sel.append('tspan').attr('class', 'name').text(d.name);
-                    sel.append('tspan').attr('class', 'amount').attr('dx', '6').text(sankeyFormatMoney(d.value));
-                }
+                sel.append('tspan').attr('class', 'name').attr('x', x).attr('dy', '-0.25em').text(d.name);
+                sel.append('tspan').attr('class', 'amount').attr('x', x).attr('dy', '1.2em').text(amount);
             });
         }
 
