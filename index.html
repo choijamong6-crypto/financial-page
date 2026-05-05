@@ -2144,7 +2144,7 @@
                 }
             }
 
-            const cats = [];
+            let cats = [];
             const catOrder = ['housing', 'tithing', 'utilities', 'insurance', 'pet',
                               'grocery', 'entertainment', 'dining', 'shopping', 'gas',
                               'membership', 'giving', 'other'];
@@ -2190,12 +2190,42 @@
                 });
             }
 
+            // Bundle small categories so labels don't overlap.
+            // Trigger when there are too many categories AND smallest are < 2.5% of flow.
+            const totalFlow = Math.max(totalIn, totalOut, 1);
+            const SMALL_PCT = 0.025;
+            if (cats.length > 7) {
+                const big = [];
+                const small = [];
+                for (const c of cats) {
+                    // Protect semantic categories — never bundle them
+                    const protectedKey = c.dataKey === 'savings' || c.dataKey === 'travel'
+                        || c.dataKey === 'remaining' || c.dataKey === 'tithing';
+                    if (protectedKey || c.value / totalFlow >= SMALL_PCT) {
+                        big.push(c);
+                    } else {
+                        small.push(c);
+                    }
+                }
+                if (small.length >= 2) {
+                    const bundleSum = small.reduce((s, c) => s + c.value, 0);
+                    big.push({
+                        key: 'c:bundleOther', dataKey: 'bundleOther',
+                        label: '📦 기타 지출',
+                        value: bundleSum, color: '#A8B8C0',
+                        _bundledCats: small
+                    });
+                    cats = big;
+                }
+            }
+
             // Subcategories
             const subs = [];
             for (const c of cats) {
                 if (c.dataKey === 'remaining') continue;
 
                 let pairs = [];
+                let presetLabels = null; // for bundleOther: use category labels directly
                 if (c.dataKey === 'savings') {
                     for (const k of ['daehyuni', 'hani']) {
                         if (monthData.savings[k] > 0) pairs.push({ key: k, value: monthData.savings[k] });
@@ -2204,6 +2234,12 @@
                     for (const dest of Object.keys(monthData.travel)) {
                         const t = monthData.travel[dest].total;
                         if (t > 0) pairs.push({ key: dest, value: t });
+                    }
+                } else if (c.dataKey === 'bundleOther') {
+                    presetLabels = {};
+                    for (const bc of c._bundledCats) {
+                        pairs.push({ key: bc.dataKey, value: bc.value });
+                        presetLabels[bc.dataKey] = bc.label;
                     }
                 } else {
                     const subData = monthData.expenses[c.dataKey];
@@ -2224,18 +2260,23 @@
 
                 kept.sort((a, b) => b.value - a.value);
 
-                // Cap at 4; bundle smallest into "기타"
-                if (kept.length > 4) {
-                    const top = kept.slice(0, 3);
-                    const restSum = kept.slice(3).reduce((s, x) => s + x.value, 0);
+                // Cap at 3 (top 2 + 기타) for normal categories.
+                // bundleOther can show up to 5 since it's the aggregation node.
+                const maxKept = c.dataKey === 'bundleOther' ? 5 : 3;
+                if (kept.length > maxKept) {
+                    const top = kept.slice(0, maxKept - 1);
+                    const restSum = kept.slice(maxKept - 1).reduce((s, x) => s + x.value, 0);
                     kept = top.concat([{ key: '_other', value: restSum }]);
                 }
 
                 for (const p of kept) {
+                    const label = presetLabels?.[p.key]
+                        ?? SANKEY_SUB_LABELS[p.key]
+                        ?? sankeyTitleCase(p.key);
                     subs.push({
                         key: 'sub:' + c.dataKey + ':' + p.key,
                         catKey: c.key,
-                        label: SANKEY_SUB_LABELS[p.key] || sankeyTitleCase(p.key),
+                        label,
                         value: p.value,
                         color: c.color
                     });
@@ -2316,7 +2357,7 @@
 
             const sankeyGen = d3.sankey()
                 .nodeWidth(14)
-                .nodePadding(12)
+                .nodePadding(18)
                 .nodeAlign(d3.sankeyLeft)
                 .extent([[12, 14], [width - 12, height - 14]]);
 
@@ -2356,31 +2397,42 @@
                 .append('title')
                 .text(d => `${d.name}\n${sankeyFormatMoney(d.value)}`);
 
-            // Labels (2-line: name on top, amount + % on bottom)
+            // Labels — hide entirely for nodes too thin to show one line.
+            // Always show source labels (every input matters; usually only 1-3).
+            const TWO_LINE_MIN = 24;
+            const ONE_LINE_MIN = 10;
+            const visibleNodes = graph.nodes.filter(d =>
+                d.type === 'source' || d.type === 'hub' || (d.y1 - d.y0) >= ONE_LINE_MIN
+            );
+
             const label = svg.append('g')
                 .attr('class', 'sankey-label')
                 .selectAll('text')
-                .data(graph.nodes)
+                .data(visibleNodes)
                 .join('text')
                 .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
                 .attr('y', d => (d.y1 + d.y0) / 2)
                 .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end');
 
-            label.append('tspan')
-                .attr('class', 'name')
-                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-                .attr('dy', '-0.25em')
-                .text(d => d.name);
+            label.each(function(d) {
+                const sel = d3.select(this);
+                const tall = (d.y1 - d.y0) >= TWO_LINE_MIN;
+                const x = d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6;
+                const pct = (d.value / totalForPercent * 100);
+                const amount = d.id === 'hub'
+                    ? sankeyFormatMoney(d.value)
+                    : `${sankeyFormatMoney(d.value)} (${pct.toFixed(1)}%)`;
 
-            label.append('tspan')
-                .attr('class', 'amount')
-                .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-                .attr('dy', '1.2em')
-                .text(d => {
-                    const pct = (d.value / totalForPercent * 100);
-                    if (d.id === 'hub') return sankeyFormatMoney(d.value);
-                    return `${sankeyFormatMoney(d.value)} (${pct.toFixed(1)}%)`;
-                });
+                if (tall) {
+                    sel.append('tspan').attr('class', 'name').attr('x', x).attr('dy', '-0.25em').text(d.name);
+                    sel.append('tspan').attr('class', 'amount').attr('x', x).attr('dy', '1.2em').text(amount);
+                } else {
+                    // Compact single-line: name + amount, no percent
+                    sel.attr('dy', '0.35em');
+                    sel.append('tspan').attr('class', 'name').text(d.name);
+                    sel.append('tspan').attr('class', 'amount').attr('dx', '6').text(sankeyFormatMoney(d.value));
+                }
+            });
         }
 
         function updateExpenseBarChart() {
