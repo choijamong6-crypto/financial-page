@@ -1603,7 +1603,15 @@
             '01_pictures/20260422_080241.jpg',
             '01_pictures/20260422_081214.jpg',
             '01_pictures/20260422_105144.jpg',
-            '01_pictures/20260425_095746.jpg'
+            '01_pictures/20260425_095746.jpg',
+            '01_pictures/20260610_182551.jpg',
+            '01_pictures/20260615_202207.jpg',
+            '01_pictures/20260617_071553.jpg',
+            '01_pictures/20260621_171301.jpg',
+            '01_pictures/20260621_173010.jpg',
+            '01_pictures/20260621_173917.jpg',
+            '01_pictures/20260621_174216.jpg',
+            '01_pictures/20260621_175834.jpg'
         ];
 
         // 랜덤 사진 선택 함수 (중복 방지)
@@ -1684,7 +1692,7 @@
                     other: { kroger: 21.18, pita: 161.41, serviceFee: 15.00, sum: 197.59 }
                 },
                 totalExpenses: 10588.40,
-                savings: { daehyuni: 500, hani: 5700, total: 6200 },
+                savings: { daehyuni: 0, hani: 5000, total: 5000 },
                 travel: {
                     destin: {
                         hotel: 163.12, gas: 24.79, misc1: 28.76, misc2: 31.82,
@@ -1739,7 +1747,7 @@
                 expenses: {
                     housing: { rent: 2316.32, seonhanRent: 1200, sum: 3516.32 },
                     tithing: { tithing: 950, sum: 950 },
-                    utilities: { gfiber: 30.61, sum: 30.61 },
+                    utilities: { gfiber: 30.61, gp: 61.56, att: 145.92, sum: 238.09 },
                     insurance: { geico: 132.80, namongInsurance: 40.20, amongInsurance: 63.91, sum: 236.91 },
                     pet: { amongVet: 284.50, chewy: 54.71, misc: 88.49, petSmart: 4.23, sum: 431.93 },
                     grocery: { publix: 138.77, misc: 6.91, megamart: 423.40, costco: 252.21, costco2: 134.99, traderJoes: 46.95, misc2: 53.52, savi: 5.76, sum: 1062.51 },
@@ -1749,33 +1757,64 @@
                     gas: { gas1: 27.30, gas2: 39.10, gas3: 43.38, sum: 109.78 },
                     other: { servingCfa: 93.65, car: 1000, camdenHani: 40, camdenDaehyuni: 40, parkingGT: 3, parkingChat: 5, parkingGT2: 6, sum: 1187.65 }
                 },
-                totalExpenses: 8406.00,
-                savings: { daehyuni: 2500, hani: 5700, total: 8200 }
+                totalExpenses: 8613.48,
+                savings: { daehyuni: 2000, hani: 0, total: 2000 }
             },
             may: {
-                income: { total: 0 },
-                expenses: {
-                    housing: { rent: 2101.69, seonhanRent: 600, sum: 2701.69 },
-                    tithing: { tithing: 950, sum: 950 },
-                    insurance: { namongInsurance: 40.21, amongInsurance: 63.91, sum: 104.12 },
-                    entertainment: { netflix: 17.99, renFest: 75.47, sum: 93.46 },
-                    dining: { dancingGoat: 7.26, teaLeaf: 7.64, starbucks: 5.72, sum: 20.62 }
+                income: {
+                    chamSalary: 4366.61,
+                    haniSalary: 4752.84,
+                    njsGt: 446.09,
+                    fetch: 40,
+                    reimberse: 1687.85,
+                    misc: 105.20,
+                    total: 11398.59
                 },
-                totalExpenses: 3869.89,
+                expenses: {
+                    housing: { rent: 2101.69, seonhanRent: 1200, sum: 3301.69 },
+                    tithing: { tithing: 1000, sum: 1000 },
+                    utilities: { gfiber: 30.61, gp: 61.56, att: 151.68, sum: 243.85 },
+                    insurance: { geico: 132.80, namongInsurance: 40.21, amongInsurance: 63.91, sum: 236.92 },
+                    pet: { among: 587.57, amongRabies: 27.00, sum: 614.57 },
+                    grocery: { traderJoes: 59.28, misc1: 22.30, publix: 32.13, misc2: 69.55, megamart: 52.96, costco: 286.57, wholefoods: 4.61, sum: 527.40 },
+                    entertainment: { nintendo: 63.59, renFest: 75.47, chatanooga: 15.00, amazonPrime: 16.32, sum: 170.38 },
+                    dining: { dancingGoat: 26.20, teaLeaf: 7.64, starbucks: 5.72, urbanHai: 68.72, bbq: 44.23, kaldis: 21.77, arkCoffee: 12.69, shabushabu: 78.78, cfa: 10.88, curry: 18.52, techDining: 31.97, misc1: 34.74, misc2: 24.93, phoKing: 41.06, barcelona: 77.86, caribou: 6.75, dancingGoats: 6.26, kaldis2: 6.09, sum: 524.81 },
+                    shopping: { amazon: 242.12, misc: 128.48, tjmaxx: 166.59, walmart: 68.60, petSmart: 42.38, chewy: 116.51, sum: 764.68 },
+                    gas: { gas1: 187.34, sum: 187.34 },
+                    other: { pandaExpress: 78.41, urbanHai: 174.24, chamHair: 45.00, usps: 1.25, permit: 60.00, parkingGT: 45.00, parkingEscape: 6.45, parkingChat: 3.00, parkingBarcelona: 6.00, horizonHobby: 36.93, researchMisc: 76.71, claude: 100.00, hairTeacherGift: 29.15, seoyoungGift: 161.99, giftMisc: 37.96, sum: 862.09 }
+                },
+                totalExpenses: 8433.73,
                 savings: { daehyuni: 0, hani: 0, total: 0 },
                 travel: {
-                    destin: { airbnb: 698.98, total: 698.98 }
+                    renFaire: { hotdog: 15.09, turkeyLeg: 16.16, archery: 10.00, iceCream: 8.62, coffee: 5.55, total: 55.42 },
+                    destin: { airbnb: 698.98, bucees: 27.21, misc1: 12.59, misc2: 16.86, misc3: 10.88, crabTrap: 155.88, cfa: 20.79, wholefoods: 22.04, camilles: 15.05, gas: 23.65, misc4: 36.91, misc5: 28.82, realThai: 83.78, blackBear: 21.97, total: 1175.41 }
                 }
             },
             jun: {
-                income: { total: 0 },
-                expenses: {
-                    tithing: { tithing: 950, sum: 950 },
-                    insurance: { namongInsurance: 40.21, sum: 40.21 },
-                    entertainment: { netflix: 17.99, sum: 17.99 }
+                income: {
+                    haniSalary: 791.41,
+                    sunhan: 1117.49,
+                    atlChurch: 2000,
+                    total: 3908.90
                 },
-                totalExpenses: 1008.20,
-                savings: { daehyuni: 0, hani: 0, total: 0 }
+                expenses: {
+                    housing: { rentAtl: 787.20, rentCo: 1839.10, sum: 2626.30 },
+                    tithing: { thanksOffering: 1000, sum: 1000 },
+                    utilities: { gp: 60.79, sum: 60.79 },
+                    insurance: { geico: 132.78, namongInsurance: 40.20, amongInsurance: 63.91, travelInsurance: 77.04, sum: 313.93 },
+                    pet: { among: 32.64, sum: 32.64 },
+                    grocery: { publix: 34.23, costco: 548.78, misc: 84.84, farmersMarket: 17.00, sprouts: 8.34, gw: 13.36, sum: 706.55 },
+                    entertainment: { youtube: 26.99, amazonPrime: 16.21, mtBlueSky: 22.00, sum: 65.20 },
+                    dining: { ark: 17.55, dancingGoat: 14.59, misc1: 8.24, misc2: 7.26, techDining: 5.45, teaLeaf: 9.75, benjis: 16.73, mountainThai: 40.29, lostCoffee: 20.95, stinger: 11.10, misc3: 11.81, texasRoadhouse: 59.43, trident: 17.66, windySaddle: 50.64, enterpriseCrepe: 12.04, rrcCoffee: 6.53, sum: 310.02 },
+                    shopping: { amazon: 346.55, tjmaxx: 138.13, walmart: 33.98, thrift: 3.24, sum: 521.90 },
+                    gas: { gas1: 28.47, gas2: 41.20, gas3: 28.16, sum: 97.83 },
+                    other: { pods1: 426.28, pods2: 1424.25, pods3: 215.55, pods4: 139.30, sapphireFee: 795.00, sapphireMisc: 195.00, parkingInterlock: 6.45, parkingBoulder: 2.00, parking3: 60.00, parking4: 6.45, parking5: 6.75, identogo: 57.50, ncsbn: 30.00, dept: 128.00, sum: 3492.53 }
+                },
+                totalExpenses: 9227.69,
+                savings: { daehyuni: 0, hani: 0, total: 0 },
+                travel: {
+                    moving: { airbnb: 200.49, misc1: 198.47, benjis: 16.73, costco: 5.93, redPepper: 42.00, roberts: 46.00, caseys: 4.60, gasQt: 36.23, gasCostco: 37.65, misc2: 31.54, misc3: 33.81, gas247: 23.18, misc4: 19.51, caseys2: 22.05, total: 718.19 }
+                }
             },
             sep: {
                 income: { salary: 4100, plants: 40, crochet: 13, total: 4153 },
@@ -1834,7 +1873,7 @@
         ];
 
         // 현재 저축 잔고 (Savings 통장만 — 각 통장은 비상금이라 합산 X)
-        const currentSavingsBalance = 4500.08; // $4,500.08
+        const currentSavingsBalance = 2500.12; // $2,500.12 (6월 Savings 통장)
 
         let currentMonth = 'jun';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
@@ -1885,8 +1924,8 @@
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
             const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 13702.99, 0, 0];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8406.00, 3869.89, 1008.20];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 13702.99, 11398.59, 3908.90];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8613.48, 8433.73, 9227.69];
 
             if (trendChart) trendChart.destroy();
 
@@ -2019,6 +2058,10 @@
             irs: '📄 IRS 환급',
             fetch: '🐕 Fetch',
             reimberse: '💵 Reimburse',
+            njsGt: '🏢 NJS+GT',
+            sunhan: '🙏 선한',
+            atlChurch: '⛪ ATL 교회',
+            misc: '💵 기타 수입',
             plants: '🌱 식물',
             crochet: '🧶 코바늘',
             fromSavings: '🏦 통장에서'
@@ -2116,6 +2159,18 @@
             trip: '여행',
             // Savings
             daehyuni: '🐦 대혀니', hani: '🐱 하니',
+            // May/June additions
+            pods1: '📦 PODs 이사', pods2: '📦 PODs 이사', pods3: '📦 PODs 이사', pods4: '📦 PODs 이사',
+            sapphireFee: 'Sapphire 카드', sapphireMisc: 'Sapphire 카드',
+            among: '아몽', amongRabies: '아몽 광견병', travelInsurance: '여행자보험',
+            thanksOffering: '감사헌금', rentAtl: 'ATL Rent', rentCo: 'CO Rent',
+            identogo: 'Identogo', ncsbn: 'NCSBN', dept: '간호 면허',
+            nintendo: 'Nintendo', amazonPrime: 'Amazon Prime', mtBlueSky: 'Mt Blue Sky',
+            urbanHai: 'Urban Hai', pandaExpress: 'Panda Express',
+            chamHair: '참새 머리', hairTeacherGift: '헤어쌤 선물', seoyoungGift: '서영 선물',
+            claude: 'Claude', horizonHobby: 'Horizon Hobby', kaldis2: 'Kaldi\'s',
+            farmersMarket: 'Farmers Market', sprouts: 'Sprouts', wholefoods: 'Whole Foods',
+            thrift: 'Thrift', moving: '🚚 이사 (CO)',
             // Generic
             misc: '기타', _other: '기타'
         };
@@ -2426,10 +2481,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 2701.69, 0], backgroundColor: '#FF9AA2' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 30.61, 0, 0], backgroundColor: '#6FB1FC' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 104.12, 40.21], backgroundColor: '#FFB088' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4622.16, 1064.08, 967.99], backgroundColor: '#B8C8D0' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 3301.69, 2626.30], backgroundColor: '#FF9AA2' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 238.09, 243.85, 60.79], backgroundColor: '#6FB1FC' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 236.92, 313.93], backgroundColor: '#FFB088' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4622.16, 4651.27, 6226.67], backgroundColor: '#B8C8D0' }
                     ]
                 },
                 options: {
