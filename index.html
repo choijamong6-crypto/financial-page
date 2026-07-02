@@ -1425,7 +1425,8 @@
             <button class="month-btn" onclick="selectMonth('mar')">3월</button>
             <button class="month-btn" onclick="selectMonth('apr')">4월</button>
             <button class="month-btn" onclick="selectMonth('may')">5월</button>
-            <button class="month-btn active" onclick="selectMonth('jun')">6월</button>
+            <button class="month-btn" onclick="selectMonth('jun')">6월</button>
+            <button class="month-btn active" onclick="selectMonth('jul')">7월</button>
         </div>
 
         <div class="summary-cards" id="summaryCards">
@@ -1816,6 +1817,24 @@
                     moving: { airbnb: 200.49, misc1: 198.47, benjis: 16.73, costco: 5.93, redPepper: 42.00, roberts: 46.00, caseys: 4.60, gasQt: 36.23, gasCostco: 37.65, misc2: 31.54, misc3: 33.81, gas247: 23.18, misc4: 19.51, caseys2: 22.05, total: 718.19 }
                 }
             },
+            jul: {
+                income: {
+                    total: 0
+                },
+                expenses: {
+                    housing: { rent: 2314.43, sum: 2314.43 },
+                    tithing: { tithing: 1000, sum: 1000 },
+                    utilities: { xfinity: 0, sum: 0 },
+                    insurance: { namongInsurance: 40.21, amongInsurance: 63.91, sum: 104.12 },
+                    grocery: { costco: 105.96, sum: 105.96 },
+                    entertainment: { netflix: 17.99, sum: 17.99 },
+                    shopping: { amazon: 8.77, sum: 8.77 },
+                    gas: { gas: 21.03, sum: 21.03 },
+                    other: { parkingBoulder: 60.00, sum: 60.00 }
+                },
+                totalExpenses: 3632.30,
+                savings: { daehyuni: 0, hani: 0, total: 0 }
+            },
             sep: {
                 income: { salary: 4100, plants: 40, crochet: 13, total: 4153 },
                 expenses: {
@@ -1875,7 +1894,7 @@
         // 현재 저축 잔고 (Savings 통장만 — 각 통장은 비상금이라 합산 X)
         const currentSavingsBalance = 2500.12; // $2,500.12 (6월 Savings 통장)
 
-        let currentMonth = 'jun';
+        let currentMonth = 'jul';
         let trendChart, categoryChart, expenseBarChart, savingsChart;
 
         function updateSummaryCards(monthData) {
@@ -1923,9 +1942,9 @@
 
         function updateTrendChart() {
             const ctx = document.getElementById('trendChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 13702.99, 11398.59, 3908.90];
-            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8613.48, 8433.73, 9227.69];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+            const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 10362.48, 9860.45, 13702.99, 11398.59, 3908.90, 0];
+            const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 10588.40, 6721.50, 8613.48, 8433.73, 9227.69, 3632.30];
 
             if (trendChart) trendChart.destroy();
 
@@ -2043,7 +2062,8 @@
             mar: { name: 'Mar', year: 2026, days: 31 },
             apr: { name: 'Apr', year: 2026, days: 30 },
             may: { name: 'May', year: 2026, days: 31 },
-            jun: { name: 'Jun', year: 2026, days: 30 }
+            jun: { name: 'Jun', year: 2026, days: 30 },
+            jul: { name: 'Jul', year: 2026, days: 31 }
         };
 
         const SANKEY_INCOME_LABELS = {
@@ -2472,7 +2492,7 @@
 
         function updateExpenseBarChart() {
             const ctx = document.getElementById('expenseBarChart').getContext('2d');
-            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
             if (expenseBarChart) expenseBarChart.destroy();
 
@@ -2481,10 +2501,10 @@
                 data: {
                     labels: months,
                     datasets: [
-                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 3301.69, 2626.30], backgroundColor: '#FF9AA2' },
-                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 238.09, 243.85, 60.79], backgroundColor: '#6FB1FC' },
-                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 236.92, 313.93], backgroundColor: '#FFB088' },
-                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4622.16, 4651.27, 6226.67], backgroundColor: '#B8C8D0' }
+                        { label: 'Housing', data: [3200, 3200, 1200, 3200, 3362.80, 3353.44, 3340.29, 3516.32, 3301.69, 2626.30, 2314.43], backgroundColor: '#FF9AA2' },
+                        { label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46, 267.99, 238.09, 243.85, 60.79, 0], backgroundColor: '#6FB1FC' },
+                        { label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00, 251.92, 236.91, 236.92, 313.93, 104.12], backgroundColor: '#FFB088' },
+                        { label: 'Other', data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 6833.50, 2861.30, 4622.16, 4651.27, 6226.67, 1213.75], backgroundColor: '#B8C8D0' }
                     ]
                 },
                 options: {
@@ -2810,14 +2830,14 @@
             // 랜덤 사진 초기화
             initRandomPhotos();
 
-            updateSummaryCards(budgetData.jun);
+            updateSummaryCards(budgetData.jul);
             updateTrendChart();
-            updateCategoryChart(budgetData.jun);
-            updateSankey('jun', budgetData.jun);
+            updateCategoryChart(budgetData.jul);
+            updateSankey('jul', budgetData.jul);
             updateExpenseBarChart();
             updateSavingsChart();
-            updateInsights(budgetData.jun);
-            updateExpenseTable(budgetData.jun);
+            updateInsights(budgetData.jul);
+            updateExpenseTable(budgetData.jul);
             updateSavingsGoals();
             // 약간 딜레이 후 나몽이 달리기 애니메이션 시작
             setTimeout(updateNamongProgress, 500);
