@@ -36,287 +36,134 @@
 cd /tmp/financial-page && git pull && git log --oneline -3
 ```
 
-## Step 1: 스프레드시트 CSV 가져오기
+## Step 1: 스프레드시트 가져오기 (xlsx, 전체 탭)
 
-**CSV Export URL** (이 URL을 WebFetch로 접근):
-```
-https://docs.google.com/spreadsheets/d/1-O4cnK8wzGdgYf724fu4lOouxCkb-O8kWM9csuNzYtE/gviz/tq?tqx=out:csv
+gviz CSV(`gviz/tq?tqx=out:csv`)는 **첫 번째 탭만** 준다. 2026-11 기준 첫 탭은 빈 템플릿 `2027 상반기`라서 쓸 수 없다. 전체 탭을 xlsx로 받아 openpyxl로 읽는다:
+
+```bash
+curl -sL "https://docs.google.com/spreadsheets/d/1-O4cnK8wzGdgYf724fu4lOouxCkb-O8kWM9csuNzYtE/export?format=xlsx" -o sheet.xlsx
+python3 -c "import openpyxl; print(openpyxl.load_workbook('sheet.xlsx', data_only=True).sheetnames)"
 ```
 
-> 주의: `export?format=csv` URL은 리다이렉트되어 실패할 수 있음. 위의 `gviz/tq` URL을 사용할 것.
+| 탭 | 내용 | 월 블록 시작 열 |
+|----|------|----------------|
+| `2026 하반기` | 2026년 7~12월 | C (7월 C~H, 8월 I~N, 9월 O~T, 10월 U~Z, 11월 AA~AF, 12월 AG~AL) |
+| `2026 상반기` | 2026년 1~6월 | B (1월 B~G, …, 6월 AF~AK) |
+| `Sheet2` | 2025년 9월~2026년 2월 (옛 형식) | — |
+| `2027 상반기` | 빈 템플릿 | C |
+| `하니` | 하은 개인 통장 (사이트에 안 씀) | — |
+
+`data_only=False`로 다시 열면 SUM 칸의 공식이 보인다. 합계가 이상할 때 범위를 확인하는 용도.
 
 ## Step 2: 스프레드시트 구조 이해
 
-### 열(Column) 구조 — 월별 6열 반복
+### 월 블록 — 6열 반복
 
-| 월 | 열 오프셋 (0-indexed, col 0은 row label) |
-|----|----------------------------------------|
-| 1월 | cols 1-6 |
-| 2월 | cols 7-12 |
-| 3월 | cols 13-18 |
-| 4월 | cols 19-24 |
-| 5월 | cols 25-30 |
-| 6월+ | cols 31-36, ... (6칸씩 증가) |
-
-각 월의 6열 구조:
 ```
-[offset+0] 수입 라벨    (참새월급, 하니월급, 총액, 참새통장, 냥이통장, 공동통장, Savings, 하니, ...)
-[offset+1] 수입 금액    ($4,333.87 등)
-[offset+2] 지출 카테고리 (Rent, 십일조, 공과금, 보험, 나몽, Grocery, 문화생활, 외식, Shopping, Gas, member, ...)
-[offset+3] 지출 항목    (Rent, Gfiber, Geico, ...)
-[offset+4] 지출 금액    ($2,162.80 등)
-[offset+5] 카테고리 SUM (해당 카테고리의 합계, 카테고리 마지막 항목 행에 나타남)
+[+0] 수입 라벨    (참새월급, 하니월급, 기타 수입, 총액, 참새통장, 냥이통장, 공동통장, Savings, ...)
+[+1] 수입 금액
+[+2] 지출 카테고리 (Rent, 십일조, 공과금, 보험, Vet, Grocery, 문화생활, 외식, Shopping, Gas, Parking, 오빠, 하니, Tesla, ...)
+[+3] 지출 항목    (Rent, Xcelenergy, Geico, Costco, ...)
+[+4] 지출 금액
+[+5] SUM         (카테고리 합계 — 믿지 말 것, 아래 "합계 규칙")
 ```
 
-### 행(Row) 구조 — 주요 마커 (주의: 행 위치는 월마다 다를 수 있음)
+- 카테고리 라벨은 다음 라벨이 나올 때까지 아래 행에 적용된다. 지출은 3행부터 카테고리 열이 `Total`인 행(보통 69행) 전까지.
+- 카테고리 열의 `under` + 숫자(예: Grocery 옆 `under 150`)는 예산 메모라서 카테고리가 아니다. 날짜가 들어 있어도 무시.
+- `2026 하반기` 탭의 A/B열은 고정 지출·목표 지출 **계획**이라 데이터가 아니다.
+- Total 아래(70행~)의 `대혀니 저축`/`하니 저축`은 금액 칸이 비어 있으면 0. 그 밑의 Izzy, Boulder gbs 같은 줄은 메모라 무시.
+- **Goal(저축 목표)**: `2026 하반기` 탭 7월 블록 74~79행(C/D열). 예전 `2026 상반기` 탭은 109~114행(A~C열).
 
-CSV에서 찾아야 할 **키워드 마커**:
+### 합계 규칙 (중요!)
 
-| 키워드 | 위치 | 의미 |
-|--------|------|------|
-| `참새월급` | 수입 라벨 열 | 참새(대현) 월급 |
-| `하니월급` | 수입 라벨 열 | 하니 월급 |
-| `총액` | 수입 라벨 열 | **해당 월 총 수입** (income.total) |
-| `참새통장` | 수입 라벨 열 | 참새 통장 잔고 |
-| `냥이통장` | 수입 라벨 열 | 냥이 통장 잔고 |
-| `공동통장` | 수입 라벨 열 | 공동 통장 잔고 |
-| `Savings` | 수입 라벨 열 | Savings 통장 잔고 |
-| `하니` + `Total` | 하단 영역 | **해당 월 총 지출** (totalExpenses) |
-| `대혀니 저축` | 하단 영역 | 대현이 저축액 |
-| `하니 저축` | 하단 영역 | 하니 저축액 |
-| `Goal` | col 0 (맨 아래) | 저축 목표 섹션 시작 |
+시트의 SUM 칸·Total·총액 공식은 범위가 틀린 경우가 많다. 그래서 **카테고리 sum = 항목 합, totalExpenses = 카테고리 sum의 합, income.total = 수입 항목 합**으로 직접 계산한다. 시트 값과 다르면 셀 위치와 함께 사용자에게 알린다. 2026-11-02에 찾은 예:
+
+- 3월 총액 `=sum(O3:O4)` → NJS $202.96 누락
+- 4월 Total → Parking $14 누락 (이전 세션에서 이미 항목 합 사용)
+- 7월 오빠 SUM `=sum(G33:G41)` → Gas·Parking 행까지 포함 ($316.19 중복)
+- 8월 Loop 금액이 텍스트 `'16,62'` → 시트 합계에서 빠짐 (16.62로 읽음)
+- 10월 SUM 열 Z10·Z15·Z18·Z31에 공식 아닌 값 $192.39가 남아 Total에 더해짐
 
 ### 지출 카테고리 → JS 키 매핑
 
-스프레드시트의 카테고리 라벨이 JS budgetData의 어떤 키로 변환되는지:
-
 | 스프레드시트 카테고리 | JS expenses 키 | 비고 |
 |----------------------|----------------|------|
-| Rent | `housing` | rent + 선한 Rent |
-| 십일조 | `tithing` | |
-| 공과금 | `utilities` | Gfiber, GP, AT&T 등 |
-| 보험 | `insurance` | Geico, 나몽 보험, 건강보험 |
-| 나몽 / 나몽&망고 | `pet` | 월마다 항목이 다름 |
-| Grocery | `grocery` | Publix, Megamart, Costco 등 |
-| 문화생활 | `entertainment` | Netflix, 보드게임 등 |
-| 외식 | `dining` | CFA, BBQ, 샤브샤브 등 |
-| Shopping | `shopping` | Amazon 등 |
-| Gas | `gas` | 주유 |
+| Rent | `housing` | rent (+ 1~5월 선한 Rent: 선한 = 하은 동생) |
+| 십일조 | `tithing` | 감사헌금 → `thanksOffering` |
+| 공과금 | `utilities` | Xcel Energy, Xfinity (애틀랜타 시절: Gfiber, GP, AT&T) |
+| 보험 | `insurance` | Geico, 나몽/아몽 보험, Tesla 보험 → `teslaInsurance`, Fetch 펫보험 → `fetchPet` |
+| 나몽 / 나몽&망고 / 나몽아몽 / Vet / Pettable | `pet` | 동물병원, ESA 레터 등 |
+| Grocery | `grocery` | Costco, Hmart, King Soopers 등 |
+| 문화생활 | `entertainment` | YouTube, Amazon Prime 등 |
+| 외식 | `dining` | |
+| Shopping | `shopping` | Amazon, TJ Maxx 등 |
+| Gas | `gas` | 주유 + Tesla 충전(`teslaCharging`), Chargepoint, Loop |
 | member | `membership` | Costco 멤버십 등 |
-| 서빙 / Bank | `other` | 기타 (Kroger, service fee 등) |
+| 그 밖의 모든 카테고리 | `other` | **시트 카테고리 하나당 키 하나**: Parking→`parking`, 오빠(대현 개인)→`oppa`, 하니(하은 개인)→`hani`, Tesla→`tesla`, DMV→`dmv`, 여행→`sandDunes` 등. 라벨은 `SANKEY_SUB_LABELS`에 추가 |
 
-> 중요: 카테고리 항목은 월마다 다름! 1월에 있는 카테고리가 2월에 없을 수 있고, 2월에만 있는 카테고리도 있음. CSV에서 해당 월에 실제로 나타나는 항목만 JS에 추가할 것.
+> 카테고리는 월마다 다르다. 해당 월에 실제로 있는 것만 넣는다.
 
-### 저축 목표 (스프레드시트 맨 아래 Goal 섹션)
+### 저축 목표 (현재 Goal 목록, 2026-11-02)
 
-| 항목 | JS savingsGoals | 현재 값 |
-|------|----------------|---------|
-| Car | `{ name: "Car Purchase", nameKo: "차", targetNum: 30000 }` | $30,000 |
-| Flight | `{ name: "Flight Ticket", nameKo: "one-way 비행기", targetNum: 5500 }` | $5,500 |
-| Green Card | `{ name: "Green Card", nameKo: "영주권 (변호사+서류)", targetNum: 8000 }` | $8,000 |
-| Bonus return | `{ name: "Bonus Return", nameKo: "보너스 리턴 (반납)", targetNum: 5000 }` | $5,000 |
-| **합계** | `totalGoal` (코드 내 하드코딩) | **$48,500** |
+| 항목 | 금액 |
+|------|------|
+| Bonus return | $5,000 (병원 사인온 보너스 반납 — 부채. 사이트에서 맨 위 "먼저 갚기!") |
+| Green Card | $8,000 |
+| Flight | $5,500 |
+| Tesla | $48,000 |
+| **합계** | **$66,500** (코드가 `savingsGoals`에서 자동 계산) |
 
-> **주의**: Bonus Return은 저축 목표가 아니라, 병원에서 받은 보너스를 나중에 반납해야 하는 돈 (부채). 저축으로 모아서 갚아야 할 금액.
+## Step 3: index.html 업데이트 위치
 
-## Step 3: 코드 내 업데이트 위치 (index.html)
+차트 배열·기본 월·목표 합계는 2026-11-02부터 `budgetData`에서 자동 계산된다. 새 달을 넣을 때 고칠 곳은 이게 전부:
 
-> 모든 라인 번호는 대략적임. `grep`으로 확인 필요.
+1. **`budgetData`에 월 객체 추가.** 키 규칙: 2025년 9~12월 = `sep`~`dec`, 2026년 1~7월 = `jan`~`jul`, **2026년 8월부터는 연도 접미사** (`aug26`, `sep26`, `oct26`, `nov26`, `dec26`, `jan27`, …)
+2. **`SANKEY_MONTH_INFO`에 같은 키 추가 — 시간순으로.** 이 순서가 추이/월별 막대 차트의 x축 순서다 (`{ name: 'Nov', year: 2026, days: 30 }`)
+3. **월 버튼 추가** + `active` 클래스를 최신 달로 이동. 2025년 버튼은 "25년 9월"처럼 연도 표시
+4. **`let currentMonth = '<최신 키>';`** — `init()`이 이 값으로 첫 화면을 그린다
+5. **`currentSavingsBalance`** — 최신 달 `Savings` 행 값만 (참새/냥이/공동통장 합산 X). 비어 있으면 그 전 달 값을 쓰고 주석에 몇 월 값인지 적는다
+6. 새 항목 키의 라벨이 어색하면 `SANKEY_SUB_LABELS`(수입은 `SANKEY_INCOME_LABELS`)에 추가. 없으면 camelCase → Title Case로 표시된다
+7. Goal 목록이 바뀌었으면 `savingsGoals`만 고친다 (인사이트·나몽 진행바 합계는 자동)
 
-### 3-1. `budgetData` 객체 (~line 1172)
-
-```javascript
-const budgetData = {
-    jan: { income: {...}, expenses: {...}, totalExpenses: N, savings: {...}, travel: {...} },
-    feb: { ... },
-    // 새 달 추가 시 여기에 추가
-};
-```
+기존 달 수정은 `budgetData`의 그 달만 고치면 차트까지 따라간다.
 
 **각 월 객체의 구조:**
 ```javascript
 monthKey: {
-    income: {
-        chamSalary: N,      // 참새월급 (없으면 생략)
-        haniSalary: N,      // 하니월급 (없으면 생략)
-        // 기타 수입 항목 (월마다 다름)
-        total: N             // 총액 행의 값
-    },
+    income: { chamSalary: N, haniSalary: N, /* 기타 수입 */ total: N },   // total = 수입 항목 합
     expenses: {
-        housing: { rent: N, seonhanRent: N, sum: N },
-        tithing: { tithing: N, sum: N },
-        utilities: { gfiber: N, gp: N, att: N, sum: N },
-        insurance: { geico: N, namongInsurance: N, healthInsurance: N, sum: N },
-        pet: { namong: N, ..., sum: N },
-        grocery: { publix: N, megamart: N, ..., sum: N },
-        entertainment: { netflix: N, ..., sum: N },
-        dining: { ..., sum: N },
-        shopping: { ..., sum: N },
-        gas: { ..., sum: N },
-        membership: { ..., sum: N },
-        other: { ..., sum: N }
-        // 해당 월에 존재하는 카테고리만 포함!
+        housing: { rent: N, sum: N },
+        // ... 해당 월에 있는 카테고리만. sum = 항목 합
+        other: { parking: N, oppa: N, ..., sum: N }
     },
-    totalExpenses: N,        // "Total" 행의 값 (모든 카테고리 SUM의 합)
-    savings: { daehyuni: N, hani: N, total: N },  // 저축 행
-    travel: { ... }          // 여행 섹션 (있는 경우만)
+    totalExpenses: N,                              // 카테고리 sum의 합
+    savings: { daehyuni: N, hani: N, total: N },
+    travel: { ... }                                // 옛 형식(상반기) 여행 섹션만. totalExpenses에 안 들어감
 }
 ```
 
-### 3-2. `savingsGoals` 배열 (~line 1274)
+## Step 4: 검증
 
-```javascript
-const savingsGoals = [
-    { name: "Green Card", nameKo: "영주권 (변호사+서류)", target: "$8,000", targetNum: 8000 },
-    { name: "Flight Ticket", nameKo: "one-way 비행기", target: "$5,500", targetNum: 5500 },
-    { name: "Car Purchase", nameKo: "차", target: "$30,000", targetNum: 30000 },
-    { name: "Bonus Return", nameKo: "보너스 리턴", target: "$5,000", targetNum: 5000 }
-];
-```
-- 스프레드시트 맨 아래 `Goal` 섹션이 변경되면 여기도 업데이트
-
-### 3-3. `currentSavingsBalance` (~line 1282)
-
-```javascript
-const currentSavingsBalance = 4500.08; // $4,500.08
-```
-- **Savings 통장 잔고만** 사용 (참새통장/냥이통장/공동통장은 각자 비상금이라 합산 X)
-- 스프레드시트에서 가장 최근 달의 수입 라벨 열에서 `Savings` 행의 금액을 읽어올 것
-- 주석도 함께 업데이트
-
-### 3-4. `updateTrendChart()` 함수 (~line 1330)
-
-```javascript
-const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
-const incomeData = [4153, 5300, 4333.87, 5461.22, 15353.08, 3458.22];
-const expenseData = [5369.42, 4405.71, 3426.90, 6555.99, 8476.59, 7442.08];
-```
-- `months` 배열에 새 달 추가 (영문 약어: 'Mar', 'Apr', 등)
-- `incomeData`에 해당 월 income.total 추가
-- `expenseData`에 해당 월 totalExpenses 추가
-- **순서**: 시간순 (오래된 달 → 최신 달)
-
-### 3-5. `updateExpenseBarChart()` 함수 (~line 1441)
-
-```javascript
-const months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
-// ...
-{ label: 'Housing',   data: [3200, 3200, 1200, 3200, 3362.80, 3353.44] },
-{ label: 'Utilities', data: [272, 220, 0, 180, 255.99, 228.46] },
-{ label: 'Insurance', data: [140, 140, 0, 140, 1487.93, 173.00] },
-{ label: 'Other',     data: [1757.42, 845.71, 2226.90, 3035.99, 3369.87, 3687.18] }
-```
-- `months` 배열에 새 달 추가
-- 각 dataset의 `data` 배열에 해당 월 값 추가:
-  - **Housing** = `expenses.housing.sum`
-  - **Utilities** = `expenses.utilities.sum`
-  - **Insurance** = `expenses.insurance.sum`
-  - **Other** = `totalExpenses - housing.sum - utilities.sum - insurance.sum`
-
-### 3-6. 월 선택 버튼 HTML (~line 995-1000)
-
-```html
-<button class="month-btn" onclick="selectMonth('sep')">9월</button>
-<button class="month-btn" onclick="selectMonth('oct')">10월</button>
-<button class="month-btn" onclick="selectMonth('nov')">11월</button>
-<button class="month-btn" onclick="selectMonth('dec')">12월</button>
-<button class="month-btn" onclick="selectMonth('jan')">1월</button>
-<button class="month-btn active" onclick="selectMonth('feb')">2월</button>
-```
-- 새 달 추가 시: 새 버튼 추가하고, `active` 클래스를 최신 달로 이동
-
-### 3-7. `init()` 함수의 기본 월 (~line 1760)
-
-```javascript
-updateSummaryCards(budgetData.feb);
-updateTrendChart();
-updateCategoryChart(budgetData.feb);
-updateExpenseBarChart();
-updateSavingsChart();
-updateInsights(budgetData.feb);
-updateExpenseTable(budgetData.feb);
-```
-- 모든 `budgetData.feb` → `budgetData.{최신월}` 로 변경
-- `currentMonth` 변수 (~line 1284)도 최신 월로 변경: `let currentMonth = 'feb';`
-
-### 3-8. `updateInsights()` 내 totalGoal (~line 1537)
-
-```javascript
-const totalGoal = 48500; // Green Card + Flight + Car + Bonus
-```
-- savingsGoals의 targetNum 합계가 변경되면 이 하드코딩 값도 변경
-
-### 3-9. `updateNamongProgress()` 내 totalGoal (~line 1725)
-
-```javascript
-const totalGoal = savingsGoals.reduce((sum, g) => sum + g.targetNum, 0);  // $48,500
-```
-- 이 줄은 자동 계산이므로 savingsGoals만 맞으면 OK
-- 주석의 `$48,500`이 실제 합계와 다르면 주석 업데이트
-
-## Step 4: 검증 체크리스트
-
-모든 업데이트 후 반드시 확인:
-
-- [ ] **지출 합계 검증**: 모든 카테고리의 `sum` 값을 더한 것 = `totalExpenses`
-  - 예: `housing.sum + tithing.sum + utilities.sum + insurance.sum + pet.sum + grocery.sum + entertainment.sum + dining.sum + shopping.sum + gas.sum + membership.sum + other.sum = totalExpenses`
-- [ ] **트렌드 차트 일치**: `incomeData` 배열의 각 값 = 해당 월 `budgetData.{month}.income.total`
-- [ ] **트렌드 차트 일치**: `expenseData` 배열의 각 값 = 해당 월 `budgetData.{month}.totalExpenses`
-- [ ] **바 차트 Other 계산**: Other = totalExpenses - Housing - Utilities - Insurance (각 월별로)
-- [ ] **저축 잔고**: `currentSavingsBalance` = 최신 월의 Savings 통장 잔고만 (다른 통장 합산 X)
-- [ ] **저축 목표 합계**: savingsGoals의 targetNum 합 = `updateInsights()`의 `totalGoal` 하드코딩 값
-- [ ] **기본 월 참조**: `init()` 내 모든 `budgetData.XXX`와 `currentMonth` 변수가 최신 달을 가리킴
-- [ ] **월 버튼**: 최신 달 버튼에 `active` 클래스가 있음
-- [ ] **months 배열 길이**: trendChart와 barChart의 months/data 배열 길이가 동일
+- [ ] 모든 달: 카테고리 `sum` = 항목 합, `totalExpenses` = 카테고리 sum의 합, `income.total` = 수입 항목 합 (예외: 2025년 12월 `travel`은 옛 구조라 항목이 합과 안 맞음 — 그대로 둠)
+- [ ] `budgetData` 키 = `SANKEY_MONTH_INFO` 키 = 버튼 순서, `active` 버튼 = `currentMonth` = 최신 달
+- [ ] 새 달 카테고리 합이 시트 항목 합과 일치 (시트 Total과 다르면 사용자에게 보고)
+- [ ] 브라우저에서 비밀번호 입력 후 모든 월 버튼 클릭 → 콘솔 오류 없음, Sankey 그려짐
 
 ## Step 5: Commit, Push, Sync
 
 ```bash
 cd /tmp/financial-page
-git add index.html
+git add index.html CLAUDE.md
 git commit -m "N월 데이터 업데이트"
 export GH_CONFIG_DIR=~/gh-config
 git push
 ```
 
-그 후 Google Drive 동기화:
+그 후 Google Drive 동기화 (Drive의 `CLAUDE.md`도 같이 — Claude Code가 이 폴더에서 열릴 때 런북을 바로 읽도록):
 ```bash
 cp /tmp/financial-page/index.html "/Users/choidaehyun/Library/CloudStorage/GoogleDrive-daehyeonchoi@gmail.com/My Drive/Favorites/Financial/index.html"
+cp /tmp/financial-page/CLAUDE.md "/Users/choidaehyun/Library/CloudStorage/GoogleDrive-daehyeonchoi@gmail.com/My Drive/Favorites/Financial/CLAUDE.md"
 ```
-
-## 새 달 추가 시 추가 작업 요약
-
-새 달(예: 3월)을 추가할 때 변경해야 할 **모든** 위치:
-
-1. `budgetData` 객체에 `mar: { ... }` 추가
-2. `currentSavingsBalance` 값을 3월 통장 잔고로 업데이트
-3. `updateTrendChart()` — months, incomeData, expenseData 배열 각각에 값 추가
-4. `updateExpenseBarChart()` — months 배열 + Housing/Utilities/Insurance/Other data 배열 각각에 값 추가
-5. 월 선택 버튼 HTML — 새 버튼 추가 + `active` 클래스 이동
-6. `init()` 함수 — 모든 `budgetData.feb` → `budgetData.mar`
-7. `currentMonth` 변수 — `'feb'` → `'mar'`
-8. `savingsGoals` — Goal 섹션이 변경된 경우만 업데이트
-9. `totalGoal` 하드코딩 — savingsGoals 합계가 변경된 경우만 업데이트
-
-## 기존 달 수정 시 작업 요약
-
-기존 달(예: 1월 데이터 수정)의 경우:
-
-1. `budgetData` 내 해당 월 객체 수정
-2. trendChart의 incomeData/expenseData 해당 인덱스 수정
-3. barChart의 Housing/Utilities/Insurance/Other 해당 인덱스 수정
-4. 해당 월이 최신 월이면 `currentSavingsBalance`도 확인
-
----
-
-## 데이터 업데이트 절차 (요약)
-1. `cd /tmp/financial-page && git pull`
-2. WebFetch로 CSV 데이터 가져오기 (gviz URL 사용)
-3. CSV 파싱하여 각 월 데이터 추출
-4. 위 Step 3의 모든 코드 위치 업데이트
-5. Step 4 검증 체크리스트 확인
-6. git commit & push
-7. Google Drive `index.html` 동기화
 
 ---
 
@@ -417,7 +264,7 @@ const calcHeight = maxCol * PER_NODE + 60;  // maxCol = sources/cats/subs 중 �
 - 라벨은 모든 노드에 표시 (작은 노드도 가시성 보장). 노드 패딩이 라벨 높이만큼 확보되어 겹치지 않음
 
 ## 월별 날짜 라벨
-`SANKEY_MONTH_INFO` 객체에 월 → `{ name, year, days }` 매핑. 새 달 추가 시 갱신:
+`SANKEY_MONTH_INFO` 객체에 월 → `{ name, year, days }` 매핑. 새 달 추가 시 갱신 (**시간순** — 차트 x축 순서도 이걸 따름):
 ```js
 sep: { name: 'Sep', year: 2025, days: 30 },
 jun: { name: 'Jun', year: 2026, days: 30 },
